@@ -1,10 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
+/*
+Things to remember
+//npm start //npx react-native run-android
+//ctrl j hides terminal
+*/
 
 import React from 'react';
 import {
@@ -15,7 +13,6 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
 import {
   Header,
   LearnMoreLinks,
@@ -23,15 +20,14 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import HomePage from './src/HomePage';
+import LoginPage from './src/pages/LoginPage';
+import HomePage from './src/pages/HomePage';
 
 const App: () => React$Node = () => {
   return (
-    <>
-      <View style={{flex: 1, justifyContent: "center"}}>
-        <HomePage />
-      </View>
-    </>
+        <View>
+          <LoginPage />
+        </View>
   );
 };
 
