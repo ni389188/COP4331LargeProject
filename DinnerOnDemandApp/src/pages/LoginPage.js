@@ -4,7 +4,7 @@ import { View } from 'react-native'
 import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
 
-const LoginPage = () =>
+const LoginPage = ({navigation}) =>
 {
     return(
       <View>
@@ -12,7 +12,7 @@ const LoginPage = () =>
           <PageTitle />
         </View>
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Login />
+          <Login navigation={navigation}/>
         </View>
       </View>
     );

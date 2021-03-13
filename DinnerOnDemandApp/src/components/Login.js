@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native'
 
-function Login()
+function Login({navigation})
 {
   return(
     <View style = {styles.background}>
@@ -13,7 +13,7 @@ function Login()
       <TouchableOpacity>
         <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style = {styles.buttonBackground} >
+      <TouchableOpacity style = {styles.buttonBackground} /*onPress={() => navigation.navigate("NavigationBar")}*/ >
         <Text style = {styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style = {{flexDirection: 'row', justifyContent: 'center'}}>

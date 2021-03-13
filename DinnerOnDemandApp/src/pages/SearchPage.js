@@ -37,7 +37,7 @@ const SearchPage = () =>
             />
             {
                 loading ?
-                    <Text style={{color: "white", textAlign: "center", justifyContent: "center"}}>
+                    <Text style={{color: "black", textAlign: "center", justifyContent: "center"}}>
                         Search for ingredients/recipes first then the results will be displayed here.
                     </Text>
                 :
