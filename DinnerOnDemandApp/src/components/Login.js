@@ -1,8 +1,15 @@
 import React, {useState} from 'react';
 import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { connect } from "react-redux"
+import SaveUser from "../redux/Actions/SaveUser"
 
-function Login({navigation})
+function Login({navigation, mapDispatchToProps, user})
 {
+  const saveToRedux = () =>
+  {
+    mapDispatchToProps({name: "Carl", email: "carlantoine14@gmail.com", favorites: []})
+  }
+
   return(
     <View style = {styles.background}>
       <Text style = {styles.loginTitle}>Sign In{"\n"}</Text>
@@ -13,7 +20,7 @@ function Login({navigation})
       <TouchableOpacity>
         <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style = {styles.buttonBackground} /*onPress={() => navigation.navigate("NavigationBar")}*/ >
+      <TouchableOpacity style = {styles.buttonBackground} onPress={() => saveToRedux()} /*onPress={() => navigation.navigate("NavigationBar")}*/ >
         <Text style = {styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style = {{flexDirection: 'row', justifyContent: 'center'}}>
@@ -72,4 +79,17 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Login;
+const mapStateToProps = ({UserReducer: { user }}) =>
+{
+  return {
+    user
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return {
+    reduxSaveUser:(user) => dispatch(SaveUser(user))
+  }
+}
+
+export default connect(mapStateToProps, { mapDispatchToProps })(Login);
