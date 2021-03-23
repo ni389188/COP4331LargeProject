@@ -35,7 +35,7 @@ function Login({navigation, mapDispatchToProps, user})
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: 'white',
+    backgroundColor: '#ABDDDC',
     paddingVertical: 60,
     paddingHorizontal: 20,
     marginTop: 50,
