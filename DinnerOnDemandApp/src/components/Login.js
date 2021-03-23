@@ -20,7 +20,7 @@ function Login({navigation, mapDispatchToProps, user})
       <TouchableOpacity>
         <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
       </TouchableOpacity>
-      <TouchableOpacity style = {styles.buttonBackground} onPress={() => saveToRedux()} /*onPress={() => navigation.navigate("NavigationBar")}*/ >
+      <TouchableOpacity style = {styles.buttonBackground} /*onPress={() => saveToRedux()}*/ onPress={() => navigation.navigate("NavigationBar")} >
         <Text style = {styles.buttonText}>Login</Text>
       </TouchableOpacity>
       <View style = {{flexDirection: 'row', justifyContent: 'center'}}>
