@@ -25,21 +25,24 @@ import HomePage from './src/pages/HomePage';
 import NavigationBar from './src/components/NavigationBar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import store from "./src/redux/store"
+import { Provider } from "react-redux"
 
 const Stack = createStackNavigator();
 
-const App: () => React$Node = () =>
-{
+const App: () => React$Node = () => {
   return (
-    <View style={styles.body}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          {/* <Stack.Screen name="SplashScreen" component={} /> */}
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="NavigationBar" component={NavigationBar} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <Provider store={store}>
+      <View style={styles.body}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            {/* <Stack.Screen name="SplashScreen" component={} /> */}
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="NavigationBar" component={NavigationBar} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </Provider>
   );
 };
 
