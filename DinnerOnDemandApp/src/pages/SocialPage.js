@@ -4,7 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import AccountButton from '../components/AccountButton';
 {/*Delete this import when working on page*/}
 
-const RecipeListPage = ({navigation}) =>
+const SocialPage = ({navigation}) =>
 {
     return(
       <View style = {styles.container}>
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecipeListPage;
+export default SocialPage;
