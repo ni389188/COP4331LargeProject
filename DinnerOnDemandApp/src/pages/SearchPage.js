@@ -16,11 +16,12 @@ const SearchPage = () =>
 
     function search()
     {
-        axios.get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
+        axios
+        .get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
         .then((response) =>
         {
             setResult(response.data)
-
+        })
     };
 
     const renderResults = ({item}) =>
