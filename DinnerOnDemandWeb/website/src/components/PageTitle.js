@@ -3,7 +3,7 @@ import React from 'react';
 function PageTitle() {
     return (
         <h1 id="title">
-            Dinner-On-Demand
+            Dinner-On-Demand Yay
         </h1>
     );
 };

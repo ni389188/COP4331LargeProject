@@ -6,19 +6,20 @@ import NavigationBar from '../components/NavigationBar';
 
 // import { Container } from './styles';
 
+const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
+
 const SearchPage = () =>
 {
     const [ingredients, setIngredients] = useState("");
-    const [results, setResult] = useState();
+    const [results, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() =>
+    function search()
     {
-        // Do stuff
-    }, [results]);
-
-    const search = () =>
-    {
+        axios.get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
+        .then((response) =>
+        {
+            setResult(response.data)
 
     };
 
