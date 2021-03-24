@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
 import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
 import AccountButton from '../components/AccountButton';
 
 const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
@@ -32,9 +31,8 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
           <TextInput style = {styles.input} placeholder="Please confirm password" />
           <View style = {styles.buttonOrientation}>
             <AccountButton
-              navigate = {navigation.navigate}
-              destination = 'RecipeListPage'
               name = 'Create Account'
+              destination = 'RecipeListPage'
             />
           </View>
           <View style = {styles.loginText}>

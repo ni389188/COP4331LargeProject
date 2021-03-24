@@ -1,16 +1,18 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-function AccountButton(props)
+function AccountButton({name, destination})
 {
+  const navigation = useNavigation();
   return(
     <View style = {styles.container}>
       <TouchableOpacity 
         style = {styles.buttonBackground}
         onPress = {() =>
-        {props.navigate(props.destination)}}
+        {navigation.navigate(destination)}}
         >
-        <Text style = {styles.buttonText}>{props.name}</Text>
+        <Text style = {styles.buttonText}>{name}</Text>
       </TouchableOpacity>
     </View>
   );

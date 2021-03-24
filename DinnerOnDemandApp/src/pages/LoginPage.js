@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
 import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
 import AccountButton from '../components/AccountButton';
 
 const LoginPage = ({navigation, mapDispatchToProps, user}) =>
@@ -31,9 +30,8 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
           </TouchableOpacity>
           <View style = {styles.buttonOrientation}>
             <AccountButton
-              navigate = {navigation.navigate}
-              destination = 'RecipeListPage'
               name = 'Login'
+              destination = 'RecipeListPage'
             />
           </View>
           <View style = {styles.registerText}>
