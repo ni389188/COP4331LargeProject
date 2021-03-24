@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, TextInput, View, Text, Image, TouchableOpacity } from 'react-native';
-import axios from "axios"
+import { FlatList, TextInput, View, Text, StyleSheet } from 'react-native';
+
+import PageTitle from '../components/PageTitle';
+import NavigationBar from '../components/NavigationBar';
 
 // import { Container } from './styles';
 
@@ -19,55 +21,68 @@ const SearchPage = () =>
         {
             setResult(response.data)
 
-            setLoading(false)
-        });
-    }
+    };
 
     const renderResults = ({item}) =>
     {
-        return (
-            <View style={{paddingHorizontal: 15, paddingVertical: 10,}}>
-                <Text>
-                    {item.title}
-                </Text>
-                <Image
-                    source={{uri: item.image}}
-                    style={{width: 312, height: 231}}
-                />
-            </View>
-        )
-    }
+        console.log(item);
+    };
 
     return (
-        <View style={{alignItems: "center", paddingBottom: 80}}>
-            <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                <TextInput
-                    placeholder={"Search for Ingredients/Recipes here"}
-                    placeholderTextColor={"black"}
-                    value={ingredients}
-                    onChangeText={setIngredients}
-                    style={{backgroundColor: "white", padding: 5, borderWidth: 1.5,
-                        borderRadius: 10, borderColor: "black", color: "black", width: "70%", marginVertical: 20}}
-                />
-                <TouchableOpacity onPress={() => ingredients !== "" ? search() : null}>
-                    <Text>Search</Text>
-                </TouchableOpacity>
+        <View style = {styles.container}>
+            <View style = {styles.header}>
+                <PageTitle text = 'Your Recipes' />
             </View>
-            {
-                loading ?
-                    <Text style={{color: "black", textAlign: "center", justifyContent: "center"}}>
-                        Search for ingredients/recipes first then the results will be displayed here.
-                    </Text>
-                :
-                    <FlatList
-                        data={results}
-                        key={item => `${item.index}`}
-                        numColumns={1}
-                        renderItem={renderResults}
+            <View style = {styles.body}>
+                <View style={{alignItems: "center"}}>
+                    <TextInput
+                        placeholder={"Search for Ingredients/Recipes here"}
+                        placeholderTextColor={"black"}
+                        value={ingredients}
+                        onChangeText={setIngredients}
+                        onSubmitEditing={() => search()}
+                        style={{backgroundColor: "white", padding: 5, borderWidth: 1.5,
+                            borderRadius: 10, borderColor: "black", color: "black", width: "90%", margin: 20}}
                     />
-            }
+                    {
+                        loading ?
+                            <Text style={{color: "black", textAlign: "center", justifyContent: "center"}}>
+                                Search for ingredients/recipes first then the results will be displayed here.
+                            </Text>
+                        :
+                            <FlatList
+                                data={results}
+                                keyExtractor={item => `item - ${item}`}
+                                renderItem={renderResults}
+                            />
+                    }
+                </View>
+            </View>
+            <View style = {styles.footer}>
+                <NavigationBar />
+            </View>
         </View>
     );
-}
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  header: {
+    flex: 1,
+    width: '100%',
+  },
+  body: {
+    flex: 11,
+  },
+  footer: {
+    flex: 1.5,
+    width: '100%',
+  },
+});
 
 export default SearchPage;

@@ -9,9 +9,8 @@ const IngredientsPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <AccountButton
-          navigate = {navigation.navigate}
-          destination = 'AccountPage'
           name = 'Todo'
+          destination = 'AccountPage'
         />
       </View>
     );
