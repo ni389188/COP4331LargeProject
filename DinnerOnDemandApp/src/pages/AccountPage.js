@@ -11,7 +11,7 @@ const AccountPage = ({navigation}) =>
         <View style={styles.logoOrientation}>
           <Image
           style={styles.logo}
-          source={require('../components/logo.png')}
+          source={require('../components/Logo.png')}
           />
         </View>
         <View style = {styles.buttonOrientation}>
