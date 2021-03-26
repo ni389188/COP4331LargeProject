@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 11,
+    alignItems: 'center',
+    width: '100%',
   },
   footer: {
     flex: 1.5,

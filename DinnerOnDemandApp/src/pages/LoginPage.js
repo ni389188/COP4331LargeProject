@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
 import PageTitle from '../components/PageTitle';
-import AccountButton from '../components/AccountButton';
+import NavigationButton from '../components/NavigationButton';
 
 const LoginPage = ({navigation, mapDispatchToProps, user}) =>
 {
@@ -29,7 +29,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
             <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
           <View style = {styles.buttonOrientation}>
-            <AccountButton
+            <NavigationButton
               name = 'Login'
               destination = 'RecipeListPage'
             />

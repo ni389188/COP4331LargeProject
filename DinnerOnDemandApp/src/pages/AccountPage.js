@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
-import AccountButton from '../components/AccountButton';
+import NavigationButton from '../components/NavigationButton';
 
 const AccountPage = ({navigation}) =>
 {
@@ -15,13 +15,13 @@ const AccountPage = ({navigation}) =>
           />
         </View>
         <View style = {styles.buttonOrientation}>
-          <AccountButton
+          <NavigationButton
           name = 'Login'
           destination = 'LoginPage'
           />
         </View>
         <View style = {styles.buttonOrientation}>
-          <AccountButton
+          <NavigationButton
           name = 'Register'
           destination = 'RegisterPage'
           />

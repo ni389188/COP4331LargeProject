@@ -3,6 +3,7 @@ import { FlatList, TextInput, View, Text, StyleSheet } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
+import NavigationButton from '../components/NavigationButton';
 
 // import { Container } from './styles';
 
@@ -32,7 +33,7 @@ const SearchPage = () =>
     return (
         <View style = {styles.container}>
             <View style = {styles.header}>
-                <PageTitle text = 'Your Recipes' />
+                <PageTitle text = 'Search for Recipes' />
             </View>
             <View style = {styles.body}>
                 <View style={{alignItems: "center"}}>
@@ -58,6 +59,12 @@ const SearchPage = () =>
                             />
                     }
                 </View>
+                <View style = {styles.button}>
+                    <NavigationButton
+                    name = 'Search'
+                    destination = 'ResultsPage'
+                    />
+                </View>
             </View>
             <View style = {styles.footer}>
                 <NavigationBar />
@@ -79,10 +86,16 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 11,
+    alignItems: 'center',
+    width: '100%',
   },
   footer: {
     flex: 1.5,
     width: '100%',
+  },
+  button: {
+      marginTop: 20,
+      width: '85%',
   },
 });
 

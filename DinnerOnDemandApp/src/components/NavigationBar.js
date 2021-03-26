@@ -18,16 +18,6 @@ const NavigationBar = () =>
                 <Text>Recipes</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-            onPress = {() => navigation.navigate('SearchPage')}
-            style = {styles.tab}
-            >
-                <Image
-                style={styles.icon}
-                source={require('./searchIcon.png')}
-                />
-                <Text>Search</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
             onPress = {() => navigation.navigate('ShoppingListPage')}
             style = {styles.tab}
             >
@@ -36,6 +26,16 @@ const NavigationBar = () =>
                 source={require('./ingredientsIcon.png')}
                 />
                 <Text>Shopping</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+            onPress = {() => navigation.navigate('SearchPage')}
+            style = {styles.tab}
+            >
+                <Image
+                style={styles.icon}
+                source={require('./searchIcon.png')}
+                />
+                <Text>Search</Text>
             </TouchableOpacity>
             <TouchableOpacity 
             onPress = {() => navigation.navigate('SocialPage')}
