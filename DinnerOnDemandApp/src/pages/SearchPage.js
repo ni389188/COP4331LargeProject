@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, TextInput, View, Text, StyleSheet } from 'react-native';
+import { FlatList, TextInput, View, Text, StyleSheet, Image } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
+import axios from "axios";
 
 // import { Container } from './styles';
 
@@ -22,12 +23,29 @@ const SearchPage = () =>
         .then((response) =>
         {
             setResult(response.data)
+            setLoading(false)
         })
     };
 
     const renderResults = ({item}) =>
     {
-        console.log(item);
+        return (
+            <View style={{paddingHorizontal: 15, paddingVertical: 10, backgroundColor: "black"}}>
+                <Text style={{color: "white"}}>
+                    {item.title}
+                </Text>
+                <Image
+                    source={{uri: item.image}}
+                    style={{width: 312, height: 231}}
+                />
+                {/* <View style = {styles.button}>
+                    <NavigationButton
+                    name = 'Search'
+                    destination = 'ResultsPage'
+                    />
+                </View> */}
+            </View>
+        )
     };
 
     return (
@@ -54,16 +72,11 @@ const SearchPage = () =>
                         :
                             <FlatList
                                 data={results}
-                                keyExtractor={item => `item - ${item}`}
+                                key={item => `item - ${item.index}`}
+                                numColumns={1}
                                 renderItem={renderResults}
                             />
                     }
-                </View>
-                <View style = {styles.button}>
-                    <NavigationButton
-                    name = 'Search'
-                    destination = 'ResultsPage'
-                    />
                 </View>
             </View>
             <View style = {styles.footer}>
