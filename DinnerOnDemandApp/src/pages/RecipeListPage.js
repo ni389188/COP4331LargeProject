@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
+import RecipeCard from '../components/RecipeCard';
 
 const RecipeListPage = ({navigation}) =>
 {
@@ -12,7 +13,16 @@ const RecipeListPage = ({navigation}) =>
           <PageTitle text = 'Your Recipes' />
         </View>
         <View style = {styles.body}>
-          
+          <View style = {styles.cards}>
+            <RecipeCard />
+          </View>
+          <TouchableOpacity 
+          style = {styles.createBackground}
+          onPress = {() =>
+          {navigation.navigate('CreatePage')}}
+          >
+            <Text style = {styles.createText}>+ Add Custom Recipe</Text>
+          </TouchableOpacity>
         </View>
         <View style = {styles.footer}>
           <NavigationBar />
@@ -34,10 +44,27 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 11,
+    alignItems: 'center',
+    width: '100%',
   },
   footer: {
     flex: 1.5,
     width: '100%',
+  },
+  cards: {
+    marginTop: 20,
+  },
+  createBackground: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'blue',
+    borderWidth: 2,
+    height: 150,
+    width: 300,
+    marginTop: 20,
+  },
+  createText: {
+    fontSize: 23,
   },
 });
 

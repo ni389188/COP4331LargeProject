@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import AccountButton from '../components/AccountButton';
+import NavigationButton from '../components/NavigationButton';
 {/*Delete this import when working on page*/}
 
 const ForgotPasswordPage = ({navigation}) =>
 {
     return(
       <View style = {styles.container}>
-        <AccountButton
+        <NavigationButton
           navigate = {navigation.navigate}
           destination = 'AccountPage'
           name = 'Todo'
