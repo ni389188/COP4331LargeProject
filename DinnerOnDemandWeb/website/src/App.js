@@ -14,8 +14,11 @@ function App() {
         </Route>        
         <Route path="/COP4331LargeProject" exact>          
           <CardPage />        
-        </Route>        
-        <Redirect to="/" />      
+        </Route>          
+        <Route path="/pages/LoginPage" exact>          
+          <LoginPage />        
+        </Route> 
+        <Redirect to="/" />  
       </Switch>      
     </Router>  
   );
