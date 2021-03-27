@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function RecipeCard()
+function RecipeCard({item})
 {
   const navigation = useNavigation();
   return(
@@ -10,12 +10,12 @@ function RecipeCard()
       <TouchableOpacity 
       style = {styles.background}
       onPress = {() =>
-      {navigation.navigate('RecipePage')}}
+      {navigation.navigate('RecipePage', {item})}}
       >
         <View style = {styles.imageSection}>
           <Image
           style={styles.image}
-          source={require('./Logo.png')}
+          source={{uri: item !== undefined ? item.image : null}}
           />
         </View>
         <View style = {styles.textSection}>

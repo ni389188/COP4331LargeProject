@@ -44,9 +44,9 @@ const SettingsPage = ({navigation}) =>
             />
           </View>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };

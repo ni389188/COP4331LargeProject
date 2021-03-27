@@ -31,7 +31,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
           <View style = {styles.buttonOrientation}>
             <NavigationButton
               name = 'Login'
-              destination = 'RecipeListPage'
+              destination = 'NavigationBar'
             />
           </View>
           <View style = {styles.registerText}>

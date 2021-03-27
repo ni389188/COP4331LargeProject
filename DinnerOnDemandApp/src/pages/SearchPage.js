@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, TextInput, View, Text, StyleSheet, Image } from 'react-native';
+import { FlatList, TextInput, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import axios from "axios";
+import RecipeCard from '../components/RecipeCard';
 
 // import { Container } from './styles';
 
@@ -12,6 +14,7 @@ const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 
 const SearchPage = () =>
 {
+    const navigation = useNavigation();
     const [ingredients, setIngredients] = useState("");
     const [results, setResult] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -30,21 +33,24 @@ const SearchPage = () =>
     const renderResults = ({item}) =>
     {
         return (
-            <View style={{paddingHorizontal: 15, paddingVertical: 10, backgroundColor: "black"}}>
-                <Text style={{color: "white"}}>
-                    {item.title}
-                </Text>
-                <Image
-                    source={{uri: item.image}}
-                    style={{width: 312, height: 231}}
-                />
-                {/* <View style = {styles.button}>
-                    <NavigationButton
-                    name = 'Search'
-                    destination = 'ResultsPage'
-                    />
-                </View> */}
-            </View>
+            <RecipeCard item={item} />
+            // <View style={{paddingHorizontal: 15, paddingVertical: 10, backgroundColor: "gray"}}>
+            //     <TouchableOpacity onPress={() => navigation.navigate('RecipeCard', {item})}>
+            //         <Text style={{color: "white"}}>
+            //             {item.title}
+            //         </Text>
+            //         <Image
+            //             source={{uri: item.image}}
+            //             style={{width: 312, height: 231}}
+            //         />
+            //         {/* <View style = {styles.button}>
+            //             <NavigationButton
+            //             name = 'Search'
+            //             destination = 'RecipeCard'
+            //             />
+            //         </View> */}
+            //     </TouchableOpacity>
+            // </View>
         )
     };
 
@@ -79,9 +85,9 @@ const SearchPage = () =>
                     }
                 </View>
             </View>
-            <View style = {styles.footer}>
+            {/* <View style = {styles.footer}>
                 <NavigationBar />
-            </View>
+            </View> */}
         </View>
     );
 };

@@ -1,52 +1,113 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
+import axios from 'axios';
 
-const RecipePage = ({navigation}) =>
+const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
+
+const RecipePage = ({ navigation, route : {params : {item}} }) =>
 {
-    return(
-      <View style = {styles.container}>
-        <View style = {styles.header}>
-          <PageTitle text = 'Recipe Name Here' />
-        </View>
-        <View style = {styles.body}>
-          <Image
-          style={styles.image}
-          source={require('../components/Logo.png')}
-          />
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Ingredients'
-            destination = 'IngredientsPage'
-          />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Instructions'
-            destination = 'InstructionsPage'
-          />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Add to Shopping List'
-            destination = 'RecipePage'
-          />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Add/Remove from Recipes'
-            destination = 'RecipePage'
-          />
-          </View>
-        </View>
-        <View style = {styles.footer}>
-          <NavigationBar />
-        </View>
+  const [instructions, setInstructions] = useState([]);
+
+  useEffect(() =>
+  {
+    axios.get(`https://api.spoonacular.com/recipes/${item.id}/analyzedInstructions?apiKey=${APIKEY}`)
+    .then(res =>
+    {
+      setInstructions(res.data)
+    })
+  }, []);
+
+  const addToShop = () =>
+  {
+
+  }
+
+  const favorite = () =>
+  {
+    
+  }
+
+  const share = () =>
+  {
+
+  }
+
+  return (
+    <View style={styles.container}>
+      {/* {console.log(item.metaInformation)} */}
+      <View style={styles.header}>
+        <PageTitle text={item.title} />
       </View>
-    );
+      <ScrollView>
+        <View style={styles.body}>
+          <Image
+            style={styles.image}
+            source={{uri: item.image}}
+          />
+          {/* Ingredients */}
+          <View>
+            <Text style={{color: "black"}}>Ingredients</Text>
+            {
+              item.usedIngredients.map((ingredient, index) =>
+              {
+                // console.log(ingredient)
+                return (
+                  <>
+                    {/* <Image
+                      style={{width: 50, height: 50}}
+                      source={{uri: ingredient.image}}
+                    /> */}
+                    <Text key={index} >
+                      Ingredient: {ingredient.originalString}
+                    </Text>
+                    <Text>
+                      Ammount: {ingredient.amount}
+                    </Text>
+                  </>
+                )
+              })
+            }
+          </View>
+
+          {/* Instructions */}
+          <View>
+            <Text>Instructions</Text>
+            {
+              instructions.length > 0 ?
+                instructions[0].steps.map((desc, index) =>
+                {
+                  return (
+                    <>
+                      <Text key={index}>
+                        {desc.step}
+                      </Text>
+                    </>
+                  )
+                })
+              :
+                null
+            }
+          </View>
+
+          {/* Add to Shopping List */}
+
+          {/* Add/Remove from Recipes */}
+
+          {/* Share */}
+          <TouchableOpacity>
+            <Image style={{width: 30, height: 30}} source={require('../components/socialIcon.png')} />
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+      {/* <View style={styles.footer}>
+        <NavigationBar />
+      </View> */}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -72,8 +133,8 @@ const styles = StyleSheet.create({
   image: {
     marginTop: 50,
     marginBottom: 30,
-    height: 150,
-    width: 150,
+    width: 312,
+    height: 231,
   },
   button: {
     marginTop: 20,
