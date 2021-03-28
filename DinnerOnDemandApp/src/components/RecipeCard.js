@@ -19,7 +19,7 @@ function RecipeCard({item})
           />
         </View>
         <View style = {styles.textSection}>
-          <Text style = {styles.buttonText}>Name: </Text>
+          <Text style = {styles.buttonText}>Name: {item !== undefined ? item.title : ""}</Text>
           <Text style = {styles.buttonText}>Flavor: </Text>
           <Text style = {styles.buttonText}>Time: </Text>
         </View>
