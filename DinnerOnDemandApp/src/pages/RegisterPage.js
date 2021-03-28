@@ -32,7 +32,7 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
           <View style = {styles.buttonOrientation}>
             <NavigationButton
               name = 'Create Account'
-              destination = 'RecipeListPage'
+              destination = 'NavigationBar'
             />
           </View>
           <View style = {styles.loginText}>
