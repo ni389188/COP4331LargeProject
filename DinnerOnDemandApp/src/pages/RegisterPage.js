@@ -21,8 +21,10 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
       <View style = {styles.body}>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Register{"\n"}</Text>
-          <Text style = {styles.inputTitle}> Name</Text>
-          <TextInput style = {styles.input} placeholder="Please enter your name" />
+          <Text style = {styles.inputTitle}> First Name</Text>
+          <TextInput style = {styles.input} placeholder="Please enter your first name" />
+          <Text style = {styles.inputTitle}> Last Name</Text>
+          <TextInput style = {styles.input} placeholder="Please enter your last name" />
           <Text style = {styles.inputTitle}> Email</Text>
           <TextInput style = {styles.input} placeholder="Please enter email" />
           <Text style = {styles.inputTitle}> Password</Text>
@@ -73,11 +75,11 @@ const styles = StyleSheet.create({
   },
   loginTitle: {
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 30,
   },
   inputTitle:{
     color: 'black',
-    marginTop: 10,
+    marginTop: 5,
   },
   input: {
     color: 'black',
@@ -90,7 +92,7 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   buttonOrientation: {
-    marginTop: 25,
+    marginTop: 20,
     width: '100%',
   },
   loginText: {
