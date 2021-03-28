@@ -11,6 +11,9 @@ const ResultsPage = ({navigation, route : {params : {item}}}) =>
       <View style = {styles.container}>
         {console.log(item)}
         <View style = {styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
           <PageTitle text = 'Results' />
         </View>
         <View style = {styles.body}>

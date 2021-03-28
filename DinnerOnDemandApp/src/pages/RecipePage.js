@@ -40,6 +40,9 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
     <View style={styles.container}>
       {/* {console.log(item.metaInformation)} */}
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Text>Back</Text>
+        </TouchableOpacity>
         <PageTitle text={item.title} />
       </View>
       <ScrollView>

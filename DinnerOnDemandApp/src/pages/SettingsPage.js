@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -10,6 +10,9 @@ const SettingsPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
           <PageTitle text = 'Profile Settings' />
         </View>
         <View style = {styles.body}>

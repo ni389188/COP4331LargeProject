@@ -60,10 +60,10 @@ const App: () => React$Node = () => {
             <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
             {/* <Stack.Screen name="RecipeListPage" component={RecipeListPage} /> */}
             {/* <Stack.Screen name="ShoppingListPage" component={ShoppingListPage} /> */}
-            {/* <Stack.Screen name="SettingsPage" component={SettingsPage} /> */}
+            {/* <Stack.Screen name="SearchPage" component={SearchPage} /> */}
             {/* <Stack.Screen name="ProfilePage" component={ProfilePage} /> */}
             <Stack.Screen name="RegisterPage" component={RegisterPage} />
-            <Stack.Screen name="SearchPage" component={SearchPage} />
+            <Stack.Screen name="SettingsPage" component={SettingsPage} />
             <Stack.Screen name="RecipePage" component={RecipePage} />
             <Stack.Screen name="CreatePage" component={CreatePage} />
             <Stack.Screen name="ResultsPage" component={ResultsPage} />
