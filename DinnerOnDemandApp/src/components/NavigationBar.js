@@ -53,7 +53,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                         <Image
                             style={styles.icon}
                             source={
-                                label === 'Recipes' ?
+                                label === 'Recipe' ?
                                     require('./recipesIcon.png')
                                 :
                                 label === 'Shopping' ?
