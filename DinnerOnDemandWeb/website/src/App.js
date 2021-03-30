@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch, Link} from 'react-router-dom';
 import './App.css';
+import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import CardPage from './pages/RecipePage';
 import WelcomePage from './pages/WelcomePage';
@@ -14,7 +15,10 @@ function App() {
         </Route>        
         <Route path="/COP4331LargeProject" exact>          
           <CardPage />        
-        </Route>          
+        </Route>  
+        <Route path="/pages/RegisterPage" exact>          
+          <RegisterPage />        
+        </Route>         
         <Route path="/pages/LoginPage" exact>          
           <LoginPage />        
         </Route> 

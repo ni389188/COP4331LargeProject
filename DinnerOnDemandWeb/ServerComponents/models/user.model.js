@@ -8,14 +8,14 @@ const reqString = {
 
 const userModel = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    FirstName: reqString, 
-    LastName: reqString, 
     Email: {
         type: String,
         unique: true,
         required: true
     }, 
     Password: reqString,
+    FirstName: reqString, 
+    LastName: reqString, 
 })
 userModel.plugin(uniqueValidator)
 

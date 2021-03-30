@@ -1,0 +1,9 @@
+Removed UserID from LoggedInName component
+
+Added Registration to NavBar
+
+Created a basic registration page
+
+Connected Login and Registration pages with API
+
+Created a route to Registration page in App.js

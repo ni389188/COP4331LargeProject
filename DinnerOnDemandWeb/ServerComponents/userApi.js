@@ -37,39 +37,29 @@ exports.setApp = function (app, MongoClient)
 
     app.post('/api/login', async (req, res, next) => 
     {  
-        // incoming: login, password  
-        // outgoing: id, firstName, lastName, error 
-        
-        /*var error = '';  
-        const { login, password } = req.body;  
-        const db = client.db();  
-        const results = await db.collection('Users').find({Login:login,Password:password}).toArray();  
-        var id = -1;  
-        var fn = '';  
-        var ln = '';  
-        if( results.length > 0 )  
-        {    
-            id = results[0].UserId;    
-            fn = results[0].FirstName;    
-            ln = results[0].LastName;  
-        }  
-        var ret = { id:id, firstName:fn, lastName:ln, error:''};  
-        res.status(200).json(ret);*/
-
-        var Email = req.body.Email;
-        var Password = req.body.Password;
+        var Email = req.body.login;
+        var Password = req.body.password;
 
         User.findOne({Email:Email, Password:Password}, function(err, result) {
+
+            // Error Encountered.
             if(err) {
                 res.status(400).json(err);
             }
 
-            if (result) {
+            // If found
+            if (result){
                 res.status(200).json({
                     ID: result._id,
                     FirstName: result.FirstName,
                     LastName: result.LastName
                 })
+            }
+
+            // If not found
+            else {
+                console.log('Failed Login');
+                res.status(400).json({ID: 'Failed Login'});
             }
         })
     });
