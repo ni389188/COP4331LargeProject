@@ -8,11 +8,11 @@ const path = require('path');
 const PORT = process.env.PORT || 5000;
 app.set('port', (process.env.PORT || 5000));
 
-const MongoClient = require('mongodb').MongoClient;
-require('dotenv').config();
-const url = process.env.MONGODB_URI;
-const client = new MongoClient(url);
-client.connect();
+//const MongoClient = require('mongodb').MongoClient;
+//require('dotenv').config();
+//const url = process.env.MONGODB_URI;
+//const client = new MongoClient(url);
+//client.connect();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -29,8 +29,11 @@ if (process.env.NODE_ENV === 'production')
     });
 }
 
+var userRoutes = require("./ServerComponents/userApi.js");
+userRoutes.setApp(app)
 // **********************HARD CODED API*********************************
-var recipeList = [  'Tomato',  'Cheese',  'Apple',  'Pepper',  'Potato'];
+
+/*var recipeList = [  'Tomato',  'Cheese',  'Apple',  'Pepper',  'Potato'];
 
 app.post('/api/addrecipe', async (req, res, next) =>
 {  
@@ -91,7 +94,7 @@ app.post('/api/searchrecipe', async (req, res, next) =>
     }  
     var ret = {results:_ret, error:error};  
     res.status(200).json(ret);
-});
+});*/
 // **********************HARD CODED API*********************************
 
 app.use((req, res, next) => {
