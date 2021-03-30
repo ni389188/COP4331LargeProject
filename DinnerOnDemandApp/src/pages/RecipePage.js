@@ -11,6 +11,7 @@ const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 const RecipePage = ({ navigation, route : {params : {item}} }) =>
 {
   const [instructions, setInstructions] = useState([]);
+  const ingredients = [...item.usedIngredients, ...item.missedIngredients]
 
   useEffect(() =>
   {
@@ -38,57 +39,67 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
 
   return (
     <View style={styles.container}>
-      {/* {console.log(item.metaInformation)} */}
+      {/* {console.log(ingredients)} */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text>Back</Text>
         </TouchableOpacity>
         <PageTitle text={item.title} />
       </View>
-      <ScrollView>
-        <View style={styles.body}>
+      <ScrollView style={{height: "95%"}}>
+        <View style={[styles.body, {marginBottom: 50}]}>
           <Image
-            style={styles.image}
+            style={[styles.image, {backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+            borderWidth: 1, borderRadius: 5,}]}
             source={{uri: item.image}}
           />
           {/* Ingredients */}
+          <Text style={{fontSize: 20, fontWeight: "bold"}}>Ingredients</Text>
           <View>
-            <Text style={{color: "black"}}>Ingredients</Text>
             {
-              item.usedIngredients.map((ingredient, index) =>
+              ingredients.map((ingredient, index) =>
               {
-                // console.log(ingredient)
                 return (
-                  <>
-                    {/* <Image
+                  <View key={index} style={{
+                      backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+                      borderWidth: 1, borderRadius: 5, marginBottom: 5, flexDirection: "row",
+                      width: "80%"
+                    }}
+                  >
+                    <Image
                       style={{width: 50, height: 50}}
                       source={{uri: ingredient.image}}
-                    /> */}
-                    <Text key={index} >
-                      Ingredient: {ingredient.originalString}
-                    </Text>
-                    <Text>
-                      Ammount: {ingredient.amount}
-                    </Text>
-                  </>
+                    />
+                    <View style={{flexDirection: "column", marginStart: 5}}>
+                      <Text>
+                        Ingredient: {ingredient.originalString}
+                      </Text>
+                      <Text>
+                        Amount: {ingredient.amount}
+                      </Text>
+                    </View>
+                  </View>
                 )
               })
             }
           </View>
 
           {/* Instructions */}
-          <View>
-            <Text>Instructions</Text>
+          <Text style={{fontSize: 20, fontWeight: "bold"}}>Instructions</Text>
+          <View style={{
+              backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+              borderWidth: 1, borderRadius: 5, marginBottom: 5,
+              width: "95%"
+            }}
+          >
             {
               instructions.length > 0 ?
                 instructions[0].steps.map((desc, index) =>
                 {
                   return (
-                    <>
-                      <Text key={index}>
-                        {desc.step}
-                      </Text>
-                    </>
+                    <Text key={index} style={{marginBottom: 5}}>
+                      {`${index + 1}. ${desc.step}`}
+                    </Text>
                   )
                 })
               :
@@ -96,24 +107,28 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
             }
           </View>
 
-          {/* Add to Shopping List */}
-
-          {/* Add/Remove from Recipes */}
-
-          {/* Share */}
-          <TouchableOpacity>
-            <Image style={{width: 30, height: 30}} source={require('../components/socialIcon.png')} />
-          </TouchableOpacity>
+          <View style={{flexDirection: "row", marginTop: 10}}>
+            {/* Add to Shopping List */}
+            <TouchableOpacity onPress={() => null}>
+              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
+            </TouchableOpacity>
+            {/* Add/Remove from Recipes */}
+            <TouchableOpacity style={{marginHorizontal: 50}} onPress={() => null}>
+              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
+            </TouchableOpacity>
+            {/* Share */}
+            <TouchableOpacity onPress={() => null}>
+              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
-      {/* <View style={styles.footer}>
-        <NavigationBar />
-      </View> */}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create(
+{
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -121,21 +136,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    flex: 1,
     width: '100%',
   },
   body: {
-    flex: 11,
+    flex: 1,
     alignItems: 'center',
     width: '100%',
   },
-  footer: {
-    flex: 1.5,
-    width: '100%',
-  },
   image: {
-    marginTop: 50,
-    marginBottom: 30,
+    margin: 20,
     width: 312,
     height: 231,
   },
