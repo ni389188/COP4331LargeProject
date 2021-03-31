@@ -5,7 +5,7 @@ import logo from '../images/logo.png';
 
 function NavBar(){
     return(
-        <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
+        <Navbar sticky="top" fixed="top" bg="dark" variant="dark" expand="lg">
             <div>
                 <Navbar.Brand>
                     <img style={{ width:50, height:50 }} src={logo} alt=""/>

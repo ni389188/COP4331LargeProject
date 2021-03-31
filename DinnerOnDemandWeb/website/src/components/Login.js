@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
 
 function Login()
 {    
@@ -52,8 +54,8 @@ function Login()
 };
 
     return (
-        <CardGroup>
-            <Card style={{ width: '8rem' }}>
+        <CardDeck>
+            <Card>
                 <Card.Body>
                     <div id="loginDiv">
                         <form onSubmit={doLogin}>
@@ -71,7 +73,7 @@ function Login()
                 </Card.Body>
             </Card>
 
-            <Card style={{ width: '8rem' }}>
+            <Card>
                 <Card.Body>
                     <div id="registerDiv">
                         <form onSubmit={doLogin}>
@@ -90,7 +92,7 @@ function Login()
                     </div>
                 </Card.Body>
             </Card>
-        </CardGroup>
+        </CardDeck>
     );
 };
     
