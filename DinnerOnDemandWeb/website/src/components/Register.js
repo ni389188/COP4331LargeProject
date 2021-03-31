@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card'
+import CardDeck from 'react-bootstrap/CardDeck'
 
 function Register()
 {    
@@ -76,19 +78,28 @@ function Register()
 };
 
     return(      
-        <div id="registerDiv">        
-            <form onSubmit={doRegister}>        
-            <span id="inner-title">PLEASE LOG IN</span><br />        
-            <input type="text" id="firstName" placeholder="First Name"   ref={(c) => firstName = c} />  
-            <input type="text" id="lastName" placeholder="Last Name"   ref={(c) => lastName = c} />  
-            <input type="text" id="email" placeholder="Email"   ref={(c) => email = c} />  
-            <input type="password" id="Password" placeholder="Password"   ref={(c) => password = c} /> 
-            <input type="password" id="confirmPassword" placeholder="Re-Enter Your Password"   ref={(c) => confirmPassword = c} />         
-            <input type="submit" id="RegisterButton" class="buttons" value = "Register"          
-                onClick={doRegister} />        
-            </form>        
-            <span id="RegisterResult">{message}</span>   
-        </div>    
+        <CardDeck>
+            <Card>
+            <Card.Body>
+                <div id="registerDiv">
+                    <form onSubmit={doRegister}>
+                        <Card.Title>
+                            <span id="inner-title">Need to Register? Sign Up Below!</span><br />
+                        </Card.Title>
+                        <Card.Text>
+                            <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
+                            <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
+                            <input type="text" id="loginName" placeholder="Email/Username" ref={(c) =>  email = c} /><br />
+                            <input type="password" id="loginPassword" placeholder="Password" ref={(c) => password = c} /><br />
+                            <input type="password" id="confirmPassword" placeholder="Plese Re-enter the Password" ref={(c) => confirmPassword = c} /><br />
+                            <input type="submit" id="loginButton" class="buttons" value="Register" onClick={doRegister} /><br />
+                        </Card.Text>
+                    </form>
+                    <span id="registerResult">{message}</span>
+                </div>
+            </Card.Body>
+        </Card>
+    </CardDeck>
     );
 };
     
