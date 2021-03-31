@@ -1,9 +1,12 @@
 import React from 'react';
+import banner from '../images/banner.png';
 
 function PageTitle() {
     return (
         <h1 id="title">
-            Dinner-On-Demand
+            {"\n"}
+            <img src={banner} class="img-fluid" alt="Responsive image"></img>
+            {"\n"}
         </h1>
     );
 };
