@@ -97,12 +97,6 @@ const SearchPage = () =>
                             />
                     }
                 </View>
-                <View style = {styles.button}>
-                    <NavigationButton
-                    name = 'Search'
-                    destination = 'ResultsPage'
-                    />
-                </View>
             </View>
         </KeyboardAvoidingView>
         </TouchableWithoutFeedback>

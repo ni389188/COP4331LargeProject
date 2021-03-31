@@ -1,41 +1,111 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import axios from 'axios';
 
+const app_name = 'cop4331din'
 const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 
 const RecipePage = ({ navigation, route : {params : {item}} }) =>
 {
   const [instructions, setInstructions] = useState([]);
-  const ingredients = [...item.usedIngredients, ...item.missedIngredients]
+  const ingredients = item.usedIngredients !== undefined ? [...item.usedIngredients, ...item.missedIngredients] : [...item.ingredients]
+  let newIngredientObj = []
+  let steps = []
+  // const [favorite, setFavorite] = useState(false)
 
   useEffect(() =>
   {
-    axios.get(`https://api.spoonacular.com/recipes/${item.id}/analyzedInstructions?apiKey=${APIKEY}`)
-    .then(res =>
+    if (item.usedIngredients !== undefined)
     {
-      setInstructions(res.data)
-    })
+      axios.get(`https://api.spoonacular.com/recipes/${item.id}/analyzedInstructions?apiKey=${APIKEY}`)
+      .then(res =>
+      {
+        setInstructions(res.data)
+      })
+    }
+    else
+    {
+      setInstructions([...item.instructions])
+    }
   }, []);
+
+  const buildPath = (route) =>
+  {    
+      if (process.env.NODE_ENV === 'production')     
+      {        
+          return 'https://' + app_name +  '.herokuapp.com/' + route;
+      }    
+      else    
+      {                
+          return 'http://localhost:5000/' + route;    
+      }
+  }
 
   const addToShop = () =>
   {
+    let obj =
+    {
+      title : item.title,
+      image: item.image,
+      ingredients : newIngredientObj,
+      instructions : { steps: steps }
+    }
 
+    axios.post(buildPath(""), JSON.stringify(obj))
+    .then(res =>
+    {
+      
+    })
+    .catch(res => alert(res));
   }
 
   const favorite = () =>
   {
-    
+    let obj =
+    {
+      title : item.title,
+      image: item.image,
+      ingredients : newIngredientObj,
+      instructions : { steps: steps }
+    }
+
+    axios.post(buildPath(""), JSON.stringify(obj))
+    .then(res =>
+    {
+      
+    })
+    .catch(res => alert(res));
   }
 
   const share = () =>
   {
 
   }
+
+  const tweetNow = () => {
+    let twitterParameters = [];
+    // if (twitterShareURL)
+    //   twitterParameters.push('url=' + encodeURI(twitterShareURL));
+    // if (tweetContent)
+      twitterParameters.push('text=' + encodeURI("tweetContent"));
+      twitterParameters.push('img=' + encodeURI(item.image))
+    // if (twitterViaAccount)
+    //   twitterParameters.push('via=' + encodeURI(twitterViaAccount));
+    const url =
+      'https://twitter.com/intent/tweet?'
+      + twitterParameters.join('&');
+    Linking.openURL(url)
+      .then((data) => {
+        alert('Twitter Opened');
+      })
+      .catch(() => {
+        alert('Something went wrong');
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -59,6 +129,7 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
             {
               ingredients.map((ingredient, index) =>
               {
+                newIngredientObj.push({image: ingredient.image, originalString: ingredient.originalString, amount: ingredient.amount});
                 return (
                   <View key={index} style={{
                       backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
@@ -96,6 +167,7 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
               instructions.length > 0 ?
                 instructions[0].steps.map((desc, index) =>
                 {
+                  steps.push({step: desc.step});
                   return (
                     <Text key={index} style={{marginBottom: 5}}>
                       {`${index + 1}. ${desc.step}`}
@@ -103,22 +175,25 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
                   )
                 })
               :
-                null
+                <Text>No Instructions</Text>
             }
           </View>
 
           <View style={{flexDirection: "row", marginTop: 10}}>
-            {/* Add to Shopping List */}
-            <TouchableOpacity onPress={() => null}>
-              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
-            </TouchableOpacity>
             {/* Add/Remove from Recipes */}
-            <TouchableOpacity style={{marginHorizontal: 50}} onPress={() => null}>
-              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
+            <TouchableOpacity onPress={() => null} style={{alignItems: "center"}}>
+              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/unlike.png')} />
+              <Text>Add Recipe</Text>
+            </TouchableOpacity>
+            {/* Add to Shopping List */}
+            <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
+              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/plus.png')} />
+              <Text>Add to Cart</Text>
             </TouchableOpacity>
             {/* Share */}
-            <TouchableOpacity onPress={() => null}>
-              <Image style={{width: 30, height: 30}} source={require('../components/share.png')} />
+            <TouchableOpacity onPress={() => tweetNow()} style={{alignItems: "center"}}>
+              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/share.png')} />
+              <Text>Share</Text>
             </TouchableOpacity>
           </View>
         </View>
