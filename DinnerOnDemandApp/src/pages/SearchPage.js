@@ -6,6 +6,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import PageTitle from '../components/PageTitle';
 import axios from "axios";
 import RecipeCard from '../components/RecipeCard';
+import NavigationButton from '../components/NavigationButton';
 
 // import { Container } from './styles';
 

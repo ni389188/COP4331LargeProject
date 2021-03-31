@@ -8,7 +8,11 @@ import NavigationButton from '../components/NavigationButton';
 
 const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
 {
-  var firstName, lastName, email, password, cPassword;
+  const [firstName, onChangeFirstName] = useState(''); 
+  const [lastName, onChangeLastName] = useState(''); 
+  const [email, onChangeEmail] = useState(''); 
+  const [password, onChangePassword] = useState(''); 
+  const [cPassword, onChangeCPassword] = useState(''); 
   
   const saveToRedux = () =>
   {
@@ -24,29 +28,32 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     }    
     else    
     {                
-      return 'http://localhost:5000/' + route;    
+      //return 'http://localhost:5000/' + route;
+      return 'http://192.168.0.14:5000/' + route;    
     }
   };
 
   const doRegister = async event =>     
   {
-    event.preventDefault();        
-    var obj = {Email:email.value,Password:password.value};
+    event.preventDefault(); 
+    if(password != cPassword)
+    {
+      alert('Passwords do not match');
+      return;
+    }    
+    var obj = {FirstName:firstName, LastName:lastName, Email:email, Password:password};
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());            
-      if( res.id <= 0 )            
+      if( res.Err > 0 )            
       {                
-        setMessage('Email/Password combination incorrect');            
+        alert('Email already in use');            
       }            
       else
       {                
-        var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-        localStorage.setItem('user_data', JSON.stringify(user));                
-        setMessage('');                
-        window.location.href = '/COP4331LargeProject';            
+        navigation.navigate('NavigationBar');          
       }        
     }        
     catch(e)        
@@ -65,21 +72,41 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Register{"\n"}</Text>
           <Text style = {styles.inputTitle}> First Name</Text>
-          <TextInput style = {styles.input} placeholder="Please enter your first name" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter your first name" 
+          onChangeText = {onChangeFirstName}
+          />
           <Text style = {styles.inputTitle}> Last Name</Text>
-          <TextInput style = {styles.input} placeholder="Please enter your last name" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter your last name" 
+          onChangeText = {onChangeLastName}
+          />
           <Text style = {styles.inputTitle}> Email</Text>
-          <TextInput style = {styles.input} placeholder="Please enter email" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter email" 
+          onChangeText = {onChangeEmail}
+          />
           <Text style = {styles.inputTitle}> Password</Text>
-          <TextInput style = {styles.input} placeholder="Please enter password" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter password" 
+          onChangeText = {onChangePassword}
+          />
           <Text style = {styles.inputTitle}> Confirm Password</Text>
-          <TextInput style = {styles.input} placeholder="Please confirm password" />
-          <View style = {styles.buttonOrientation}>
-            <NavigationButton
-              name = 'Create Account'
-              destination = 'NavigationBar'
-            />
-          </View>
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please confirm password" 
+          onChangeText = {onChangeCPassword}
+          />
+          <TouchableOpacity 
+          style = {styles.buttonBackground}
+          onPress = {doRegister}
+          >
+            <Text style = {styles.buttonText}>Create Account</Text>
+          </TouchableOpacity>
           <View style = {styles.loginText}>
             <Text style = {{color: 'black'}}>Already have an account?</Text>
             <TouchableOpacity onPress = {() => navigation.navigate('LoginPage')}>
@@ -134,9 +161,16 @@ const styles = StyleSheet.create({
   signUpText: {
     color: 'blue',
   },
-  buttonOrientation: {
-    marginTop: 20,
+  buttonBackground: {
+    backgroundColor: 'blue',
     width: '100%',
+    borderWidth: 1,
+    marginTop: 20,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 23,
+    margin: 10,
   },
   loginText: {
     flexDirection: 'row', 

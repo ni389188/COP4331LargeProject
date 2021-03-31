@@ -59,7 +59,7 @@ app.post('/api/login', async (req, res, next) =>
     }
     res.status(200).json(ret);
 });
-/*
+
 app.post('/api/register', async (req, res, next) => 
 {  
     const db = client.db();
@@ -75,7 +75,7 @@ app.post('/api/register', async (req, res, next) =>
     }
     res.status(200).json(ret);
 });
-*/
+
 //start mongoDB client
 client.connect();
 

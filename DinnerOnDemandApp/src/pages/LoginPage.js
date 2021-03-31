@@ -45,7 +45,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       }            
       else
       {                
-        navigation.navigate('RecipeListPage');    
+        navigation.navigate('NavigationBar');    
       }        
     }        
     catch(e)        
