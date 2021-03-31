@@ -34,7 +34,7 @@ function Login()
         var res = JSON.parse(await response.text());        
         
         // TO-DO add error handling.
-        if(res.ID == 'Failed Login')            
+        if(res.ID === 'Failed Login')            
         {                
             setMessage('User/Password combination incorrect');            
         }            

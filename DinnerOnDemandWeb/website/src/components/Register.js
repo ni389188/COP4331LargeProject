@@ -29,7 +29,7 @@ function Register()
         event.preventDefault(); 
 
         // If Passwords do not match try again
-        if (password.value != confirmPassword.value)
+        if (password.value !== confirmPassword.value)
         {
             setMessage('passwords did not match');
         }
@@ -51,7 +51,7 @@ function Register()
             if(res.errors)            
             {    
                 // Validator found this email already exists.
-                if (res.errors.Email.name == 'ValidatorError') {
+                if (res.errors.Email.name === 'ValidatorError') {
                     setMessage('This email already exists');  
                 }
                 // Something else happened               
