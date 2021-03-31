@@ -51,17 +51,46 @@ function Login()
     }        
 };
 
-    return(      
-        <div id="loginDiv">        
-            <form onSubmit={doLogin}>        
-            <span id="inner-title">PLEASE LOG IN</span><br />        
-            <input type="text" id="loginName" placeholder="Username"   ref={(c) => loginName = c} />  
-            <input type="password" id="loginPassword" placeholder="Password"   ref={(c) => loginPassword = c} />        
-            <input type="submit" id="loginButton" class="buttons" value = "Do It"          
-                onClick={doLogin} />        
-            </form>        
-            <span id="loginResult">{message}</span>   
-        </div>    
+    return (
+        <CardGroup>
+            <Card style={{ width: '8rem' }}>
+                <Card.Body>
+                    <div id="loginDiv">
+                        <form onSubmit={doLogin}>
+                            <Card.Title>
+                                <span id="inner-title">Welcome Back. Log In Below!</span><br />
+                            </Card.Title>
+                            <Card.Text>
+                                <input type="text" id="loginName" placeholder="Email/Username" ref={(c) => loginName = c} /><br />
+                                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
+                                <input type="submit" id="loginButton" class="buttons" value="Log In" onClick={doLogin} /><br />
+                            </Card.Text>
+                        </form>
+                        <span id="loginResult">{message}</span>
+                    </div>
+                </Card.Body>
+            </Card>
+
+            <Card style={{ width: '8rem' }}>
+                <Card.Body>
+                    <div id="registerDiv">
+                        <form onSubmit={doLogin}>
+                            <Card.Title>
+                                <span id="inner-title">Need to Register? Sign Up Below!</span><br />
+                            </Card.Title>
+                            <Card.Text>
+                                <input type="text" id="firstName" placeholder="First Name" ref={(c) => loginName = c} /><br />
+                                <input type="text" id="lastName" placeholder="Last Name" ref={(c) => loginName = c} /><br />
+                                <input type="text" id="loginName" placeholder="Email/Username" ref={(c) => loginName = c} /><br />
+                                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
+                                <input type="submit" id="loginButton" class="buttons" value="Register" onClick={doLogin} /><br />
+                            </Card.Text>
+                        </form>
+                        <span id="registerResult">{message}</span>
+                    </div>
+                </Card.Body>
+            </Card>
+        </CardGroup>
     );
 };
     

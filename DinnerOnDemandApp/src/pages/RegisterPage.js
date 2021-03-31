@@ -8,11 +8,61 @@ import NavigationButton from '../components/NavigationButton';
 
 const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
 {
+  const [firstName, onChangeFirstName] = useState(''); 
+  const [lastName, onChangeLastName] = useState(''); 
+  const [email, onChangeEmail] = useState(''); 
+  const [password, onChangePassword] = useState(''); 
+  const [cPassword, onChangeCPassword] = useState(''); 
+  
   const saveToRedux = () =>
   {
     mapDispatchToProps({name: "Carl", email: "carlantoine14@gmail.com", favorites: []})
   }
-  
+
+  const app_name = 'cop4331din';
+  function buildPath(route)
+  {    
+    if (process.env.NODE_ENV === 'production')     
+    {        
+      return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }    
+    else    
+    {                
+      //return 'http://localhost:5000/' + route;
+      return 'http://10.0.2.2:5000/' + route;
+    }
+  };
+
+  const doRegister = async event =>     
+  {
+    event.preventDefault(); 
+    if(password != cPassword)
+    {
+      alert('Passwords do not match');
+      return;
+    }    
+    var obj = {FirstName:firstName, LastName:lastName, Email:email, Password:password};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());            
+      if( res.Err > 0 )            
+      {                
+        alert('Email already in use');            
+      }            
+      else
+      {                
+        navigation.navigate('NavigationBar');          
+      }        
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());            
+        return;        
+    }        
+  };
+
   return(
     <View style = {styles.container}>
       <View style = {styles.header}>
@@ -21,20 +71,42 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
       <View style = {styles.body}>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Register{"\n"}</Text>
-          <Text style = {styles.inputTitle}> Name</Text>
-          <TextInput style = {styles.input} placeholder="Please enter your name" />
+          <Text style = {styles.inputTitle}> First Name</Text>
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter your first name" 
+          onChangeText = {onChangeFirstName}
+          />
+          <Text style = {styles.inputTitle}> Last Name</Text>
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter your last name" 
+          onChangeText = {onChangeLastName}
+          />
           <Text style = {styles.inputTitle}> Email</Text>
-          <TextInput style = {styles.input} placeholder="Please enter email" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter email" 
+          onChangeText = {onChangeEmail}
+          />
           <Text style = {styles.inputTitle}> Password</Text>
-          <TextInput style = {styles.input} placeholder="Please enter password" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter password" 
+          onChangeText = {onChangePassword}
+          />
           <Text style = {styles.inputTitle}> Confirm Password</Text>
-          <TextInput style = {styles.input} placeholder="Please confirm password" />
-          <View style = {styles.buttonOrientation}>
-            <NavigationButton
-              name = 'Create Account'
-              destination = 'RecipeListPage'
-            />
-          </View>
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please confirm password" 
+          onChangeText = {onChangeCPassword}
+          />
+          <TouchableOpacity 
+          style = {styles.buttonBackground}
+          onPress = {doRegister}
+          >
+            <Text style = {styles.buttonText}>Create Account</Text>
+          </TouchableOpacity>
           <View style = {styles.loginText}>
             <Text style = {{color: 'black'}}>Already have an account?</Text>
             <TouchableOpacity onPress = {() => navigation.navigate('LoginPage')}>
@@ -73,11 +145,11 @@ const styles = StyleSheet.create({
   },
   loginTitle: {
     textAlign: 'center',
-    fontSize: 40,
+    fontSize: 30,
   },
   inputTitle:{
     color: 'black',
-    marginTop: 10,
+    marginTop: 5,
   },
   input: {
     color: 'black',
@@ -89,9 +161,16 @@ const styles = StyleSheet.create({
   signUpText: {
     color: 'blue',
   },
-  buttonOrientation: {
-    marginTop: 25,
+  buttonBackground: {
+    backgroundColor: 'blue',
     width: '100%',
+    borderWidth: 1,
+    marginTop: 20,
+  },
+  buttonText: {
+    textAlign: 'center',
+    fontSize: 23,
+    margin: 10,
   },
   loginText: {
     flexDirection: 'row', 

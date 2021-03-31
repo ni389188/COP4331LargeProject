@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -12,6 +12,9 @@ const CurrentRecipesPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
           <PageTitle text = 'Recipes in Shopping List' />
         </View>
         <View style = {styles.body}>
@@ -27,9 +30,9 @@ const CurrentRecipesPage = ({navigation}) =>
             </View>
           </View>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };
