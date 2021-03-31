@@ -29,7 +29,7 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     else    
     {                
       //return 'http://localhost:5000/' + route;
-      return 'http://10.0.2.2:5000/' + route;    
+      return 'http://10.0.2.2:5000/' + route;
     }
   };
 
