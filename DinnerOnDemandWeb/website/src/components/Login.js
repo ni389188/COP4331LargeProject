@@ -33,18 +33,22 @@ function Login()
             const response = await fetch(buildPath('api/login'),                
             {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-        var res = JSON.parse(await response.text());            
-        if( res.id <= 0 )            
+        var res = JSON.parse(await response.text());        
+        
+        // TO-DO add error handling.
+        if(res.ID === 'Failed Login')            
         {                
             setMessage('User/Password combination incorrect');            
         }            
         else            
         {                
-            var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}                
+            var user = {firstName:res.FirstName,lastName:res.LastName,id:res.ID}                
             localStorage.setItem('user_data', JSON.stringify(user));                
             setMessage('');                
             window.location.href = '/COP4331LargeProject';            
-        }        
+        } 
+        
+        //setMessage("the lenght is: " + JSON.stringify(res));
     }        
     catch(e)        
     {            
