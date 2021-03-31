@@ -41,7 +41,7 @@ import store from "./src/redux/store"
 import { Provider } from "react-redux"
 import NavigationBar from './src/components/NavigationBar';
 
-import WIPPage from './src/pages/SearchPage';
+import WIPPage from './src/components/NavigationBar';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();

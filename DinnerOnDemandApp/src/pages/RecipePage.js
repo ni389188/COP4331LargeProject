@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, Linking, Share, TextInput } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -15,7 +15,6 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
   const ingredients = item.usedIngredients !== undefined ? [...item.usedIngredients, ...item.missedIngredients] : [...item.ingredients]
   let newIngredientObj = []
   let steps = []
-  // const [favorite, setFavorite] = useState(false)
 
   useEffect(() =>
   {
@@ -86,119 +85,115 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
 
   }
 
-  const tweetNow = () => {
+  const tweetNow = () =>
+  {
     let twitterParameters = [];
-    // if (twitterShareURL)
-    //   twitterParameters.push('url=' + encodeURI(twitterShareURL));
-    // if (tweetContent)
-      twitterParameters.push('text=' + encodeURI("tweetContent"));
-      twitterParameters.push('img=' + encodeURI(item.image))
-    // if (twitterViaAccount)
-    //   twitterParameters.push('via=' + encodeURI(twitterViaAccount));
-    const url =
-      'https://twitter.com/intent/tweet?'
-      + twitterParameters.join('&');
+
+    twitterParameters.push('text=' + encodeURI(`Recipe ${item.title}`));
+
+    const url = 'https://twitter.com/intent/tweet?' + twitterParameters.join('&');
+
     Linking.openURL(url)
-      .then((data) => {
-        alert('Twitter Opened');
-      })
-      .catch(() => {
-        alert('Something went wrong');
-      });
+    .then((data) =>
+    {
+      // alert('Twitter Opened');
+    })
+    .catch(() =>
+    {
+      // alert('Something went wrong');
+    });
   };
 
   return (
-    <View style={styles.container}>
-      {/* {console.log(ingredients)} */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text>Back</Text>
-        </TouchableOpacity>
-        <PageTitle text={item.title} />
-      </View>
-      <ScrollView style={{height: "95%"}}>
-        <View style={[styles.body, {marginBottom: 50}]}>
-          <Image
-            style={[styles.image, {backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
-            borderWidth: 1, borderRadius: 5,}]}
-            source={{uri: item.image}}
-          />
-          {/* Ingredients */}
-          <Text style={{fontSize: 20, fontWeight: "bold"}}>Ingredients</Text>
-          <View>
-            {
-              ingredients.map((ingredient, index) =>
+    <>
+      <View style={styles.container}>
+        {/* {console.log(ingredients)} */}
+        <View style={styles.header}>
+          <PageTitle text={item.title} back navigate={navigation}/>
+        </View>
+        <ScrollView style={{height: "95%"}}>
+          <View style={[styles.body, {marginBottom: 50}]}>
+            <Image
+              style={[styles.image, {backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+              borderWidth: 1, borderRadius: 5,}]}
+              source={{uri: item.image}}
+            />
+            {/* Ingredients */}
+            <Text style={{fontSize: 20, fontWeight: "bold"}}>Ingredients</Text>
+            <View>
               {
-                newIngredientObj.push({image: ingredient.image, originalString: ingredient.originalString, amount: ingredient.amount});
-                return (
-                  <View key={index} style={{
-                      backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
-                      borderWidth: 1, borderRadius: 5, marginBottom: 5, flexDirection: "row",
-                      width: "80%"
-                    }}
-                  >
-                    <Image
-                      style={{width: 50, height: 50}}
-                      source={{uri: ingredient.image}}
-                    />
-                    <View style={{flexDirection: "column", marginStart: 5}}>
-                      <Text>
-                        Ingredient: {ingredient.originalString}
-                      </Text>
-                      <Text>
-                        Amount: {ingredient.amount}
-                      </Text>
-                    </View>
-                  </View>
-                )
-              })
-            }
-          </View>
-
-          {/* Instructions */}
-          <Text style={{fontSize: 20, fontWeight: "bold"}}>Instructions</Text>
-          <View style={{
-              backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
-              borderWidth: 1, borderRadius: 5, marginBottom: 5,
-              width: "95%"
-            }}
-          >
-            {
-              instructions.length > 0 ?
-                instructions[0].steps.map((desc, index) =>
+                ingredients.map((ingredient, index) =>
                 {
-                  steps.push({step: desc.step});
+                  newIngredientObj.push({image: ingredient.image, originalString: ingredient.originalString, amount: ingredient.amount});
                   return (
-                    <Text key={index} style={{marginBottom: 5}}>
-                      {`${index + 1}. ${desc.step}`}
-                    </Text>
+                    <View key={index} style={{
+                        backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+                        borderWidth: 1, borderRadius: 5, marginBottom: 5, flexDirection: "row",
+                      }}
+                    >
+                      <Image
+                        style={{width: 50, height: 50}}
+                        source={{uri: ingredient.image}}
+                      />
+                      <View style={{flexDirection: "column", marginStart: 5, width: "80%"}}>
+                        <Text>
+                          Ingredient: {ingredient.originalString}
+                        </Text>
+                        <Text>
+                          Amount: {ingredient.amount}
+                        </Text>
+                      </View>
+                    </View>
                   )
                 })
-              :
-                <Text>No Instructions</Text>
-            }
-          </View>
+              }
+            </View>
 
-          <View style={{flexDirection: "row", marginTop: 10}}>
-            {/* Add/Remove from Recipes */}
-            <TouchableOpacity onPress={() => null} style={{alignItems: "center"}}>
-              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/unlike.png')} />
-              <Text>Add Recipe</Text>
-            </TouchableOpacity>
-            {/* Add to Shopping List */}
-            <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
-              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/plus.png')} />
-              <Text>Add to Cart</Text>
-            </TouchableOpacity>
-            {/* Share */}
-            <TouchableOpacity onPress={() => tweetNow()} style={{alignItems: "center"}}>
-              <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/share.png')} />
-              <Text>Share</Text>
-            </TouchableOpacity>
+            {/* Instructions */}
+            <Text style={{fontSize: 20, fontWeight: "bold"}}>Instructions</Text>
+            <View style={{
+                backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
+                borderWidth: 1, borderRadius: 5, marginBottom: 5,
+                width: "95%"
+              }}
+            >
+              {
+                instructions.length > 0 ?
+                  instructions[0].steps.map((desc, index) =>
+                  {
+                    steps.push({step: desc.step});
+                    return (
+                      <Text key={index} style={{marginBottom: 5}}>
+                        {`${index + 1}. ${desc.step}`}
+                      </Text>
+                    )
+                  })
+                :
+                  <Text>No Instructions</Text>
+              }
+            </View>
+
+            <View style={{flexDirection: "row", marginTop: 10}}>
+              {/* Add/Remove from Recipes */}
+              <TouchableOpacity onPress={() => null} style={{alignItems: "center"}}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/unlike.png')} />
+                <Text>Add Recipe</Text>
+              </TouchableOpacity>
+              {/* Add to Shopping List */}
+              <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/plus.png')} />
+                <Text>Add to Cart</Text>
+              </TouchableOpacity>
+              {/* Share */}
+              <TouchableOpacity onPress={() => tweetNow()} style={{alignItems: "center"}}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/share.png')} />
+                <Text>Share</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </ScrollView>
-    </View>
+        </ScrollView>
+      </View>
+    </>
   );
 };
 

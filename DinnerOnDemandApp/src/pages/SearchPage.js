@@ -90,7 +90,7 @@ const SearchPage = () =>
                         :
                             <FlatList
                                 data={results}
-                                key={item => `item - ${item.index}`}
+                                keyExtractor={(item, index) => index.toString()}
                                 numColumns={1}
                                 renderItem={renderResults}
                                 ListFooterComponent={<View style={{height: 150}}/>}
