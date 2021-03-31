@@ -31,18 +31,22 @@ function Login()
             const response = await fetch(buildPath('api/login'),                
             {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
 
-        var res = JSON.parse(await response.text());            
-        if( res.id <= 0 )            
+        var res = JSON.parse(await response.text());        
+        
+        // TO-DO add error handling.
+        if(res.ID === 'Failed Login')            
         {                
             setMessage('User/Password combination incorrect');            
         }            
         else            
         {                
-            var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}                
+            var user = {firstName:res.FirstName,lastName:res.LastName,id:res.ID}                
             localStorage.setItem('user_data', JSON.stringify(user));                
             setMessage('');                
             window.location.href = '/COP4331LargeProject';            
-        }        
+        } 
+        
+        //setMessage("the lenght is: " + JSON.stringify(res));
     }        
     catch(e)        
     {            
@@ -57,7 +61,7 @@ function Login()
             <span id="inner-title">PLEASE LOG IN</span><br />        
             <input type="text" id="loginName" placeholder="Username"   ref={(c) => loginName = c} />  
             <input type="password" id="loginPassword" placeholder="Password"   ref={(c) => loginPassword = c} />        
-            <input type="submit" id="loginButton" class="buttons" value = "Do It"          
+            <input type="submit" id="loginButton" class="buttons" value = "Login"          
                 onClick={doLogin} />        
             </form>        
             <span id="loginResult">{message}</span>   
