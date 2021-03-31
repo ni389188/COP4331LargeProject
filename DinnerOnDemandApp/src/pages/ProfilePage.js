@@ -46,7 +46,7 @@ const ProfilePage = ({navigation}) =>
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ABDDDC',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '85%',
-    marginTop: 40,
+    marginTop: 20,
   },
 });
 
