@@ -39,9 +39,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import store from "./src/redux/store"
 import { Provider } from "react-redux"
-
-import WIPPage from './src/pages/SearchPage';
 import NavigationBar from './src/components/NavigationBar';
+
+import WIPPage from './src/pages/AccountPage';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();
@@ -52,16 +52,15 @@ const App: () => React$Node = () => {
       <View style={styles.body}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="SplashScreen" component={} /> */}
-            {/* <Stack.Screen name="WIPPage" component={WIPPage} /> */}
+            <Stack.Screen name="WIPPage" component={WIPPage} />
             <Stack.Screen name="AccountPage" component={AccountPage} />
             <Stack.Screen name="NavigationBar" component={NavigationBar} />
             <Stack.Screen name="LoginPage" component={LoginPage} />
             <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
-            {/* <Stack.Screen name="RecipeListPage" component={RecipeListPage} /> */}
-            {/* <Stack.Screen name="ShoppingListPage" component={ShoppingListPage} /> */}
-            {/* <Stack.Screen name="SearchPage" component={SearchPage} /> */}
-            {/* <Stack.Screen name="ProfilePage" component={ProfilePage} /> */}
+            <Stack.Screen name="RecipeListPage" component={RecipeListPage} />
+            <Stack.Screen name="ShoppingListPage" component={ShoppingListPage} />
+            <Stack.Screen name="SearchPage" component={SearchPage} />
+            <Stack.Screen name="ProfilePage" component={ProfilePage} />
             <Stack.Screen name="RegisterPage" component={RegisterPage} />
             <Stack.Screen name="SettingsPage" component={SettingsPage} />
             <Stack.Screen name="RecipePage" component={RecipePage} />

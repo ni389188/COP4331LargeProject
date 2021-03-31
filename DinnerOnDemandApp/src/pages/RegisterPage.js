@@ -8,11 +8,54 @@ import NavigationButton from '../components/NavigationButton';
 
 const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
 {
+  var firstName, lastName, email, password, cPassword;
+  
   const saveToRedux = () =>
   {
     mapDispatchToProps({name: "Carl", email: "carlantoine14@gmail.com", favorites: []})
   }
-  
+
+  const app_name = 'cop4331din';
+  function buildPath(route)
+  {    
+    if (process.env.NODE_ENV === 'production')     
+    {        
+      return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }    
+    else    
+    {                
+      return 'http://localhost:5000/' + route;    
+    }
+  };
+
+  const doRegister = async event =>     
+  {
+    event.preventDefault();        
+    var obj = {Email:email.value,Password:password.value};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/login'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());            
+      if( res.id <= 0 )            
+      {                
+        setMessage('Email/Password combination incorrect');            
+      }            
+      else
+      {                
+        var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
+        localStorage.setItem('user_data', JSON.stringify(user));                
+        setMessage('');                
+        window.location.href = '/COP4331LargeProject';            
+      }        
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());            
+        return;        
+    }        
+  };
+
   return(
     <View style = {styles.container}>
       <View style = {styles.header}>

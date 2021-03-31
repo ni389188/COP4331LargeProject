@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function AccountButton({name, destination})
+function NavigationButton({name, destination})
 {
   const navigation = useNavigation();
   return(
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AccountButton;
+export default NavigationButton;
