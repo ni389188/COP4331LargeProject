@@ -6,6 +6,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import PageTitle from '../components/PageTitle';
 import axios from "axios";
 import RecipeCard from '../components/RecipeCard';
+import NavigationButton from '../components/NavigationButton';
 
 // import { Container } from './styles';
 
@@ -95,6 +96,12 @@ const SearchPage = () =>
                                 ListFooterComponent={<View style={{height: 150}}/>}
                             />
                     }
+                </View>
+                <View style = {styles.button}>
+                    <NavigationButton
+                    name = 'Search'
+                    destination = 'ResultsPage'
+                    />
                 </View>
             </View>
         </KeyboardAvoidingView>
