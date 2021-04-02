@@ -24,7 +24,10 @@ if (process.env.NODE_ENV === 'production')
 }
 
 var userRoutes = require("./ServerComponents/userApi.js");
-userRoutes.setApp(app)
+userRoutes.setApp(app);
+
+var recipeRoutes = require("./ServerComponents/recipeApi.js");
+recipeRoutes.setAppRecipe(app);
 
 // **********************HARD CODED API*********************************
 
@@ -51,23 +54,6 @@ app.post('/api/addrecipe', async (req, res, next) =>
     res.status(200).json(ret);
 });
 
-app.post('/api/searchrecipe', async (req, res, next) => 
-{  
-    // incoming: userId, search  
-    // outgoing: results[], error  
-    var error = '';  
-    const { userId, search } = req.body;  
-    var _search = search.trim();  
-    const db = client.db();  
-    const results = await db.collection('Recipes').find({"Recipe":{$regex:_search+'.*', $options:'r'}}).toArray();  
-    var _ret = [];  
-    for( var i=0; i<results.length; i++ )  
-    {    
-        _ret.push( results[i].Recipe );  
-    }  
-    var ret = {results:_ret, error:error};  
-    res.status(200).json(ret);
-});
 // **********************HARD CODED API*********************************
 
 app.use((req, res, next) => {
