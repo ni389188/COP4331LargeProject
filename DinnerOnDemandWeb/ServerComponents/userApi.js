@@ -52,14 +52,15 @@ exports.setApp = function (app, MongoClient)
                 res.status(200).json({
                     ID: result._id,
                     FirstName: result.FirstName,
-                    LastName: result.LastName
+                    LastName: result.LastName,
+                    loggedIn: true
                 })
             }
 
             // If not found
             else {
                 console.log('Failed Login');
-                res.status(400).json({ID: 'Failed Login'});
+                res.status(400).json({loggedIn:false});
             }
         })
     });
