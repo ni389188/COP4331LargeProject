@@ -25,11 +25,14 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     if (process.env.NODE_ENV === 'production')     
     {        
       return 'https://' + app_name +  '.herokuapp.com/' + route;
-    }    
+    }
+    else if(process.env.NODE_ENV === 'mobile')
+    {
+      return 'http://10.0.2.2:5000/' + route;  
+    }
     else    
     {                
-      //return 'http://localhost:5000/' + route;
-      return 'http://10.0.2.2:5000/' + route;    
+      return 'http://localhost:5000/' + route;  
     }
   };
 

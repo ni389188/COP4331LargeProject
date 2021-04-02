@@ -1,6 +1,7 @@
 /*
 Things to remember
-//npm start //npx react-native run-android
+//cd ../Backend/npm start
+//npx react-native run-android
 //ctrl j hides terminal
 */
 
@@ -20,6 +21,7 @@ import {
   DebugInstructions,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import 'localstorage-polyfill';
 
 import AccountPage from './src/pages/AccountPage';
 import LoginPage from './src/pages/LoginPage';

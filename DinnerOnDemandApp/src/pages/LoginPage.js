@@ -10,6 +10,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
 {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
+  const storage = require('../tokenStorage.js');
 
   const saveToRedux = () =>
   {
@@ -22,10 +23,9 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
     if (process.env.NODE_ENV === 'production')     
     {        
       return 'https://' + app_name +  '.herokuapp.com/' + route;
-    }    
-    else    
-    {                
-      //return 'http://localhost:5000/' + route;
+    }
+    else
+    {
       return 'http://10.0.2.2:5000/' + route;   
     }
   };
@@ -39,12 +39,13 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
     {                
       const response = await fetch(buildPath('api/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());
-      if( res.Err > 0 )            
+      if(res.error)            
       {                
         alert('Invalid Username or Password');            
       }            
       else
       {                
+        storage.storeToken(res)
         navigation.navigate('NavigationBar');    
       }        
     }        
@@ -74,6 +75,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
           style = {styles.input} 
           placeholder="Please enter password" 
           onChangeText = {onChangePassword}
+          secureTextEntry = {true}
           />
           <TouchableOpacity onPress = {() => navigation.navigate('ForgotPasswordPage')}>
             <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
