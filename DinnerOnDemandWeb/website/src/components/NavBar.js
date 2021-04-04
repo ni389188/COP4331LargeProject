@@ -5,7 +5,7 @@ import logo from '../images/logo.png';
 
 function NavBar(){
     return(
-        <Navbar fixed="top" bg="dark" variant="dark" expand="lg">
+        <Navbar sticky="top" fixed="top" bg="dark" variant="dark" expand="lg">
             <div>
                 <Navbar.Brand>
                     <img style={{ width:50, height:50 }} src={logo} alt=""/>
@@ -15,6 +15,7 @@ function NavBar(){
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="../pages/WelcomePage">Home</Nav.Link>
+                    <Nav.Link href="../pages/RegisterPage">Register</Nav.Link>
                     <Nav.Link href="../pages/LoginPage">Login</Nav.Link>
                     <Nav.Link href="../pages/AboutUs">About</Nav.Link>
                 </Nav>

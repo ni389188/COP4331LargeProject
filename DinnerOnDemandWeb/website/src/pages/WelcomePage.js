@@ -2,12 +2,10 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import PageTitle from '../components/PageTitle';
 import Card from 'react-bootstrap/Card'
-import CardGroup from 'react-bootstrap/CardGroup'
+import CardDeck from 'react-bootstrap/CardDeck'
 import image1 from '../images/burger-and-fries.jpg';
 import image2 from '../images/fancy-toast.jpg';
 import image3 from '../images/pizza.jpg';
-
-
 
 
 const WelcomePage = () => {
@@ -15,8 +13,7 @@ const WelcomePage = () => {
         <div>
             <NavBar />
             <PageTitle />
-
-            <CardGroup>
+            <CardDeck>
                 <Card style={{ width: '18rem' }}>
                     <Card.Img variant="top" src={image1} alt=""/>
                     <Card.Body>
@@ -47,7 +44,7 @@ const WelcomePage = () => {
                         </Card.Text>
                     </Card.Body>
                 </Card>
-            </CardGroup>
+            </CardDeck>
         </div>
     );
 }

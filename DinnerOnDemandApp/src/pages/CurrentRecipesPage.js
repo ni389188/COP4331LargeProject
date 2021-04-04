@@ -11,10 +11,7 @@ const CurrentRecipesPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>Back</Text>
-          </TouchableOpacity>
-          <PageTitle text = 'Recipes in Shopping List' />
+          <PageTitle text = 'Recipes in Shopping List' back navigate={navigation}/>
         </View>
         <View style = {styles.body}>
           <View style = {styles.background}>

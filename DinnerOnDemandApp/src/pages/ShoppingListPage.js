@@ -33,9 +33,6 @@ const ShoppingListPage = ({navigation}) =>
             </View>
           </View>
         </View>
-        {/* <View style = {styles.footer}>
-          <NavigationBar />
-        </View> */}
       </View>
     );
 };

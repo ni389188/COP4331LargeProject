@@ -43,7 +43,7 @@ import store from "./src/redux/store"
 import { Provider } from "react-redux"
 import NavigationBar from './src/components/NavigationBar';
 
-import WIPPage from './src/pages/AccountPage';
+import WIPPage from './src/components/NavigationBar';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();
@@ -59,10 +59,6 @@ const App: () => React$Node = () => {
             <Stack.Screen name="NavigationBar" component={NavigationBar} />
             <Stack.Screen name="LoginPage" component={LoginPage} />
             <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
-            <Stack.Screen name="RecipeListPage" component={RecipeListPage} />
-            <Stack.Screen name="ShoppingListPage" component={ShoppingListPage} />
-            <Stack.Screen name="SearchPage" component={SearchPage} />
-            <Stack.Screen name="ProfilePage" component={ProfilePage} />
             <Stack.Screen name="RegisterPage" component={RegisterPage} />
             <Stack.Screen name="SettingsPage" component={SettingsPage} />
             <Stack.Screen name="RecipePage" component={RecipePage} />
