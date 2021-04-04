@@ -3,7 +3,6 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
-import NavigationButton from '../components/NavigationButton';
 import RecipeCard from '../components/RecipeCard';
 import Counter from '../components/Counter';
 

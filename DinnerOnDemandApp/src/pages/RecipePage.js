@@ -3,7 +3,6 @@ import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView } from 'rea
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
-import NavigationButton from '../components/NavigationButton';
 import axios from 'axios';
 
 const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';

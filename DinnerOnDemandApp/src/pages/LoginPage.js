@@ -41,7 +41,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       var res = JSON.parse(await response.text());
       if(res.error)            
       {                
-        alert('Invalid Username or Password');            
+        alert(res.error);            
       }            
       else
       {                
@@ -80,12 +80,10 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
           <TouchableOpacity onPress = {() => navigation.navigate('ForgotPasswordPage')}>
             <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
-          style = {styles.buttonBackground}
-          onPress = {doLogin}
-          >
-            <Text style = {styles.buttonText}>Login</Text>
-          </TouchableOpacity>
+          <NavigationButton 
+          name = 'Login'
+          doFunction = {doLogin}
+          />
           <View style = {styles.registerText}>
             <Text style = {{color: 'black'}}>Don't have an account?</Text>
             <TouchableOpacity onPress = {() => navigation.navigate('RegisterPage')}>
@@ -142,20 +140,10 @@ const styles = StyleSheet.create({
     color: 'blue',
     textAlign: 'right',
     marginTop: 2.5,
+    marginBottom: 20,
   },
   signUpText: {
     color: 'blue',
-  },
-  buttonBackground: {
-    backgroundColor: 'blue',
-    width: '100%',
-    borderWidth: 1,
-    marginTop: 25,
-  },
-  buttonText: {
-    textAlign: 'center',
-    fontSize: 23,
-    margin: 10,
   },
   registerText: {
     flexDirection: 'row', 

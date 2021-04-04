@@ -100,7 +100,7 @@ const SearchPage = () =>
                 <View style = {styles.button}>
                     <NavigationButton
                     name = 'Search'
-                    destination = 'ResultsPage'
+                    doFunction = {() => navigation.navigate('ResultsPage')}
                     />
                 </View>
             </View>

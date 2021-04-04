@@ -68,7 +68,7 @@ app.post('/api/login', async (req, res, next) =>
         }
         else
         {
-            ret = {error: 1};
+            ret = {error:"Invalid Username or Password"};
         }
     }
     catch(e)
