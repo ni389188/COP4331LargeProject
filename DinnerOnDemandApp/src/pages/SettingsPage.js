@@ -25,25 +25,22 @@ const SettingsPage = ({navigation}) =>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Name'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Image'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Password'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Save'
-            destination = 'ProfilePage'
+            doFunction = {() => navigation.navigate('ProfilePage')}
             />
           </View>
         </View>

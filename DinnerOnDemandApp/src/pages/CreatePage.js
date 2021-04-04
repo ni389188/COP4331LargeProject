@@ -37,7 +37,7 @@ const CreatePage = ({navigation}) =>
           <View style = {styles.background}>
             <NavigationButton
               name = 'Save Recipe'
-              destination = 'RecipePage'
+              doFunction = {() => navigation.navigate('RecipePage')}
             />
           </View>
         </View>

@@ -9,9 +9,8 @@ const ForgotPasswordPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <NavigationButton
-          navigate = {navigation.navigate}
-          destination = 'AccountPage'
           name = 'Todo'
+          doFunction = {() => navigation.navigate('AccountPage')}
         />
       </View>
     );

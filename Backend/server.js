@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config();
+const jwt = require('./createJWT');
 //create server
 const app = express();
 //Create mongo client
@@ -49,13 +50,30 @@ app.post('/api/login', async (req, res, next) =>
     const password = req.body.Password;  
     const db = client.db();
     const results = await db.collection('Users').find({Email:email,Password:password}).toArray(); 
+    var error = '';
+    var id = -1;
+    var fn = '';
+    var ln = '';
     if( results.length )  
     {       
-        var ret =  { FirstName:results[0].FirstName, LastName:results[0].LastName, Email:results[0].Email, Err:0};
+        id = results[0]._id;
+        fn = results[0].FirstName;
+        ln = results[0].LastName;
     } 
-    else
+    try
     {
-        var ret = {Err:1}; 
+        if(id != -1)
+        {
+            ret = jwt.createToken( fn, ln, id );
+        }
+        else
+        {
+            ret = {error:"Invalid Username or Password"};
+        }
+    }
+    catch(e)
+    {
+        ret = {error:e.message};
     }
     res.status(200).json(ret);
 });

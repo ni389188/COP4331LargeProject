@@ -18,7 +18,7 @@ const ShoppingListPage = ({navigation}) =>
           <View style = {styles.button}>
             <NavigationButton
             name = 'See Current Recipes'
-            destination = 'CurrentRecipesPage'
+            doFunction = {() => navigation.navigate('CurrentRecipesPage')}
             />
           </View>
           <View style = {styles.background}>

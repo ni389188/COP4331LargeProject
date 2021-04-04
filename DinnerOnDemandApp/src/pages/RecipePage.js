@@ -3,7 +3,6 @@ import { View, StyleSheet, Image, Text, TouchableOpacity, ScrollView, Linking, S
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
-import NavigationButton from '../components/NavigationButton';
 import axios from 'axios';
 
 const app_name = 'cop4331din'
