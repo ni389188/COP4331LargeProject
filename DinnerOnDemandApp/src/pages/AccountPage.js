@@ -7,7 +7,6 @@ import NavigationButton from '../components/NavigationButton';
 const AccountPage = ({navigation}) =>
 {
   const storage = require('../tokenStorage');
-
   useEffect(() =>
   {
     console.log(storage.retrieveToken('user_data'));

@@ -45,7 +45,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       }            
       else
       {                
-        storage.storeToken(res)
+        storage.storeToken(res);
         navigation.navigate('NavigationBar');    
       }        
     }        

@@ -50,7 +50,6 @@ app.post('/api/login', async (req, res, next) =>
     const password = req.body.Password;  
     const db = client.db();
     const results = await db.collection('Users').find({Email:email,Password:password}).toArray(); 
-    var error = '';
     var id = -1;
     var fn = '';
     var ln = '';
@@ -82,14 +81,21 @@ app.post('/api/register', async (req, res, next) =>
 {  
     const db = client.db();
     const AccountExists = await db.collection('Users').find({Email:req.body.Email}).toArray(); 
-    console.log(AccountExists.length);
-    if(AccountExists.length)
+    try
     {
-        var ret = {Err:1};
-    }  
-    else
+        if(AccountExists.length)
+        {
+            var ret = {error:"Email is already in use"};
+        }
+        else
+        {
+            await db.collection('Users').insertOne(req.body);
+            var ret = jwt.createToken( req.body.firstName, req.body.lastName, req.body._id );
+        }
+    }
+    catch(e)
     {
-        var ret = await db.collection('Users').insertOne(req.body);
+        ret = {error:e.message};
     }
     res.status(200).json(ret);
 });
