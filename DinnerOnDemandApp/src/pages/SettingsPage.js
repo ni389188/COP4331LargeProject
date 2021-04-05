@@ -7,6 +7,7 @@ import NavigationButton from '../components/NavigationButton';
 
 const SettingsPage = ({navigation}) =>
 {
+    
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>

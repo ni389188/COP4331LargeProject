@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
+import LoggedInName from '../components/LoggedInName';
 
 const ProfilePage = ({navigation}) =>
 {
@@ -29,8 +30,7 @@ const ProfilePage = ({navigation}) =>
           />
         </View>
         <View style = {styles.textSection}>
-          <Text style = {styles.buttonText}>Name: </Text>
-          <Text style = {styles.buttonText}>Email: </Text>
+          <LoggedInName />
         </View>
         <View style = {styles.button}>
           <NavigationButton
