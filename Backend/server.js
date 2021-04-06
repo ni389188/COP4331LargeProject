@@ -1,17 +1,18 @@
-//dependencies
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path');
-const MongoClient = require('mongodb').MongoClient;
-require('dotenv').config();
-const jwt = require('./createJWT');
-//create server
+
 const app = express();
-//Create mongo client
+
+const path = require('path');
+
+require('dotenv').config();
+const MongoClient = require('mongodb').MongoClient;
 const url = process.env.MONGODB_URI;
 const client = new MongoClient(url);
-//set ports
+client.connect();
+const jwt = require('./createJWT');
+
 const PORT = process.env.PORT || 5000;
 app.set('port', (process.env.PORT || 5000));
 
@@ -30,6 +31,42 @@ if (process.env.NODE_ENV === 'production')
     });
 }
 
+var userRoutes = require("./ServerComponents/userApi.js");
+userRoutes.setApp(app);
+
+var recipeRoutes = require("./ServerComponents/recipeApi.js");
+recipeRoutes.setAppRecipe(app);
+
+var mobileroutes = require("./ServerComponents/mobileUserApi.js");
+mobileroutes.setApp(app, client);
+
+// **********************HARD CODED API*********************************
+
+var recipeList = [  'Tomato',  'Cheese',  'Apple',  'Pepper',  'Potato'];
+app.post('/api/addrecipe', async (req, res, next) =>
+{  
+    // incoming: userId, color  
+    // outgoing: error  
+    const { userId, recipe } = req.body;  
+    const newRecipe = {Recipe:recipe,UserId:userId};  
+    var error = '';  
+    
+    try  
+    {    
+        const db = client.db();    
+        const result = db.collection('Recipes').insertOne(newRecipe);  
+    }  
+    catch(e)  
+    {    
+        error = e.toString();  
+    }
+    recipeList.push( recipe );  
+    var ret = { error: error };  
+    res.status(200).json(ret);
+});
+
+// **********************HARD CODED API*********************************
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -43,67 +80,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//API
-app.post('/api/login', async (req, res, next) => 
-{  
-    const email = req.body.Email;
-    const password = req.body.Password;  
-    const db = client.db();
-    const results = await db.collection('Users').find({Email:email,Password:password}).toArray(); 
-    var id = -1;
-    var fn = '';
-    var ln = '';
-    if( results.length )  
-    {       
-        id = results[0]._id;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
-    } 
-    try
-    {
-        if(id != -1)
-        {
-            ret = jwt.createToken( fn, ln, id );
-        }
-        else
-        {
-            ret = {error:"Invalid Username or Password"};
-        }
-    }
-    catch(e)
-    {
-        ret = {error:e.message};
-    }
-    res.status(200).json(ret);
-});
-
-app.post('/api/register', async (req, res, next) => 
-{  
-    const db = client.db();
-    const AccountExists = await db.collection('Users').find({Email:req.body.Email}).toArray(); 
-    try
-    {
-        if(AccountExists.length)
-        {
-            var ret = {error:"Email is already in use"};
-        }
-        else
-        {
-            await db.collection('Users').insertOne(req.body);
-            var ret = jwt.createToken( req.body.firstName, req.body.lastName, req.body._id );
-        }
-    }
-    catch(e)
-    {
-        ret = {error:e.message};
-    }
-    res.status(200).json(ret);
-});
-
-//start mongoDB client
-client.connect();
-
-//start server
 app.listen(PORT, () => 
 {  
     console.log('Server listening on port ' + PORT);
