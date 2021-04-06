@@ -45,7 +45,7 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      const response = await fetch(buildPath('api/mobile/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());           
       if( res.error )            
       {                

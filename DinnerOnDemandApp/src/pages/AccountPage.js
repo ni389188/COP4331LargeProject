@@ -9,7 +9,6 @@ const AccountPage = ({navigation}) =>
   const storage = require('../tokenStorage');
   useEffect(() =>
   {
-    console.log(storage.retrieveToken('user_data'));
     if(storage.retrieveToken('user_data') != null)
     {
       navigation.navigate('NavigationBar');
