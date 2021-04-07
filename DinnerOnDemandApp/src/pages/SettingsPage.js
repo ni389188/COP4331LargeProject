@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -7,9 +7,13 @@ import NavigationButton from '../components/NavigationButton';
 
 const SettingsPage = ({navigation}) =>
 {
+    
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
           <PageTitle text = 'Profile Settings' />
         </View>
         <View style = {styles.body}>
@@ -22,31 +26,28 @@ const SettingsPage = ({navigation}) =>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Name'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Image'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Change Password'
-            destination = 'ProfilePage'
             />
           </View>
           <View style = {styles.button}>
             <NavigationButton
             name = 'Save'
-            destination = 'ProfilePage'
+            doFunction = {() => navigation.navigate('ProfilePage')}
             />
           </View>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };

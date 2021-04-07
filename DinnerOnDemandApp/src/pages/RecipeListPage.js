@@ -24,9 +24,9 @@ const RecipeListPage = ({navigation}) =>
             <Text style = {styles.createText}>+ Add Custom Recipe</Text>
           </TouchableOpacity>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };

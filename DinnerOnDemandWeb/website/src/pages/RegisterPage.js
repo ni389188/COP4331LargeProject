@@ -1,16 +1,17 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
-import NavBar from '../components/NavBar' 
 
-const LoginPage = () => {
+import PageTitle from '../components/PageTitle';
+import Register from '../components/Register';
+import NavBar from '../components/NavBar'
+
+const RegisterPage = () => {
     return (
         <div>
             <NavBar />
             <PageTitle />
-            <Login />           
+            <Register />
         </div>
     );
 };
 
-export default LoginPage;
+export default RegisterPage;

@@ -2,15 +2,15 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function AccountButton({name, destination})
+function NavigationButton({name, doFunction})
 {
   const navigation = useNavigation();
+
   return(
     <View style = {styles.container}>
       <TouchableOpacity 
         style = {styles.buttonBackground}
-        onPress = {() =>
-        {navigation.navigate(destination)}}
+        onPress = {doFunction}
         >
         <Text style = {styles.buttonText}>{name}</Text>
       </TouchableOpacity>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default AccountButton;
+export default NavigationButton;

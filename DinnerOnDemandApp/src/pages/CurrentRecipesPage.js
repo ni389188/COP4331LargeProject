@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
-import NavigationButton from '../components/NavigationButton';
 import RecipeCard from '../components/RecipeCard';
 import Counter from '../components/Counter';
 
@@ -12,7 +11,7 @@ const CurrentRecipesPage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
-          <PageTitle text = 'Recipes in Shopping List' />
+          <PageTitle text = 'Recipes in Shopping List' back navigate={navigation}/>
         </View>
         <View style = {styles.body}>
           <View style = {styles.background}>
@@ -27,9 +26,9 @@ const CurrentRecipesPage = ({navigation}) =>
             </View>
           </View>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };

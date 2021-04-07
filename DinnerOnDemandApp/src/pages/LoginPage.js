@@ -8,11 +8,54 @@ import NavigationButton from '../components/NavigationButton';
 
 const LoginPage = ({navigation, mapDispatchToProps, user}) =>
 {
+  const [email, onChangeEmail] = useState('');
+  const [password, onChangePassword] = useState('');
+  const storage = require('../tokenStorage.js');
+
   const saveToRedux = () =>
   {
     mapDispatchToProps({name: "Carl", email: "carlantoine14@gmail.com", favorites: []})
-  }
-  
+  };
+
+  const app_name = 'cop4331din';
+  function buildPath(route)
+  {    
+    if (process.env.NODE_ENV === 'production')     
+    {        
+      return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }
+    else
+    {
+      return 'http://10.0.2.2:5000/' + route;   
+    }
+  };
+
+  const doLogin = async event =>     
+  {
+    event.preventDefault();        
+    var obj = {Email:email,Password:password};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/mobile/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());
+      if(res.error)            
+      {                
+        alert(res.error);            
+      }            
+      else
+      {                
+        storage.storeToken(res);
+        navigation.navigate('NavigationBar');    
+      }        
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());            
+        return;        
+    }      
+  };
+
   return(
     <View style = {styles.container}>
       <View style = {styles.header}>
@@ -22,18 +65,25 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Sign In{"\n"}</Text>
           <Text style = {styles.inputTitle}> Email</Text>
-          <TextInput style = {styles.input} placeholder="Please enter email" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter email"
+          onChangeText = {onChangeEmail}
+          />
           <Text style = {styles.inputTitle}> Password</Text>
-          <TextInput style = {styles.input} placeholder="Please enter password" />
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter password" 
+          onChangeText = {onChangePassword}
+          secureTextEntry = {true}
+          />
           <TouchableOpacity onPress = {() => navigation.navigate('ForgotPasswordPage')}>
             <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
-          <View style = {styles.buttonOrientation}>
-            <NavigationButton
-              name = 'Login'
-              destination = 'RecipeListPage'
-            />
-          </View>
+          <NavigationButton 
+          name = 'Login'
+          doFunction = {doLogin}
+          />
           <View style = {styles.registerText}>
             <Text style = {{color: 'black'}}>Don't have an account?</Text>
             <TouchableOpacity onPress = {() => navigation.navigate('RegisterPage')}>
@@ -90,13 +140,10 @@ const styles = StyleSheet.create({
     color: 'blue',
     textAlign: 'right',
     marginTop: 2.5,
+    marginBottom: 20,
   },
   signUpText: {
     color: 'blue',
-  },
-  buttonOrientation: {
-    marginTop: 25,
-    width: '100%',
   },
   registerText: {
     flexDirection: 'row', 

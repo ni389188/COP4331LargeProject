@@ -18,7 +18,7 @@ const ShoppingListPage = ({navigation}) =>
           <View style = {styles.button}>
             <NavigationButton
             name = 'See Current Recipes'
-            destination = 'CurrentRecipesPage'
+            doFunction = {() => navigation.navigate('CurrentRecipesPage')}
             />
           </View>
           <View style = {styles.background}>
@@ -32,9 +32,6 @@ const ShoppingListPage = ({navigation}) =>
               <Text style = {styles.text}>Avocado</Text>
             </View>
           </View>
-        </View>
-        <View style = {styles.footer}>
-          <NavigationBar />
         </View>
       </View>
     );

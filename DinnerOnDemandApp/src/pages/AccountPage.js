@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
@@ -6,28 +6,36 @@ import NavigationButton from '../components/NavigationButton';
 
 const AccountPage = ({navigation}) =>
 {
-    return(
-      <View style = {styles.container}>
-        <View style={styles.logoOrientation}>
-          <Image
-          style={styles.logo}
-          source={require('../components/Logo.png')}
-          />
-        </View>
-        <View style = {styles.buttonOrientation}>
-          <NavigationButton
-          name = 'Login'
-          destination = 'LoginPage'
-          />
-        </View>
-        <View style = {styles.buttonOrientation}>
-          <NavigationButton
-          name = 'Register'
-          destination = 'RegisterPage'
-          />
-        </View>
+  const storage = require('../tokenStorage');
+  useEffect(() =>
+  {
+    if(storage.retrieveToken('user_data') != null)
+    {
+      navigation.navigate('NavigationBar');
+    }
+  });
+  return(
+    <View style = {styles.container}>
+      <View style={styles.logoOrientation}>
+        <Image
+        style={styles.logo}
+        source={require('../components/Logo.png')}
+        />
       </View>
-    );
+      <View style = {styles.buttonOrientation}>
+        <NavigationButton
+        name = 'Login'
+        doFunction = {() => navigation.navigate('LoginPage')}
+        />
+      </View>
+      <View style = {styles.buttonOrientation}>
+        <NavigationButton
+        name = 'Register'
+        doFunction = {() => navigation.navigate('RegisterPage')}
+        />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

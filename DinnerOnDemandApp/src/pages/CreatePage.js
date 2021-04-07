@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -10,6 +10,9 @@ const CreatePage = ({navigation}) =>
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Text>Back</Text>
+          </TouchableOpacity>
           <PageTitle text = 'Create a Recipe' />
         </View>
         <View style = {styles.body}>
@@ -34,13 +37,13 @@ const CreatePage = ({navigation}) =>
           <View style = {styles.background}>
             <NavigationButton
               name = 'Save Recipe'
-              destination = 'RecipePage'
+              doFunction = {() => navigation.navigate('RecipePage')}
             />
           </View>
         </View>
-        <View style = {styles.footer}>
+        {/* <View style = {styles.footer}>
           <NavigationBar />
-        </View>
+        </View> */}
       </View>
     );
 };
