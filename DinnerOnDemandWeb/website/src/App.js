@@ -4,6 +4,7 @@ import './App.css';
 import LoginPage from './pages/LoginPage';
 import CardPage from './pages/RecipePage';
 import WelcomePage from './pages/WelcomePage';
+import Home from './pages/HomePageExtras/Home'
 
 function App() {  
   return (
@@ -18,10 +19,14 @@ function App() {
         <Route path="/pages/LoginPage" exact>          
           <LoginPage />        
         </Route> 
+        <Route path="/pages/HomePageExtras/Home" exact>          
+          <Home />        
+        </Route>  
+       
         <Redirect to="/" />  
-      </Switch>      
+      </Switch>       
     </Router>  
   );
-}
+}  
     
 export default App;
