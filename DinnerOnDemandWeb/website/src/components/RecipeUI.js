@@ -61,26 +61,31 @@ function RecipeUI() {
     const searchRecipe = async event =>     
     {        
         event.preventDefault();        
-        var obj = {userId:userId,search:search.value};        
+        var obj = {ingredients:search.value};        
         var js = JSON.stringify(obj);        
         try        
         {            
             const response = await fetch(buildPath('api/searchrecipe'),            
-            {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});            
-            var txt = await response.text();            
-            var res = JSON.parse(txt);            
-            var _results = res.results;            
-            var resultText = '';            
-            for( var i=0; i<_results.length; i++ )            
-            {                
-                resultText += _results[i];                
-                if( i < _results.length - 1 )                
-                {                    
-                    resultText += ', ';                
-                }            
-            }            
-            setResults('Recipe(s) have been retrieved');            
-            setRecipeList(resultText);        
+            {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});            
+            
+            // TO-Do add error handling.
+
+            var txt = JSON.parse(await response.text());                  
+            var recipes = txt.obj; 
+                      
+            var recipeTitles = [];
+            var recipeImage = [];          
+            for( var i=0; i<recipes.length; i++ )            
+            {    
+                recipeTitles.push(txt.obj[i].title);            
+                
+                recipeImage.push(txt.obj[i].image);
+            }   
+
+            setResults('Recipe(s) have been retrieved'); 
+            
+            // '\r' adds comma. Remove if needed.
+            setRecipeList(recipeTitles + '\r');        
         }        
         catch(e)        
         {            
