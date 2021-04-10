@@ -67,25 +67,34 @@ function RecipeUI() {
         {            
             const response = await fetch(buildPath('api/searchrecipe'),            
             {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});            
-            
-            // TO-Do add error handling.
 
-            var txt = JSON.parse(await response.text());                  
-            var recipes = txt.obj; 
-                      
-            var recipeTitles = [];
-            var recipeImage = [];          
-            for( var i=0; i<recipes.length; i++ )            
-            {    
-                recipeTitles.push(txt.obj[i].title);            
+            var txt = JSON.parse(await response.text()); 
+            
+            // Added Error handling for no matches.
+            if (txt.error === 'no matches') {
+                setRecipeList('Could not find a match');
+            }
+            else if (txt.error == 'zero or negative limit') {
+                setRecipeList('The number of results requested is not valid');
+            }
+
+            else {
+                var recipes = txt.obj; 
+                        
+                var recipeTitles = [];
+                var recipeImage = [];          
+                for( var i=0; i<recipes.length; i++ )            
+                {    
+                    recipeTitles.push(txt.obj[i].title);            
+                    
+                    recipeImage.push(txt.obj[i].image);
+                }   
+
+                setResults('Recipe(s) have been retrieved'); 
                 
-                recipeImage.push(txt.obj[i].image);
-            }   
-
-            setResults('Recipe(s) have been retrieved'); 
-            
-            // '\r' adds comma. Remove if needed.
-            setRecipeList(recipeTitles + '\r');        
+                // '\r' adds comma. Remove if needed.
+                setRecipeList(recipeTitles + '\r');   
+            }     
         }        
         catch(e)        
         {            
