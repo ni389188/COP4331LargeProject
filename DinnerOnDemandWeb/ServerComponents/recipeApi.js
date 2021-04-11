@@ -7,26 +7,25 @@ require('../ServerComponents/dbConfig')
 
 exports.setAppRecipe = function (app, MongoClient)
 {
-        app.get('/api/searchrecipe', async (req, res, next) =>
+        app.post('/api/searchrecipe', async (req, res, next) =>
     {   
         var ingredientList = req.body.ingredients;
 
-        var apiKey = '7bfd691826fd4d31834f7728f67c9b3e';
+        var apiKey = '7bfd691826fd4d31834f7728f67c9b3e'
+        
+        var limit = '7';
 
-        // If a limit is not passed, then display 7
-        var limit = '7' || req.body.limit;
+        var toInt = parseInt(req.body.limit);
 
-        // Compare limit of results with 20 to avoid very large requests.
-        var bigLimit = limit.localeCompare('20');
-
-        // Compare limit of results with 1 to find if 0 or negative.
-        var negativeLimit = limit.localeCompare('1');
-
+        if (! isNaN(toInt)) {
+            limit = toInt;
+        }
+        
         // Limit is biggerthan '20'
-        if ( bigLimit === 1){limit = '20'}
+        if ( toInt > 20){limit = '20'}
 
         // Limit is 0 or smaller
-        if ( negativeLimit == -1) {res.status(400).json({found:false, error:'zero or negative limit'});}
+        if ( toInt < 1) {res.status(400).json({found:false, error:'zero or negative limit'});}
         
         // String for request with parameters.
         var request = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredientList}&apiKey=${apiKey}&number=${limit}`

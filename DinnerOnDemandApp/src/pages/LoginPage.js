@@ -37,7 +37,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      const response = await fetch(buildPath('api/mobile/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());
       if(res.error)            
       {                
@@ -45,7 +45,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       }            
       else
       {                
-        storage.storeToken(res)
+        storage.storeToken(res);
         navigation.navigate('NavigationBar');    
       }        
     }        

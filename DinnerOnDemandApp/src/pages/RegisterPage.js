@@ -13,7 +13,8 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
   const [email, onChangeEmail] = useState(''); 
   const [password, onChangePassword] = useState(''); 
   const [cPassword, onChangeCPassword] = useState(''); 
-  
+  const storage = require('../tokenStorage');
+
   const saveToRedux = () =>
   {
     mapDispatchToProps({name: "Carl", email: "carlantoine14@gmail.com", favorites: []})
@@ -44,14 +45,15 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-      var res = JSON.parse(await response.text());            
-      if( res.Err > 0 )            
+      const response = await fetch(buildPath('api/mobile/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());           
+      if( res.error )            
       {                
-        alert('Email already in use');            
+        alert(res.error);           
       }            
       else
       {                
+        storage.storeToken(res);
         navigation.navigate('NavigationBar');          
       }        
     }        
@@ -93,12 +95,14 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
           style = {styles.input} 
           placeholder="Please enter password" 
           onChangeText = {onChangePassword}
+          secureTextEntry = {true}
           />
           <Text style = {styles.inputTitle}> Confirm Password</Text>
           <TextInput 
           style = {styles.input} 
           placeholder="Please confirm password" 
           onChangeText = {onChangeCPassword}
+          secureTextEntry = {true}
           />
           <TouchableOpacity 
           style = {styles.buttonBackground}

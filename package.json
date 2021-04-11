@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/csantiago16cs/COP4331LargeProject#readme",
   "dependencies": {
+<<<<<<< HEAD
+    "express": "^4.17.1",
+    "react-icons": "^4.2.0"
+=======
+    "env": "0.0.2",
     "express": "^4.17.1"
+>>>>>>> d9879b3da573cce442ef8cb60e3897f6c7024da9
   }
 }
