@@ -6,13 +6,6 @@ const app = express();
 
 const path = require('path');
 
-require('dotenv').config();
-const MongoClient = require('mongodb').MongoClient;
-const url = process.env.MONGODB_URI;
-const client = new MongoClient(url);
-client.connect();
-const jwt = require('./createJWT');
-
 const PORT = process.env.PORT || 5000;
 app.set('port', (process.env.PORT || 5000));
 
@@ -36,9 +29,6 @@ userRoutes.setApp(app);
 
 var recipeRoutes = require("./ServerComponents/recipeApi.js");
 recipeRoutes.setAppRecipe(app);
-
-var mobileroutes = require("./ServerComponents/mobileUserApi.js");
-mobileroutes.setApp(app, client);
 
 // **********************HARD CODED API*********************************
 
