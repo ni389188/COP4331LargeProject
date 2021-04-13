@@ -1,4 +1,5 @@
 const express = require('express');
+const jwt = require('../createJWT');
 
 const mongoose = require('mongoose');
 require('../ServerComponents/dbConfig')();
@@ -9,7 +10,6 @@ exports.setApp = function (app, MongoClient)
 {
     app.post('/api/register', async (req, res, next) => 
     {  
-
         const newUser = new User({ 
             _id: new mongoose.Types.ObjectId(),
             FirstName: req.body.FirstName,
@@ -17,30 +17,24 @@ exports.setApp = function (app, MongoClient)
             Email: req.body.Email, 
             Password: req.body.Password
         });
-        
         // Stores into the DB.
         newUser.save().then(result => {
 
-            res.status(200).json({
-                ID: result._id,
-                FirstName: result.FirstName,
-                LastName: result.LastName,
-                Email: result.Email
-            });
+            ret = jwt.createToken( newUser.FirstName, newUser.LastName, newUser._id)
+            res.status(200).json(ret);
         })
         .catch(err => {
             console.log(err);
-
             res.status(400).json(err);
         });
     });
 
     app.post('/api/login', async (req, res, next) => 
     {  
-        var Email = req.body.login;
-        var Password = req.body.password;
-
-        User.findOne({Email:Email, Password:Password}, function(err, result) {
+        var email = req.body.Email;
+        var password = req.body.Password;
+        console.log(email);
+        User.findOne({Email:email, Password:password}, function(err, result) {
 
             // Error Encountered.
             if(err) {
@@ -49,12 +43,10 @@ exports.setApp = function (app, MongoClient)
 
             // If found
             if (result){
-                res.status(200).json({
-                    ID: result._id,
-                    FirstName: result.FirstName,
-                    LastName: result.LastName,
-                    loggedIn: true
-                })
+                ret = jwt.createToken( result.FirstName, result.LastName, result._id)
+                ret.LoggedIn = true
+                console.log(ret)
+                res.status(200).json(ret)
             }
 
             // If not found
