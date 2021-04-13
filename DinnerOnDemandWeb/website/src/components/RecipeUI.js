@@ -32,7 +32,8 @@ function RecipeUI() {
     const addRecipe = async event =>     
     {    
         event.preventDefault();        
-        
+
+        // TO-DO: Get title from tittle array in search.
         var obj = {userId:userId,recipe:recipe.value};        
         var js = JSON.stringify(obj);        
         
@@ -60,9 +61,11 @@ function RecipeUI() {
     };    
     const searchRecipe = async event =>     
     {        
-        event.preventDefault();        
+        event.preventDefault();     
+         
         var obj = {ingredients:search.value};        
-        var js = JSON.stringify(obj);        
+        var js = JSON.stringify(obj);  
+
         try        
         {            
             const response = await fetch(buildPath('api/searchrecipe'),            
@@ -74,17 +77,21 @@ function RecipeUI() {
             if (txt.error === 'no matches') {
                 setRecipeList('Could not find a match');
             }
-            else if (txt.error == 'zero or negative limit') {
+            else if (txt.error === 'zero or negative limit') {
                 setRecipeList('The number of results requested is not valid');
             }
 
             else {
                 var recipes = txt.obj; 
-                        
+                
+                var recipeIds = [];
                 var recipeTitles = [];
-                var recipeImage = [];          
+                var recipeImage = [];
+                
                 for( var i=0; i<recipes.length; i++ )            
                 {    
+                    recipeIds.push(txt.obj[i].id);
+
                     recipeTitles.push(txt.obj[i].title);            
                     
                     recipeImage.push(txt.obj[i].image);
