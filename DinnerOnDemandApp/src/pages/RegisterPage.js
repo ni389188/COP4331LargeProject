@@ -45,16 +45,16 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/mobile/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-      var res = JSON.parse(await response.text());           
-      if( res.error )            
+      const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());       
+      if( res.accessToken )            
       {                
-        alert(res.error);           
+        storage.storeToken(res);
+        navigation.navigate('NavigationBar');   
       }            
       else
       {                
-        storage.storeToken(res);
-        navigation.navigate('NavigationBar');          
+        alert("Email is already in use.");         
       }        
     }        
     catch(e)        
