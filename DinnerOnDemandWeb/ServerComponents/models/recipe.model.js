@@ -13,7 +13,11 @@ const recipeModel = mongoose.Schema({
         required: true
     }, 
     UserID: reqString,
-    RecipeID: reqString, 
+    
+    RecipeID: {
+        type: Number,
+        required: true,
+    },
     Title: reqString, 
 })
 recipeModel.plugin(uniqueValidator)
