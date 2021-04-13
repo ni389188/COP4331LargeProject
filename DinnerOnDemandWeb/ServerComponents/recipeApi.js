@@ -108,6 +108,7 @@ exports.setAppRecipe = function (app, MongoClient)
                 
                 // Success.
                 res.status(200).json({
+                    Added:true,
                     CompositeID: result.CompositeID,
                     UserID: result.UserID,
                     RecipeID: req.body.recipeID,
@@ -136,22 +137,34 @@ exports.setAppRecipe = function (app, MongoClient)
     // Gets recipes the user has added.
     app.post('/api/getrecipes', async (req, res, next) => 
     {   
-        var UserID = req.body.userID;
 
-        // Stores into the DB.
-        Recipe.find({UserID:UserID}).then(result => {
+        if (null == req.body.userID) {
+            res.status(400).json({found:false, errors:'userID required'});
+        }
 
-            res.status(200).json({recipes: result});
-        })
-        // Catch Error.
-        .catch(err => {
-            // Display error.
-            console.log(err);   
+        else {
+            var UserID = req.body.userID;
 
-            // Respond with error.
-            res.status(400).json(err);
-    
-        });
+            // Stores into the DB.
+            Recipe.find({UserID:UserID}).then(result => {
+                
+                if (result.length > 0) {
+                    res.status(200).json({found:true, recipes: result});
+                }
+                else {
+                    res.status(404).json({found:false, errors:'not found'});
+                }
+            })
+            // Catch Error.
+            .catch(err => {
+                // Display error.
+                console.log(err);   
+
+                // Respond with error.
+                res.status(400).json({found:false, err});
+        
+            });
+        }
     });
 
 }
