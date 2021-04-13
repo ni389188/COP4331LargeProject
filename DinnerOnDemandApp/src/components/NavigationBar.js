@@ -6,10 +6,14 @@ import RecipeListPage from '../pages/RecipeListPage';
 import ShoppingListPage from '../pages/ShoppingListPage';
 import SearchPage from '../pages/SearchPage';
 import ProfilePage from '../pages/ProfilePage';
+import { Layout, useTheme } from '@ui-kitten/components';
+import { ThemeContext } from './theme-context';
 
 function MyTabBar({ state, descriptors, navigation }) {
+    const themeContext = React.useContext(ThemeContext);
+
     return (
-        <View style={styles.container}>
+        <Layout style={styles.container}>
             {state.routes.map((route, index) => {
                 const { options } = descriptors[route.key];
                 const label =
@@ -30,6 +34,8 @@ function MyTabBar({ state, descriptors, navigation }) {
                     if (!isFocused && !event.defaultPrevented) {
                         navigation.navigate(route.name);
                     }
+
+                    // themeContext.toggleTheme()
                 };
 
                 const onLongPress = () => {
@@ -47,11 +53,11 @@ function MyTabBar({ state, descriptors, navigation }) {
                         testID={options.tabBarTestID}
                         onPress={onPress}
                         onLongPress={onLongPress}
-                        style={styles.tab}
+                        style={[styles.tab, {borderTopColor: themeContext.theme === "light" ? "black" : "white"}]}
                         key={label}
                     >
                         <Image
-                            style={styles.icon}
+                            style={[styles.icon, {tintColor: themeContext.theme === "light" ? "black" : "white"}]}
                             source={
                                 label === 'Recipe' ?
                                     require('./recipesIcon.png')
@@ -65,13 +71,13 @@ function MyTabBar({ state, descriptors, navigation }) {
                                     require('./profileIcon.png')
                             }
                         />
-                        <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
+                        <Text style={{ color: isFocused ? '#673ab7' : themeContext.theme === "light" ? "black" : "white" }}>
                             {label}
                         </Text>
                     </TouchableOpacity>
                 );
             })}
-        </View>
+        </Layout>
     );
 }
 
@@ -92,7 +98,7 @@ const NavigationBar = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         flexDirection: 'row',
         alignContent: 'center',
     },
@@ -100,8 +106,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
-        paddingVertical: 20,
+        // backgroundColor: 'white',
+        paddingVertical: 15,
+        borderTopWidth: 3,
     },
     icon: {
         height: 30,
