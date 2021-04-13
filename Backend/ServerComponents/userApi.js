@@ -20,7 +20,7 @@ exports.setApp = function (app, MongoClient)
         // Stores into the DB.
         newUser.save().then(result => {
 
-            ret = jwt.createToken( newUser.FirstName, newUser.LastName, newUser._id)
+            ret = jwt.createToken( newUser.FirstName, newUser.LastName, newUser._id);
             res.status(200).json(ret);
         })
         .catch(err => {
@@ -33,7 +33,6 @@ exports.setApp = function (app, MongoClient)
     {  
         var email = req.body.Email;
         var password = req.body.Password;
-        console.log(email);
         User.findOne({Email:email, Password:password}, function(err, result) {
 
             // Error Encountered.
@@ -43,10 +42,9 @@ exports.setApp = function (app, MongoClient)
 
             // If found
             if (result){
-                ret = jwt.createToken( result.FirstName, result.LastName, result._id)
-                ret.LoggedIn = true
-                console.log(ret)
-                res.status(200).json(ret)
+                ret = jwt.createToken( result.FirstName, result.LastName, result._id);
+                ret.LoggedIn = true;
+                res.status(200).json(ret);
             }
 
             // If not found
