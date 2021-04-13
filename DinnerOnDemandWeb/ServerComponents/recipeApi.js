@@ -44,45 +44,47 @@ exports.setAppRecipe = function (app, MongoClient)
         // If no recipes were found.
         if (data.length < 1) {res.status(404).json({found:false, error: 'no matches'});}
 
-        var obj = [];
-        
-        // Add data to obj.
-        for (i = 0; i < data.length; i++)
-        {
+        else {
+            var obj = [];
+            
+            // Add data to obj.
+            for (i = 0; i < data.length; i++)
+            {
 
-            var usedIngredients = [];
-            var missedIngredients = [];
+                var usedIngredients = [];
+                var missedIngredients = [];
 
-            for (k = 0; k < data[i].usedIngredients.length; k++) {
-                usedIngredients.push({
-                "id":data[i].usedIngredients[k].id,
-                "amount":data[i].usedIngredients[k].amount,
-                "unit":data[i].usedIngredients[k].unit,
-                "name:":data[i].usedIngredients[k].name,
-                "originalString":data[i].usedIngredients[k].originalString
+                for (k = 0; k < data[i].usedIngredients.length; k++) {
+                    usedIngredients.push({
+                    "id":data[i].usedIngredients[k].id,
+                    "amount":data[i].usedIngredients[k].amount,
+                    "unit":data[i].usedIngredients[k].unit,
+                    "name:":data[i].usedIngredients[k].name,
+                    "originalString":data[i].usedIngredients[k].originalString
+                    });
+                }
+
+                for (k = 0; k < data[i].missedIngredients.length; k++) {
+                    missedIngredients.push({
+                    "id":data[i].missedIngredients[k].id,
+                    "amount":data[i].missedIngredients[k].amount,
+                    "unit":data[i].missedIngredients[k].unit,
+                    "name:":data[i].missedIngredients[k].name,
+                    "originalString":data[i].missedIngredients[k].originalString
+                    });
+                }
+
+                obj.push({"id":data[i].id,
+                "title":data[i].title,
+                "image":data[i].image,
+                "usedIngredients":usedIngredients,
+                "missedIngredients":missedIngredients,
+
                 });
             }
 
-            for (k = 0; k < data[i].missedIngredients.length; k++) {
-                missedIngredients.push({
-                "id":data[i].missedIngredients[k].id,
-                "amount":data[i].missedIngredients[k].amount,
-                "unit":data[i].missedIngredients[k].unit,
-                "name:":data[i].missedIngredients[k].name,
-                "originalString":data[i].missedIngredients[k].originalString
-                });
-            }
-
-            obj.push({"id":data[i].id,
-            "title":data[i].title,
-            "image":data[i].image,
-            "usedIngredients":usedIngredients,
-            "missedIngredients":missedIngredients,
-
-            });
+            res.status(200).json({found:true, error:'none', obj: obj});
         }
-
-        res.status(200).json({found:true, error:'none', obj: obj});
     });
 
     // Add a recipe to an user. Recipe ID is obtained from recipe search.
