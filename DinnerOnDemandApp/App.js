@@ -1,5 +1,6 @@
 /*
 Things to remember
+// Do npm install in these
 //cd ../Backend/npm start
 //npx react-native run-android
 //ctrl j hides terminal
@@ -43,32 +44,50 @@ import store from "./src/redux/store"
 import { Provider } from "react-redux"
 import NavigationBar from './src/components/NavigationBar';
 
+import * as eva from '@eva-design/eva';
+import { ApplicationProvider, Layout } from '@ui-kitten/components';
+import { ThemeContext } from './src/components/theme-context';
+
 import WIPPage from './src/pages/AccountPage';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();
 
-const App: () => React$Node = () => {
+const App: () => React$Node = () =>
+{
+  const [theme, setTheme] = React.useState('light');
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+  };
+
   return (
-    <Provider store={store}>
-      <View style={styles.body}>
-        <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="WIPPage" component={WIPPage} />
-            <Stack.Screen name="AccountPage" component={AccountPage} />
-            <Stack.Screen name="NavigationBar" component={NavigationBar} />
-            <Stack.Screen name="LoginPage" component={LoginPage} />
-            <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
-            <Stack.Screen name="RegisterPage" component={RegisterPage} />
-            <Stack.Screen name="SettingsPage" component={SettingsPage} />
-            <Stack.Screen name="RecipePage" component={RecipePage} />
-            <Stack.Screen name="CreatePage" component={CreatePage} />
-            <Stack.Screen name="ResultsPage" component={ResultsPage} />
-            <Stack.Screen name="CurrentRecipesPage" component={CurrentRecipesPage} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
-    </Provider>
+    <>
+      <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ApplicationProvider {...eva} theme={eva[theme]}>
+          <Provider store={store}>
+            <View style={styles.body}>
+              <NavigationContainer>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                  <Stack.Screen name="WIPPage" component={WIPPage} />
+                  <Stack.Screen name="AccountPage" component={AccountPage} />
+                  <Stack.Screen name="NavigationBar" component={NavigationBar} />
+                  <Stack.Screen name="LoginPage" component={LoginPage} />
+                  <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
+                  <Stack.Screen name="RegisterPage" component={RegisterPage} />
+                  <Stack.Screen name="SettingsPage" component={SettingsPage} />
+                  <Stack.Screen name="RecipePage" component={RecipePage} />
+                  <Stack.Screen name="CreatePage" component={CreatePage} />
+                  <Stack.Screen name="ResultsPage" component={ResultsPage} />
+                  <Stack.Screen name="CurrentRecipesPage" component={CurrentRecipesPage} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </View>
+          </Provider>
+        </ApplicationProvider>
+      </ThemeContext.Provider>
+    </>
   );
 };
 

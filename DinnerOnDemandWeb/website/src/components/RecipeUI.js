@@ -32,7 +32,8 @@ function RecipeUI() {
     const addRecipe = async event =>     
     {    
         event.preventDefault();        
-        
+
+        // TO-DO: Get title from tittle array in search.
         var obj = {userId:userId,recipe:recipe.value};        
         var js = JSON.stringify(obj);        
         
@@ -60,27 +61,47 @@ function RecipeUI() {
     };    
     const searchRecipe = async event =>     
     {        
-        event.preventDefault();        
-        var obj = {userId:userId,search:search.value};        
-        var js = JSON.stringify(obj);        
+        event.preventDefault();     
+         
+        var obj = {ingredients:search.value};        
+        var js = JSON.stringify(obj);  
+
         try        
         {            
             const response = await fetch(buildPath('api/searchrecipe'),            
-            {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});            
-            var txt = await response.text();            
-            var res = JSON.parse(txt);            
-            var _results = res.results;            
-            var resultText = '';            
-            for( var i=0; i<_results.length; i++ )            
-            {                
-                resultText += _results[i];                
-                if( i < _results.length - 1 )                
-                {                    
-                    resultText += ', ';                
-                }            
-            }            
-            setResults('Recipe(s) have been retrieved');            
-            setRecipeList(resultText);        
+            {method:'POST',body:js, headers:{'Content-Type': 'application/json'}});            
+
+            var txt = JSON.parse(await response.text()); 
+            
+            // Added Error handling for no matches.
+            if (txt.error === 'no matches') {
+                setRecipeList('Could not find a match');
+            }
+            else if (txt.error === 'zero or negative limit') {
+                setRecipeList('The number of results requested is not valid');
+            }
+
+            else {
+                var recipes = txt.obj; 
+                
+                var recipeIds = [];
+                var recipeTitles = [];
+                var recipeImage = [];
+                
+                for( var i=0; i<recipes.length; i++ )            
+                {    
+                    recipeIds.push(txt.obj[i].id);
+
+                    recipeTitles.push(txt.obj[i].title);            
+                    
+                    recipeImage.push(txt.obj[i].image);
+                }   
+
+                setResults('Recipe(s) have been retrieved'); 
+                
+                // '\r' adds comma. Remove if needed.
+                setRecipeList(recipeTitles + '\r');   
+            }     
         }        
         catch(e)        
         {            
