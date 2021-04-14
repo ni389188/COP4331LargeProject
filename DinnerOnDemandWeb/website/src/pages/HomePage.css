@@ -1,0 +1,98 @@
+.homePage {
+  color: #fff;
+  padding: 160px 0;
+}
+
+.homeRow {
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  margin-right: -15px;
+  margin-bottom: -15px;
+  margin-left: -15px;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+.col {
+  margin-bottom: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  flex: 1;
+  max-width: 50%;
+  flex-basis: 50%;
+}
+
+.textWrapper {
+  max-width: 540px;
+  padding-top: 0;
+  padding-bottom: 60px;
+}
+
+.textline {
+  color: rgb(10, 10, 10);
+  font-size: 35px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  margin-top: 200px;
+ 
+}
+
+
+.dark {
+  color: #1c2237;
+}
+
+.darkBg {
+  background-color: #14b6df;
+}
+
+.subText {
+  max-width: 440px;
+  margin-bottom: 35px;
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 20px;
+}
+
+.imageWrapper {
+  max-width: 555 px;
+}
+
+.homeImage {
+  max-width: 95%;
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 10px;
+  padding-right: 0;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+  vertical-align: middle;
+  display: inline-block;
+}
+
+@media screen and (max-width: 768px){
+  .container {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+@media screen and (max-width: 768px){
+    .home__home-text-wrapper{
+      padding-bottom: 65px;
+    }
+    .col {
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+  }
+
+  

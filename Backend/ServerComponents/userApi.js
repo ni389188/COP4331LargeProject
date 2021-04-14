@@ -34,7 +34,6 @@ exports.setApp = function (app, MongoClient)
         var email = req.body.Email;
         var password = req.body.Password;
         User.findOne({Email:email, Password:password}, function(err, result) {
-
             // Error Encountered.
             if(err) {
                 res.status(400).json(err);
