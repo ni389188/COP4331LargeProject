@@ -11,13 +11,13 @@ const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 const RecipePage = ({ navigation, route : {params : {item}} }) =>
 {
   const [instructions, setInstructions] = useState([]);
-  const ingredients = item.usedIngredients !== undefined ? [...item.usedIngredients, ...item.missedIngredients] : [...item.ingredients]
+  const ingredients = item !== undefined ? item.usedIngredients !== undefined ? [...item.usedIngredients, ...item.missedIngredients] : [...item.ingredients] : null
   let newIngredientObj = []
   let steps = []
 
   useEffect(() =>
   {
-    if (item.usedIngredients !== undefined)
+    if (item !== undefined && item.usedIngredients !== undefined)
     {
       axios.get(`https://api.spoonacular.com/recipes/${item.id}/analyzedInstructions?apiKey=${APIKEY}`)
       .then(res =>
@@ -25,7 +25,7 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
         setInstructions(res.data)
       })
     }
-    else
+    else if (item !== undefined)
     {
       setInstructions([...item.instructions])
     }
