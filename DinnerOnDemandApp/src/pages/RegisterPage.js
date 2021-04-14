@@ -35,7 +35,13 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
 
   const doRegister = async event =>     
   {
-    event.preventDefault(); 
+    event.preventDefault();
+    var valid = isValid()
+    if(valid != '')
+    {
+      alert(valid);
+      return;
+    }
     if(password != cPassword)
     {
       alert('Passwords do not match');
@@ -63,6 +69,21 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
         return;        
     }        
   };
+
+  const isValid = () =>
+  {
+    var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]){8,}/
+    if(emailRegex.test(email) == true)
+    {
+      if(passwordRegex.test(password) == true)
+      {
+        return '';
+      }
+      return "Passwords must contain at least 8 characters and one of each of the following:\n-A lowercase letter\n-An uppercase letter\n-A number\n-A special character";
+    }
+    return "Please enter a valid email";
+  }
 
   return(
     <View style = {styles.container}>
