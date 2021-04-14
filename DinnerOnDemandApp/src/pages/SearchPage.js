@@ -96,12 +96,12 @@ const SearchPage = () => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView behavior={"height"} style={{ flex: 1 }}>
-                <Layout style={{ flex: 2 }}>
+                <Layout style={{ flex: 1 }}>
                     <View style={styles.header}>
                         <PageTitle text='Search for Recipes' />
                     </View>
-                    <View style={styles.body, { marginTop: 10, }}>
-                        <View style={{ flexDirection: "column", alignItems: "center" }}>
+                    <View style={styles.body}>
+                        <View style={{ flexDirection: "column", alignItems: "center", paddingTop:10 }}>
                             <CheckBox checked={useCustom} onChange={() => setUseCustom(!useCustom)}>
                                 <Text>Search Custom Recipes</Text>
                             </CheckBox>
@@ -142,14 +142,16 @@ const SearchPage = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 2,
+        flex: 1,
         backgroundColor: 'white',
     },
     header: {
         width: '100%',
+        height: '100%',
+        flex: 1,
     },
     body: {
-        flex: 1,
+        flex: 11,
         alignItems: 'center',
         width: '100%',
     },
