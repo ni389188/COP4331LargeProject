@@ -110,8 +110,8 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
         <View style={styles.header}>
           <PageTitle text={item.title} back navigate={navigation}/>
         </View>
-        <ScrollView style={{height: "95%"}}>
-          <View style={[styles.body, {marginBottom: 50}]}>
+        <View style={styles.body}>
+          <ScrollView contentContainerStyle = {{alignItems: 'center', paddingBottom: 50}} style = {{flex: 1}}>
             <Image
               style={[styles.image, {backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
               borderWidth: 1, borderRadius: 5,}]}
@@ -189,8 +189,8 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
                 <Text>Share</Text>
               </TouchableOpacity>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </View>
       </View>
     </>
   );
@@ -205,12 +205,15 @@ const styles = StyleSheet.create(
     alignItems: 'center',
   },
   header: {
+    flex: 1,
     width: '100%',
+    alignItems: 'center',
   },
   body: {
-    flex: 1,
+    flex: 11,
     alignItems: 'center',
     width: '100%',
+    height: '95%',
   },
   image: {
     margin: 20,

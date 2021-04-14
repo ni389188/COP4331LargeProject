@@ -37,7 +37,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/mobile/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      const response = await fetch(buildPath('api/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());
       if(res.LoggedIn)            
       {                
@@ -45,14 +45,13 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
         navigation.navigate('NavigationBar');   
       }            
       else
-      {                
-         alert("Invalid email or password"); 
+      {
+        alert("Invalid email or password"); 
       }        
     }        
     catch(e)        
     {            
-        alert(e.toString());            
-        return;        
+        alert(e.toString());                 
     }      
   };
 

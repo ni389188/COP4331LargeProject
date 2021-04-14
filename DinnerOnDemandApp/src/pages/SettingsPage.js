@@ -7,61 +7,63 @@ import NavigationButton from '../components/NavigationButton';
 
 const SettingsPage = ({navigation}) =>
 {
-    
-    return(
-      <View style = {styles.container}>
-        <View style = {styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text>Back</Text>
-          </TouchableOpacity>
-          <PageTitle text = 'Profile Settings' />
-        </View>
-        <View style = {styles.body}>
-          <View style = {styles.imageSection}>
-            <Image
-            style={styles.image}
-            source={require('../components/Logo.png')}
-            />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Change Name'
-            />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Change Image'
-            />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Change Password'
-            />
-          </View>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'Save'
-            doFunction = {() => navigation.navigate('ProfilePage')}
-            />
-          </View>
-        </View>
-        {/* <View style = {styles.footer}>
-          <NavigationBar />
-        </View> */}
+  return(
+    <View style = {styles.container}>
+      <View style = {styles.header}>
+          <PageTitle 
+          text = 'Profile Settings'
+          back = {1}
+          navigate = {navigation}
+          />
       </View>
-    );
+      <View style = {styles.body}>
+        <View style = {styles.imageSection}>
+          <Image
+          style={styles.image}
+          source={require('../components/Logo.png')}
+          />
+        </View>
+        <View style = {styles.button}>
+          <NavigationButton
+          name = 'Change Name'
+          />
+        </View>
+        <View style = {styles.button}>
+          <NavigationButton
+          name = 'Change Image'
+          />
+        </View>
+        <View style = {styles.button}>
+          <NavigationButton
+          name = 'Change Password'
+          />
+        </View>
+        <View style = {styles.button}>
+          <NavigationButton
+          name = 'Save'
+          doFunction = {() => navigation.navigate('ProfilePage')}
+          />
+        </View>
+      </View>
+      {/* <View style = {styles.footer}>
+        <NavigationBar />
+      </View> */}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "#ABDDDC",
     justifyContent: 'center',
     alignItems: 'center',
   },
   header: {
     flex: 1,
     width: '100%',
+    height: '100%',
+    flexDirection: 'row',
   },
   body: {
     flex: 11,

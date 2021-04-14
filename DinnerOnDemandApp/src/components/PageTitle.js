@@ -8,28 +8,39 @@ function PageTitle({text, back, navigate})
      <View style = {styles.header}>
         {
            back ?
+           <View style = {{flex: 1}}>
             <HeaderBackButton
-                  onPress={() => navigate.goBack()}
-                  tintColor={"white"}
+               onPress={() => navigate.goBack()}
+               tintColor={"white"}
             />
+           </View>
+            
            :
             null 
         }
         <Text style={styles.text}>{text}</Text>
+        {
+           back ?
+           <View style = {{flex: 1}}/>
+           :
+           null
+        }
      </View>
    );
 };
 
 const styles = StyleSheet.create({
    header: {
-      padding: 15,
+      flex: 1,
       backgroundColor: 'blue',
       flexDirection: "row",
-      alignSelf: "center",
+      alignItems: "center",
       width: "100%",
+      height: "100%",
       justifyContent: "center"
    },
    text: {
+      flex: 6,
       color: 'white',
       fontSize: 20,
       textAlign: 'center',
