@@ -37,8 +37,10 @@ exports.setApp = function (app, MongoClient)
 
     app.post('/api/login', async (req, res, next) => 
     {  
-        var Email = req.body.login;
+        var Email = req.body.email;
         var Password = req.body.password;
+
+        console.log(Email + Password);
 
         User.findOne({Email:Email, Password:Password}, function(err, result) {
 
