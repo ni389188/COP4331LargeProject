@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import jwt_decode from 'jwt-decode';
 
-function LoggedInName()
+function LoggedInName({size, font, align})
 {
   const storage = require('../tokenStorage.js');  
   var tok = storage.retrieveToken();
@@ -14,11 +14,31 @@ function LoggedInName()
     firstName = ud.firstName;
     lastName = ud.lastName; 
   }
-  return(
-   <View style = {{flex:1, alignItems: 'center', width: '100%'}}>
-    <Text style = {{fontSize:23}}>{firstName} {lastName}</Text>
-   </View>
-  );
+  if(size == 'first')
+  {
+    return(
+      <View style = {{flex:1, alignItems:align, width: '100%', height:"100%"}}>
+        <Text style = {{fontSize:font}}>{firstName}</Text>
+      </View>
+    );
+  }
+  else if(size == 'last')
+  {
+    return(
+      <View style = {{flex:1, alignItems:align, width: '100%', height:"100%"}}>
+        <Text style = {{fontSize:font}}>{lastName}</Text>
+      </View>
+    )
+  }
+  else
+  {
+    return(
+      
+      <View style = {{flex:1, alignItems:align, width: '100%', height:"100%"}}>
+        <Text style = {{fontSize:font}}>{firstName} {lastName}</Text>
+      </View>
+    )
+  }
 };
 
 export default LoggedInName;

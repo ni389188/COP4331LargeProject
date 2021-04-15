@@ -42,7 +42,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       if(res.LoggedIn)            
       {                
         storage.storeToken(res);
-        navigation.navigate('NavigationBar');   
+        navigation.push('NavigationBar');   
       }            
       else
       {

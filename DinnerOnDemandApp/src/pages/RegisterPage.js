@@ -56,7 +56,7 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
       if( res.accessToken )            
       {                
         storage.storeToken(res);
-        navigation.navigate('NavigationBar');   
+        navigation.push('NavigationBar');   
       }            
       else
       {                

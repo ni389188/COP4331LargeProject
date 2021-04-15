@@ -8,7 +8,7 @@ import LoggedInName from '../components/LoggedInName';
 
 const ProfilePage = ({navigation}) =>
 {
-  const storage = require('../tokenStorage');
+  const storage = require('../tokenStorage.js');
   const doLogout = async event =>     
   {
     if(storage.retrieveToken('user_data') != null)
@@ -26,16 +26,32 @@ const ProfilePage = ({navigation}) =>
         <View style = {styles.imageSection}>
           <Image
           style={styles.image}
-          source={require('../components/Logo.png')}
+          source={require('../components/defaultProfileImage.png')}
           />
         </View>
         <View style = {styles.textSection}>
-          <LoggedInName />
+          <Text style = {{fontSize:23}}>Welcome,</Text>
+          {
+            1==1
+            ?
+            <LoggedInName 
+            size = 'full'
+            font={23}
+            align = 'center'
+            />
+            :null
+          }
+          
         </View>
         <View style = {styles.button}>
           <NavigationButton
           name = 'Edit Profile'
-          doFunction = {() => navigation.navigate('SettingsPage')}
+          doFunction = {() => navigation.push('SettingsPage')}
+          />
+        </View>
+        <View style = {styles.button}>
+          <NavigationButton
+          name = 'Change Password'
           />
         </View>
         <View style = {styles.button}>
@@ -90,10 +106,10 @@ const styles = StyleSheet.create({
   },
   textSection: {
       justifyContent: 'center',
-      alignItems: 'flex-start',
-      height: 150,
+      alignItems: 'center',
+      height: 75,
       width: 150,
-      marginTop: 20,
+      marginTop: 30,
   },
   image: {
       height: 150,
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '85%',
-    marginTop: 20,
+    marginTop: 30,
   },
 });
 
