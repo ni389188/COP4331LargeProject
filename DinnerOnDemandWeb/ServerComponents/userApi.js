@@ -40,8 +40,6 @@ exports.setApp = function (app, MongoClient)
         var Email = req.body.email;
         var Password = req.body.password;
 
-        console.log(Email + Password);
-
         User.findOne({Email:Email, Password:Password}, function(err, result) {
 
             // Error Encountered.
