@@ -1,40 +1,31 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Card } from '@ui-kitten/components';
+import { ThemeContext } from './theme-context';
 
-function RecipeCard({item})
-{
+function RecipeCard({ item }) {
   const navigation = useNavigation();
-  return(
-    // <View style = {styles.container}>
-    //   <TouchableOpacity 
-    //   style = {styles.background}
-    //   onPress = {() =>
-    //   {navigation.navigate('RecipePage', {item})}}
-    //   >
-    //     <View style = {styles.imageSection}>
-    //     <View style = {styles.textSection}>
-    //       <Text style = {styles.buttonText}>Name: {item !== undefined ? item.title : ""}</Text>
-    //     </View>
-    //       <Image
-    //       style={styles.image}
-    //       source={{uri: item !== undefined ? item.image : null}}
-    //       />
-    //     </View>
-    //   </TouchableOpacity>
-    // </View>
+  const themeContext = React.useContext(ThemeContext);
 
-    <TouchableOpacity onPress={() => navigation.navigate('RecipePage', {item})} style={styles.background}>
-      <View style={{alignSelf: "center", alignItems: 'center',}}>
-        <Text style={styles.buttonText}>
-          {item !== undefined ? item.title : ""}
-        </Text>
-        <Image
-          style={styles.image}
-          source={{uri: item !== undefined ? item.image : null}}
-        />
-      </View>
-    </TouchableOpacity>
+  const header = () => {
+    return (
+      <Text style={[styles.buttonText, {color: themeContext.theme === "light" ? "black" : "white"}]}>
+        {item !== undefined ? item.title : ""}
+      </Text>
+    )
+  }
+
+  return (
+    <Card header={header}
+      style={{ margin: 2, width: "80%", alignSelf: "center", borderColor: "red", marginBottom: 15 }} 
+      onPress={() => navigation.navigate('RecipePage', { item })}
+    >
+      <Image
+        style={styles.image}
+        source={{ uri: item !== undefined ? item.image : null }}
+      />
+    </Card>
   );
 };
 
@@ -56,12 +47,14 @@ const styles = StyleSheet.create({
   image: {
     height: 173,
     width: 234,
-    alignContent: "center"
+    alignContent: "center",
+    alignSelf: "center"
   },
   buttonText: {
     fontSize: 18,
     margin: 10,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    alignSelf: "center"
   },
 })
 

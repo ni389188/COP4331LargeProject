@@ -35,7 +35,7 @@ function MyTabBar({ state, descriptors, navigation }) {
                         navigation.navigate(route.name);
                     }
 
-                    // themeContext.toggleTheme()
+                    themeContext.toggleTheme()
                 };
 
                 const onLongPress = () => {
