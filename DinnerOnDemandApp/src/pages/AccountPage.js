@@ -25,13 +25,13 @@ const AccountPage = ({navigation}) =>
       <View style = {styles.buttonOrientation}>
         <NavigationButton
         name = 'Login'
-        doFunction = {() => navigation.navigate('LoginPage')}
+        doFunction = {() => navigation.push('LoginPage')}
         />
       </View>
       <View style = {styles.buttonOrientation}>
         <NavigationButton
         name = 'Register'
-        doFunction = {() => navigation.navigate('RegisterPage')}
+        doFunction = {() => navigation.push('RegisterPage')}
         />
       </View>
     </View>
