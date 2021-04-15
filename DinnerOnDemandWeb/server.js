@@ -29,32 +29,8 @@ userRoutes.setApp(app);
 var recipeRoutes = require("./ServerComponents/recipeApi.js");
 recipeRoutes.setAppRecipe(app);
 
-// **********************HARD CODED API*********************************
-
-var recipeList = [  'Tomato',  'Cheese',  'Apple',  'Pepper',  'Potato'];
-app.post('/api/addrecipe', async (req, res, next) =>
-{  
-    // incoming: userId, color  
-    // outgoing: error  
-    const { userId, recipe } = req.body;  
-    const newRecipe = {Recipe:recipe,UserId:userId};  
-    var error = '';  
-    
-    try  
-    {    
-        const db = client.db();    
-        const result = db.collection('Recipes').insertOne(newRecipe);  
-    }  
-    catch(e)  
-    {    
-        error = e.toString();  
-    }
-    recipeList.push( recipe );  
-    var ret = { error: error };  
-    res.status(200).json(ret);
-});
-
-// **********************HARD CODED API*********************************
+var customRecipeRoutes = require("./ServerComponents/customRecipeApi");
+customRecipeRoutes.setAppCustomRecipe(app);
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

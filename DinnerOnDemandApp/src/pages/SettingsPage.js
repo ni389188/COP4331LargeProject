@@ -236,6 +236,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       height: '100%',
       width: '100%',
+
   },
   body: {
     flex: 6,
