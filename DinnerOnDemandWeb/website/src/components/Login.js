@@ -25,7 +25,7 @@ function Login()
     const doLogin = async event =>     
     {        
         event.preventDefault();        
-        var obj = {Email:loginName.value,Password:loginPassword.value};        
+        var obj = {email:loginName.value,password:loginPassword.value};        
         var js = JSON.stringify(obj);        
         
         try        
@@ -36,7 +36,7 @@ function Login()
         var res = JSON.parse(await response.text());        
         
         // TO-DO add error handling.
-        if(res.ID === 'Failed Login')            
+        if(res.loggedIn === false)            
         {                
             setMessage('User/Password combination incorrect');            
         }            
