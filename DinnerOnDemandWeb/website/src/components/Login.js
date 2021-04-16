@@ -27,10 +27,8 @@ function Login()
     const doLogin = async event =>     
     {        
         event.preventDefault();
-        
-        var hashedPassword = sha256("cop4331" + loginPassword.value).toString();
 
-        var obj = {email:loginName.value,password:hashedPassword};        
+        var obj = {email:loginName.value,password:loginPassword.value};        
         var js = JSON.stringify(obj);        
         
         try        
