@@ -117,6 +117,23 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
               borderWidth: 1, borderRadius: 5,}]}
               source={{uri: item.image}}
             />
+            <View style={{flexDirection: "row", marginTop: 10}}>
+              {/* Add/Remove from Recipes */}
+              <TouchableOpacity onPress={() => null} style={{alignItems: "center"}}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/unlike.png')} />
+                <Text>Add Recipe</Text>
+              </TouchableOpacity>
+              {/* Add to Shopping List */}
+              <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/plus.png')} />
+                <Text>Add to Cart</Text>
+              </TouchableOpacity>
+              {/* Share */}
+              <TouchableOpacity onPress={() => tweetNow()} style={{alignItems: "center"}}>
+                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/share.png')} />
+                <Text>Share</Text>
+              </TouchableOpacity>
+            </View>
             {/* Ingredients */}
             <Text style={{fontSize: 20, fontWeight: "bold"}}>Ingredients</Text>
             <View>
@@ -170,24 +187,6 @@ const RecipePage = ({ navigation, route : {params : {item}} }) =>
                 :
                   <Text>No Instructions</Text>
               }
-            </View>
-
-            <View style={{flexDirection: "row", marginTop: 10}}>
-              {/* Add/Remove from Recipes */}
-              <TouchableOpacity onPress={() => null} style={{alignItems: "center"}}>
-                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/unlike.png')} />
-                <Text>Add Recipe</Text>
-              </TouchableOpacity>
-              {/* Add to Shopping List */}
-              <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
-                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/plus.png')} />
-                <Text>Add to Cart</Text>
-              </TouchableOpacity>
-              {/* Share */}
-              <TouchableOpacity onPress={() => tweetNow()} style={{alignItems: "center"}}>
-                <Image style={{width: 30, height: 30, marginBottom: 5}} source={require('../components/share.png')} />
-                <Text>Share</Text>
-              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>
