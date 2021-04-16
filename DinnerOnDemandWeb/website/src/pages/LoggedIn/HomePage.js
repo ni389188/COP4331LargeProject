@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
