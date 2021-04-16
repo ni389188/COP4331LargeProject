@@ -16,6 +16,11 @@ const userModel = mongoose.Schema({
     Password: reqString,
     FirstName: reqString, 
     LastName: reqString, 
+    VerificationCode: reqString,
+    IsVerified: {
+        type: Boolean,
+        required: true
+    } 
 })
 userModel.plugin(uniqueValidator)
 

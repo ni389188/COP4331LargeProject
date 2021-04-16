@@ -31,17 +31,11 @@ const ProfilePage = ({navigation}) =>
         </View>
         <View style = {styles.textSection}>
           <Text style = {{fontSize:23}}>Welcome,</Text>
-          {
-            1==1
-            ?
             <LoggedInName 
             size = 'full'
             font={23}
             align = 'center'
             />
-            :null
-          }
-          
         </View>
         <View style = {styles.button}>
           <NavigationButton
