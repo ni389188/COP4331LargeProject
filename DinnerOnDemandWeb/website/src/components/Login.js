@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import sha256 from 'crypto-js/sha256'
-
 
 function Login()
 {    
@@ -52,7 +50,7 @@ function Login()
             window.location.href = '/COP4331LargeProject';            
         } 
         
-        //setMessage("the lenght is: " + JSON.stringify(res));
+
     }        
     catch(e)        
     {            
@@ -67,11 +65,11 @@ function Login()
                 Welcome Back. Log In Below!
             </Card.Title>
             <Form onSubmit={doLogin}>
-                <Form.Group controlId="loginName" ref={(c) => loginName = c}>
-                    <Form.Control type="email" placeholder="Enter Email" />
+                <Form.Group controlId="loginName">
+                    <Form.Control type="email" placeholder="Enter Email" ref={(c) => loginName = c} />
                 </Form.Group>
-                <Form.Group controlId="loginPassword" ref={(c) => loginPassword = c}>
-                    <Form.Control type="password" placeholder="Enter Password" />
+                <Form.Group controlId="loginPassword">
+                    <Form.Control type="password" placeholder="Enter Password" ref={(c) => loginPassword = c}/>
                 </Form.Group>
                 <Button type="submit" controlId="loginButton" onClick={doLogin}>Log In</Button>
                 <span id="loginResult">{message}</span>
