@@ -5,6 +5,7 @@ import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
+import jwt_decode from 'jwt-decode';
 
 const SettingsPage = ({navigation}) =>
 {
@@ -13,18 +14,70 @@ const SettingsPage = ({navigation}) =>
   const [text, onChangeText] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const app_name = 'cop4331din';
+  function buildPath(route)
+  {    
+    if (process.env.NODE_ENV === 'production')     
+    {        
+      return 'https://' + app_name +  '.herokuapp.com/' + route;
+    }
+    else    
+    {                
+      return 'http://10.0.2.2:5000/' + route;  
+    }
+  };
+
   const doDelete = async event =>     
   {
-    if(storage.retrieveToken('user_data') != null)
-    {
-      storage.removeToken('user_data');
+    var ud = await jwt_decode(await storage.retrieveToken());
+    await storage.removeToken('user_data');
+    var obj = {_id:ud.userId};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/delete'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());   
+      if(res == 'success')
+      {
+        alert("Account has been deleted. Thank you for using Dinner On Demand!");
+        navigation.navigate('AccountPage');
+      }
+      else
+      {
+        alert(res.err)
+      }
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());                 
     }
-    navigation.navigate('AccountPage');
   };
 
   const doSave = async event =>
   {
-    navigation.push('NavigationBar');
+    event.preventDefault();
+    var ud = await jwt_decode(await storage.retrieveToken());
+    var obj = {FirstName:firstName,LastName:lastName, _id:ud.userId};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/update'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());
+      if(res.accessToken)            
+      {                
+        if(storage.retrieveToken('user_data') != null)
+        {
+          storage.removeToken('user_data');
+        }
+        storage.storeToken(res);
+        navigation.push('NavigationBar');   
+      }      
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());                 
+    }   
   };
 
   return(
@@ -190,7 +243,7 @@ const SettingsPage = ({navigation}) =>
           ?
           <>
             <View style = {[styles.section, {flex: 2}]}>
-              <Text style = {styles.deleteText}>Are you sure you want to delete your account? This Action is irreversible.</Text>
+              <Text style = {styles.deleteText}>Are you sure you want to delete your account? This action is IRREVERSIBLE.</Text>
             </View>
             <View style = {styles.section}>
               <NavigationButton
