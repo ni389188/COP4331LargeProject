@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
+import sha256 from 'crypto-js/sha256'
+
 
 function Login()
 {    
@@ -24,8 +26,11 @@ function Login()
 
     const doLogin = async event =>     
     {        
-        event.preventDefault();        
-        var obj = {email:loginName.value,password:loginPassword.value};        
+        event.preventDefault();
+        
+        var hashedPassword = sha256("cop4331" + loginPassword.value).toString();
+
+        var obj = {email:loginName.value,password:hashedPassword};        
         var js = JSON.stringify(obj);        
         
         try        

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import CardDeck from 'react-bootstrap/CardDeck'
+import sha256 from 'crypto-js/sha256'
 
 function Register()
 {    
@@ -39,7 +40,10 @@ function Register()
         // If passwords matched then continue
         else {
             
-            var obj = {FirstName: firstName.value, LastName: lastName.value, Email: email.value, Password: password.value};  
+            // Uses nounce "cop4331" and sha256 to hash password.
+            var hashedPassword = sha256("cop4331" + password.value).toString();
+
+            var obj = {firstName: firstName.value, lastName: lastName.value, email: email.value, password: hashedPassword};  
             var js = JSON.stringify(obj);
             
             try        
