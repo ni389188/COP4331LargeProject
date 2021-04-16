@@ -39,7 +39,7 @@ function Register()
         // If passwords matched then continue
         else {
             
-            var obj = {FirstName: firstName.value, LastName: lastName.value, Email: email.value, Password: password.value};  
+            var obj = {firstName: firstName.value, lastName: lastName.value, email: email.value, password: password.value};  
             var js = JSON.stringify(obj);
             
             try        
