@@ -5,18 +5,24 @@ require('../ServerComponents/dbConfig')();
 
 const User = require('./models/user.model');
 
+const sha256 = require('crypto-js/sha256');
+
+
 exports.setApp = function (app, MongoClient)
 {
     app.post('/api/register', async (req, res, next) => 
     {  
         var randomNumber = Math.random().toString().substr(2,4);
 
+        // Concats "cop4331" and password before hashing.
+        var hashedPassword = sha256("cop4331" + req.body.password).toString();
+
         const newUser = new User({ 
             _id: new mongoose.Types.ObjectId(),
             FirstName: req.body.firstName,
             LastName: req.body.lastName, 
             Email: req.body.email, 
-            Password: req.body.password,
+            Password: hashedPassword,
             VerificationCode: randomNumber,
             IsVerified: false
         });
@@ -42,9 +48,10 @@ exports.setApp = function (app, MongoClient)
     app.post('/api/login', async (req, res, next) => 
     {  
         var Email = req.body.email;
-        var Password = req.body.password;
+        var hashedPassword = sha256("cop4331" + req.body.password).toString();
 
-        User.findOne({Email:Email, Password:Password}, function(err, result) {
+
+        User.findOne({Email:Email, Password:hashedPassword}, function(err, result) {
 
             // Error Encountered.
             if(err) {
