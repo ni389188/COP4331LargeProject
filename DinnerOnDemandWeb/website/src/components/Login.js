@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import sha256 from 'crypto-js/sha256'
+
+
 function Login()
 {    
 
@@ -24,7 +27,8 @@ function Login()
 
     const doLogin = async event =>     
     {        
-        event.preventDefault();        
+        event.preventDefault();
+
         var obj = {email:loginName.value,password:loginPassword.value};        
         var js = JSON.stringify(obj);        
         
