@@ -30,11 +30,28 @@ const SettingsPage = ({navigation}) =>
 
   const doDelete = async event =>     
   {
-    if(storage.retrieveToken('user_data') != null)
-    {
-      storage.removeToken('user_data');
+    var ud = await jwt_decode(await storage.retrieveToken());
+    await storage.removeToken('user_data');
+    var obj = {_id:ud.userId};
+    var js = JSON.stringify(obj);
+    try        
+    {                
+      const response = await fetch(buildPath('api/delete'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());   
+      if(res == 'success')
+      {
+        alert("Account has been deleted. Thank you for using Dinner On Demand!");
+        navigation.navigate('AccountPage');
+      }
+      else
+      {
+        alert(res.err)
+      }
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());                 
     }
-    navigation.navigate('AccountPage');
   };
 
   const doSave = async event =>
@@ -226,7 +243,7 @@ const SettingsPage = ({navigation}) =>
           ?
           <>
             <View style = {[styles.section, {flex: 2}]}>
-              <Text style = {styles.deleteText}>Are you sure you want to delete your account? This Action is irreversible.</Text>
+              <Text style = {styles.deleteText}>Are you sure you want to delete your account? This action is IRREVERSIBLE.</Text>
             </View>
             <View style = {styles.section}>
               <NavigationButton

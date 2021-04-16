@@ -80,4 +80,16 @@ exports.setApp = function (app, MongoClient)
             res.status(400).json(err);
         });
     });
+
+    app.post('/api/delete', async (req, res, next) => 
+    {  
+        // Update user DB.
+        User.findByIdAndRemove(req.body._id).then(result => {
+            res.status(200).json("success");
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    });
 }
