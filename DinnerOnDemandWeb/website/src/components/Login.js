@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 import sha256 from 'crypto-js/sha256'
 
 
@@ -61,26 +62,23 @@ function Login()
 };
 
     return (
-        <CardDeck>
-            <Card>
-                <Card.Body>
-                    <div id="loginDiv">
-                        <form onSubmit={doLogin}>
-                            <Card.Title>
-                                <span id="inner-title">Welcome Back. Log In Below!</span><br />
-                            </Card.Title>
-                            <Card.Text>
-                                <input type="text" id="loginName" placeholder="Email/Username" ref={(c) => loginName = c} /><br />
-                                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
-                                <input type="submit" id="loginButton" class="buttons" value="Log In" onClick={doLogin} /><br />
-                            </Card.Text>
-                        </form>
-                        <span id="loginResult">{message}</span>
-                    </div>
-                </Card.Body>
-            </Card>
-
-        </CardDeck> 
+        <Card>
+            <Card.Title>
+                Welcome Back. Log In Below!
+            </Card.Title>
+            <Form onSubmit={doLogin}>
+                <Form.Group controlId="loginName" ref={(c) => loginName = c}>
+                    <Form.Control type="email" placeholder="Enter Email" />
+                </Form.Group>
+                <Form.Group controlId="loginPassword" ref={(c) => loginPassword = c}>
+                    <Form.Control type="password" placeholder="Enter Password" />
+                </Form.Group>
+                <Button type="submit" controlId="loginButton" onClick={doLogin}>Log In</Button>
+                <span id="loginResult">{message}</span>
+                <br />
+                <a href="../pages/RegisterPage">Need to Register? Click Here</a>
+            </Form>
+        </Card >
     );
 };
     
