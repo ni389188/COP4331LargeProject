@@ -11,7 +11,6 @@ function HomePage({
 }) {
     return (
         <>
-            <NavBar />
             <div
                 className={lightBg ? 'homePage' : 'homePage darkBg'}
             >
@@ -29,11 +28,9 @@ function HomePage({
                         <div className='col'>
                             <div className='imageWrapper'>
                                 <img src={img} alt={alt} className='homeImage' />
-                                <Link to='/home'>
+                                <Link to={buttonName.includes("Search") ? '/pages/search' : '/home'}>
                                     <Button variant="primary" size="lg" block>{buttonName}</Button>
-                                 
                                 </Link>
-                               
                             </div>
                         </div>
                     </div>
