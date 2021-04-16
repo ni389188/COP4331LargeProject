@@ -58,4 +58,26 @@ exports.setApp = function (app, MongoClient)
             }
         })
     });
+
+    app.post('/api/update', async (req, res, next) => 
+    {  
+        var obj = {};
+        if(req.body.FirstName != '')
+        {
+            obj.FirstName = req.body.FirstName;
+        }
+        if(req.body.LastName != '')
+        {
+            obj.LastName = req.body.LastName;
+        }
+        // Update user DB.
+        User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {
+            ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
+            res.status(200).json(ret);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    });
 }
