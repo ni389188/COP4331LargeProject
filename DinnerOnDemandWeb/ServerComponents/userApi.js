@@ -9,13 +9,16 @@ exports.setApp = function (app, MongoClient)
 {
     app.post('/api/register', async (req, res, next) => 
     {  
+        var randomNumber = Math.random().toString().substr(2,4);
 
         const newUser = new User({ 
             _id: new mongoose.Types.ObjectId(),
-            FirstName: req.body.FirstName,
-            LastName: req.body.LastName, 
-            Email: req.body.Email, 
-            Password: req.body.Password
+            FirstName: req.body.firstName,
+            LastName: req.body.lastName, 
+            Email: req.body.email, 
+            Password: req.body.password,
+            VerificationCode: randomNumber,
+            IsVerified: false
         });
         
         // Stores into the DB.
@@ -25,7 +28,8 @@ exports.setApp = function (app, MongoClient)
                 ID: result._id,
                 FirstName: result.FirstName,
                 LastName: result.LastName,
-                Email: result.Email
+                Email: result.Email,
+                VerificationCode: result.VerificationCode
             });
         })
         .catch(err => {
