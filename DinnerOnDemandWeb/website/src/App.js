@@ -12,7 +12,6 @@ import NavBar from './components/NavBar';
 function App() {  
   return (
     <>
-      <NavBar />
       <Router >      
         <Switch>        
           <Route path="/" exact>          
