@@ -37,6 +37,7 @@ import CreatePage from './src/pages/CreatePage';
 import ResultsPage from './src/pages/ResultsPage';
 import CurrentRecipesPage from './src/pages/CurrentRecipesPage';
 import ProfilePage from './src/pages/ProfilePage';
+import ChangePasswordPage from './src/pages/ChangePasswordPage';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -73,6 +74,7 @@ const App: () => React$Node = () =>
                   <Stack.Screen name="WIPPage" component={WIPPage} />
                   <Stack.Screen name="AccountPage" component={AccountPage} />
                   <Stack.Screen name="NavigationBar" component={NavigationBar} />
+                  <Stack.Screen name="ChangePasswordPage" component={ChangePasswordPage} />
                   <Stack.Screen name="LoginPage" component={LoginPage} />
                   <Stack.Screen name="ForgotPasswordPage" component={ForgotPasswordPage} />
                   <Stack.Screen name="RegisterPage" component={RegisterPage} />
