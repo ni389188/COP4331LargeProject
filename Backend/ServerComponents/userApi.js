@@ -62,13 +62,26 @@ exports.setApp = function (app, MongoClient)
     app.post('/api/update', async (req, res, next) => 
     {  
         var obj = {};
-        if(req.body.FirstName != '')
+        if(req.body.FirstName != '' && req.body.FirstName != undefined)
         {
             obj.FirstName = req.body.FirstName;
         }
-        if(req.body.LastName != '')
+        if(req.body.LastName != '' && req.body.LastName != undefined)
         {
             obj.LastName = req.body.LastName;
+        }
+        if(req.body.password != '' && req.body.Password != undefined)
+        {
+            await User.findById(req.body._id, function(err, result) {
+                if (result.Password == sha256("cop4331" + req.body.OldPassword).toString()){
+                    obj.Password = sha256("cop4331" + req.body.Password).toString();
+                }
+            })
+            if(obj.Password == undefined)
+            {
+                res.status(400).json("Current password is incorrect");
+                return;
+            }
         }
         // Update user DB.
         User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {

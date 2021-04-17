@@ -46,6 +46,7 @@ const ProfilePage = ({navigation}) =>
         <View style = {styles.button}>
           <NavigationButton
           name = 'Change Password'
+          doFunction = {() => navigation.navigate('ChangePasswordPage')}
           />
         </View>
         <View style = {styles.button}>
