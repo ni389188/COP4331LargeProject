@@ -1,5 +1,5 @@
 import React from 'react'
-import HomePage from '../HomePage'
+import HomePage from '../LoggedIn/HomePage'
 import {homeObject1,homeObject2,homeObject3} from './Data'
 
 

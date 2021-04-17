@@ -48,6 +48,8 @@ exports.setApp = function (app, MongoClient)
     app.post('/api/login', async (req, res, next) => 
     {  
         var Email = req.body.email;
+
+        // Concats "cop4331" and password before hashing.
         var hashedPassword = sha256("cop4331" + req.body.password).toString();
 
 

@@ -83,7 +83,6 @@ exports.setApp = function (app, MongoClient)
                 return;
             }
         }
-        console.log("hi")
         // Update user DB.
         User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );

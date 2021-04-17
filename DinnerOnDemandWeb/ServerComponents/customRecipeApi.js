@@ -46,7 +46,7 @@ exports.setAppCustomRecipe = function (app, MongoClient)
             console.log(err);   
 
             // Respond with error.
-            res.status(400).json(err);
+            res.status(400).json({err, Added:false});
 
         });
     });
