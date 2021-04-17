@@ -47,7 +47,7 @@ function Login()
             var user = {firstName:res.FirstName,lastName:res.LastName,id:res.ID}                
             localStorage.setItem('user_data', JSON.stringify(user));                
             setMessage('');                
-            window.location.href = '/COP4331LargeProject';            
+            window.location.href = '/pages/HomePageExtras/Home';            
         } 
         
 

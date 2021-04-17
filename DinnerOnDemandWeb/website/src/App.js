@@ -8,6 +8,8 @@ import WelcomePage from './pages/WelcomePage';
 import Home from './pages/HomePageExtras/Home'
 import SearchRecipe from './pages/SearchRecipe';
 import NavBar from './components/NavBar';
+import Favorites from './pages/Favorites';
+import CustomRecipe from './pages/CustomRecipe';
 
 function App() {  
   return (
@@ -31,7 +33,13 @@ function App() {
           </Route>
           <Route path="/pages/search">
             <SearchRecipe />
-          </Route>    
+          </Route>
+          <Route path="/pages/favorites">
+            <Favorites />
+          </Route>
+          <Route path="/pages/customs">
+            <CustomRecipe />
+          </Route>
           <Redirect to="/" />  
         </Switch>       
       </Router>
