@@ -83,6 +83,11 @@ exports.setApp = function (app, MongoClient)
                 return;
             }
         }
+        if(obj == {})
+        {
+            res.status(200).json("empty");
+            return;
+        }
         // Update user DB.
         User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
@@ -104,5 +109,10 @@ exports.setApp = function (app, MongoClient)
             console.log(err);
             res.status(400).json(err);
         });
+    });
+
+    app.post('/api/recover', async (req, res, next) =>
+    {
+        res.status(200).json(req.body.Email)
     });
 }
