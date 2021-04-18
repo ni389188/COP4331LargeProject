@@ -110,4 +110,9 @@ exports.setApp = function (app, MongoClient)
             res.status(400).json(err);
         });
     });
+
+    app.post('/api/recover', async (req, res, next) =>
+    {
+        res.status(200).json(req.body.Email)
+    });
 }
