@@ -84,20 +84,20 @@ function Register()
                 Need to Register? Sign Up Below!
             </Card.Title>
             <Form onSubmit={doRegister}>
-                <Form.Group controlId="firstName" ref={(c) => firstName = c}>
-                    <Form.Control type="text" placeholder="First Name" />
+                <Form.Group controlId="firstName">
+                    <Form.Control type="text" placeholder="First Name" ref={(c) => firstName = c}/>
                 </Form.Group>
-                <Form.Group controlId="lastName" ref={(c) => lastName = c}>
-                    <Form.Control type="text" placeholder="Last Name" />
+                <Form.Group controlId="lastName" >
+                    <Form.Control type="text" placeholder="Last Name" ref={(c) => lastName = c}/>
                 </Form.Group>
-                <Form.Group controlId="loginName" ref={(c) => email = c}>
-                    <Form.Control type="text" placeholder="Email" />
+                <Form.Group controlId="loginName">
+                    <Form.Control type="text" placeholder="Email" ref={(c) => email = c}/>
                 </Form.Group>
-                <Form.Group controlId="loginPassword" ref={(c) => password = c}>
-                    <Form.Control type="password" placeholder="Password" />
+                <Form.Group controlId="loginPassword">
+                    <Form.Control type="password" placeholder="Password" ref={(c) => password = c}/>
                 </Form.Group>
-                <Form.Group controlId="confirmPassword" ref={(c) => confirmPassword = c}>
-                    <Form.Control type="password" placeholder="Please Re-Enter Password" />
+                <Form.Group controlId="confirmPassword">
+                    <Form.Control type="password" placeholder="Please Re-Enter Password" ref={(c) => confirmPassword = c}/>
                 </Form.Group>
                 <Button type="submit" controlId="loginButton" onClick={doRegister}>Register</Button>
                 <span id="registerResult">{message}</span>

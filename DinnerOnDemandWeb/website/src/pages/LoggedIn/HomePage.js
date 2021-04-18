@@ -28,7 +28,7 @@ function HomePage({
                         <div className='col'>
                             <div className='imageWrapper'>
                                 <img src={img} alt={alt} className='homeImage' />
-                                <Link to={buttonName.includes("Search") ? '/pages/search' : '/home'}>
+                                <Link to={buttonName.includes("Search") ? '/pages/search' : buttonName.includes("Add") ? '/pages/customs' : '/pages/favorites'}>
                                     <Button variant="primary" size="lg" block>{buttonName}</Button>
                                 </Link>
                             </div>
