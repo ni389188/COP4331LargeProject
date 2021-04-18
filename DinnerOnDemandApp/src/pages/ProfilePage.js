@@ -77,7 +77,10 @@ const styles = StyleSheet.create({
   body: {
     flex: 11,
     alignItems: 'center',
-    width: '100%',
+    width: '85%',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    marginVertical: 20,
   },
   footer: {
     flex: 1.5,
@@ -102,8 +105,8 @@ const styles = StyleSheet.create({
   textSection: {
       justifyContent: 'center',
       alignItems: 'center',
-      height: 75,
-      width: 150,
+      height: '15%',
+      width: '85%',
       marginTop: 30,
   },
   image: {
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '85%',
-    marginTop: 30,
+    marginTop: 20,
   },
 });
 

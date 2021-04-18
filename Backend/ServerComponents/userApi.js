@@ -83,6 +83,11 @@ exports.setApp = function (app, MongoClient)
                 return;
             }
         }
+        if(obj == {})
+        {
+            res.status(200).json("empty");
+            return;
+        }
         // Update user DB.
         User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );

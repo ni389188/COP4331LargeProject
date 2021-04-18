@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function NavigationButton({name, doFunction, color})
+function NavigationButton({name, doFunction, custom})
 {
   const navigation = useNavigation();
-
   return(
     <View style = {styles.container}>
       <TouchableOpacity 
-        style = {[styles.buttonBackground, color?{backgroundColor:color}:null]}
+        style = {[styles.buttonBackground, custom]}
         onPress = {doFunction}
         >
         <Text style = {styles.buttonText}>{name}</Text>

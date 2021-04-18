@@ -249,7 +249,7 @@ const SettingsPage = ({navigation}) =>
               <NavigationButton
               name = 'Delete Account'
               doFunction = {doDelete}
-              color = 'red'
+              custom = {{backgroundColor: 'red'}}
               />
             </View>
             <View style = {styles.section}>
@@ -295,11 +295,19 @@ const styles = StyleSheet.create({
     flex: 6,
     width: '85%',
     justifyContent: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 20,
+    marginBottom: 20,
   },
   altBody: {
     flex: 11,
     width: '85%',
     justifyContent: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 20,
+    marginVertical: 20,
   },
   footer: {
     flex: 1.5,
@@ -317,7 +325,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   nameDivide:{
-    flex:4,
+    flex:3,
     height:'100%',
     width:'100%',
     alignItems: 'center',
