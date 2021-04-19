@@ -1,5 +1,5 @@
 import React from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../../components/NavBar';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import './HomePage.css';
@@ -11,7 +11,6 @@ function HomePage({
 }) {
     return (
         <>
-            <NavBar />
             <div
                 className={lightBg ? 'homePage' : 'homePage darkBg'}
             >
@@ -29,11 +28,9 @@ function HomePage({
                         <div className='col'>
                             <div className='imageWrapper'>
                                 <img src={img} alt={alt} className='homeImage' />
-                                <Link to='/home'>
+                                <Link to={buttonName.includes("Search") ? '/pages/search' : buttonName.includes("Add") ? '/pages/customs' : '/pages/favorites'}>
                                     <Button variant="primary" size="lg" block>{buttonName}</Button>
-                                 
                                 </Link>
-                               
                             </div>
                         </div>
                     </div>

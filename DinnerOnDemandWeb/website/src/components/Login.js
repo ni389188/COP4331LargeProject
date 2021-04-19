@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 function Login()
 {    
@@ -24,7 +25,8 @@ function Login()
 
     const doLogin = async event =>     
     {        
-        event.preventDefault();        
+        event.preventDefault();
+
         var obj = {email:loginName.value,password:loginPassword.value};        
         var js = JSON.stringify(obj);        
         
@@ -45,10 +47,10 @@ function Login()
             var user = {firstName:res.FirstName,lastName:res.LastName,id:res.ID}                
             localStorage.setItem('user_data', JSON.stringify(user));                
             setMessage('');                
-            window.location.href = '/COP4331LargeProject';            
+            window.location.href = '/pages/HomePageExtras/Home';            
         } 
         
-        //setMessage("the lenght is: " + JSON.stringify(res));
+
     }        
     catch(e)        
     {            
@@ -58,26 +60,23 @@ function Login()
 };
 
     return (
-        <CardDeck>
-            <Card>
-                <Card.Body>
-                    <div id="loginDiv">
-                        <form onSubmit={doLogin}>
-                            <Card.Title>
-                                <span id="inner-title">Welcome Back. Log In Below!</span><br />
-                            </Card.Title>
-                            <Card.Text>
-                                <input type="text" id="loginName" placeholder="Email/Username" ref={(c) => loginName = c} /><br />
-                                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
-                                <input type="submit" id="loginButton" class="buttons" value="Log In" onClick={doLogin} /><br />
-                            </Card.Text>
-                        </form>
-                        <span id="loginResult">{message}</span>
-                    </div>
-                </Card.Body>
-            </Card>
-
-        </CardDeck> 
+        <Card>
+            <Card.Title>
+                Welcome Back. Log In Below!
+            </Card.Title>
+            <Form onSubmit={doLogin}>
+                <Form.Group controlId="loginName">
+                    <Form.Control type="email" placeholder="Enter Email" ref={(c) => loginName = c} />
+                </Form.Group>
+                <Form.Group controlId="loginPassword">
+                    <Form.Control type="password" placeholder="Enter Password" ref={(c) => loginPassword = c}/>
+                </Form.Group>
+                <Button type="submit" controlId="loginButton" onClick={doLogin}>Log In</Button>
+                <span id="loginResult">{message}</span>
+                <br />
+                <a href="../pages/RegisterPage">Need to Register? Click Here</a>
+            </Form>
+        </Card >
     );
 };
     

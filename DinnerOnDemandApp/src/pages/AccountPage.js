@@ -6,14 +6,6 @@ import NavigationButton from '../components/NavigationButton';
 
 const AccountPage = ({navigation}) =>
 {
-  const storage = require('../tokenStorage');
-  useEffect(() =>
-  {
-    if(storage.retrieveToken('user_data') != null)
-    {
-      navigation.navigate('NavigationBar');
-    }
-  });
   return(
     <View style = {styles.container}>
       <View style={styles.logoOrientation}>
@@ -25,13 +17,13 @@ const AccountPage = ({navigation}) =>
       <View style = {styles.buttonOrientation}>
         <NavigationButton
         name = 'Login'
-        doFunction = {() => navigation.navigate('LoginPage')}
+        doFunction = {() => navigation.push('LoginPage')}
         />
       </View>
       <View style = {styles.buttonOrientation}>
         <NavigationButton
         name = 'Register'
-        doFunction = {() => navigation.navigate('RegisterPage')}
+        doFunction = {() => navigation.push('RegisterPage')}
         />
       </View>
     </View>

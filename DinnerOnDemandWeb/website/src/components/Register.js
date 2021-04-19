@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
-import CardDeck from 'react-bootstrap/CardDeck'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 function Register()
 {    
@@ -45,7 +46,7 @@ function Register()
         // If passwords matched then continue
         else {
             
-            var obj = {FirstName: firstName.value, LastName: lastName.value, Email: email.value, Password: password.value};  
+            var obj = {firstName: firstName.value, lastName: lastName.value, email: email.value, password: password.value};  
             var js = JSON.stringify(obj);
             
             try        
@@ -94,29 +95,31 @@ function Register()
     }       
 };
 
-    return(      
-        <CardDeck>
-            <Card>
-            <Card.Body>
-                <div id="registerDiv">
-                    <form onSubmit={doRegister}>
-                        <Card.Title>
-                            <span id="inner-title">Need to Register? Sign Up Below!</span><br />
-                        </Card.Title>
-                        <Card.Text>
-                            <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
-                            <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
-                            <input type="text" id="loginName" placeholder="Email/Username" ref={(c) =>  email = c} /><br />
-                            <input type="password" id="loginPassword" placeholder="Password" ref={(c) => password = c} /><br />
-                            <input type="password" id="confirmPassword" placeholder="Plese Re-enter the Password" ref={(c) => confirmPassword = c} /><br />
-                            <input type="submit" id="loginButton" class="buttons" value="Register" onClick={doRegister} /><br />
-                        </Card.Text>
-                    </form>
-                    <span id="registerResult">{message}</span>
-                </div>
-            </Card.Body>
+    return(     
+        <Card>
+            <Card.Title>
+                Need to Register? Sign Up Below!
+            </Card.Title>
+            <Form onSubmit={doRegister}>
+                <Form.Group controlId="firstName">
+                    <Form.Control type="text" placeholder="First Name" ref={(c) => firstName = c}/>
+                </Form.Group>
+                <Form.Group controlId="lastName" >
+                    <Form.Control type="text" placeholder="Last Name" ref={(c) => lastName = c}/>
+                </Form.Group>
+                <Form.Group controlId="loginName">
+                    <Form.Control type="text" placeholder="Email" ref={(c) => email = c}/>
+                </Form.Group>
+                <Form.Group controlId="loginPassword">
+                    <Form.Control type="password" placeholder="Password" ref={(c) => password = c}/>
+                </Form.Group>
+                <Form.Group controlId="confirmPassword">
+                    <Form.Control type="password" placeholder="Please Re-Enter Password" ref={(c) => confirmPassword = c}/>
+                </Form.Group>
+                <Button type="submit" controlId="loginButton" onClick={doRegister}>Register</Button>
+                <span id="registerResult">{message}</span>
+            </Form>
         </Card>
-    </CardDeck>
     );
 };
     

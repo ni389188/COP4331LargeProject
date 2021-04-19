@@ -42,7 +42,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       if(res.LoggedIn)            
       {                
         storage.storeToken(res);
-        navigation.navigate('NavigationBar');   
+        navigation.push('NavigationBar');   
       }            
       else
       {
@@ -58,7 +58,7 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
   return(
     <View style = {styles.container}>
       <View style = {styles.header}>
-        <PageTitle text = "Dinner on Demand" />
+        <PageTitle text = "Dinner on Demand"/>
       </View>
       <View style = {styles.body}>
         <View style = {styles.background}>

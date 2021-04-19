@@ -6,30 +6,44 @@ import LoginPage from './pages/LoginPage';
 import CardPage from './pages/RecipePage';
 import WelcomePage from './pages/WelcomePage';
 import Home from './pages/HomePageExtras/Home'
+import SearchRecipe from './pages/SearchRecipe';
+import NavBar from './components/NavBar';
+import Favorites from './pages/Favorites';
+import CustomRecipe from './pages/CustomRecipe';
 
 function App() {  
   return (
-    <Router >      
-      <Switch>        
-        <Route path="/" exact>          
-          <WelcomePage />      
-        </Route>        
-        <Route path="/COP4331LargeProject" exact>          
-          <CardPage />        
-        </Route>  
-        <Route path="/pages/RegisterPage" exact>          
-          <RegisterPage />        
-        </Route>         
-        <Route path="/pages/LoginPage" exact>          
-          <LoginPage />        
-        </Route> 
-        <Route path="/pages/HomePageExtras/Home" exact>          
-          <Home />        
-        </Route>  
-       
-        <Redirect to="/" />  
-      </Switch>       
-    </Router>  
+    <>
+      <Router >      
+        <Switch>        
+          <Route path="/" exact>          
+            <WelcomePage />      
+          </Route>        
+          <Route path="/COP4331LargeProject" exact>          
+            <CardPage />        
+          </Route>  
+          <Route path="/pages/RegisterPage" exact>          
+            <RegisterPage />        
+          </Route>         
+          <Route path="/pages/LoginPage" exact>          
+            <LoginPage />        
+          </Route> 
+          <Route path="/pages/HomePageExtras/Home" exact>          
+            <Home />        
+          </Route>
+          <Route path="/pages/search">
+            <SearchRecipe />
+          </Route>
+          <Route path="/pages/favorites">
+            <Favorites />
+          </Route>
+          <Route path="/pages/customs">
+            <CustomRecipe />
+          </Route>
+          <Redirect to="/" />  
+        </Switch>       
+      </Router>
+    </>
   );
 }  
     
