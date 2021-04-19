@@ -18,23 +18,6 @@ const CreatePage = ({ navigation }) => {
   const [ingredients, setIngredients] = useState(null);
   const [units, setUnits] = useState([""]);
   const [instructions, setInstructions] = useState(null);
-  const uploadedImage = React.useRef(null);
-  const imageUploader = React.useRef(null);
-  const [fileData, setFileData] = useState('');
-
-  const handleImageUpload = e => {
-    const [file] = e.target.files;
-    if (file) {
-      const reader = new FileReader();
-      const { current } = uploadedImage;
-      current.file = file;
-      reader.onload = e => {
-        current.src = e.target.result;
-        setImage(current.src);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const app_name = 'cop4331din';
 
@@ -117,13 +100,13 @@ const CreatePage = ({ navigation }) => {
       alert(response.customButton);
     } else {
       const source = { uri: response.uri };
-      setFileData('data:image/jpeg;base64,' + response.base64)
+      setImage('data:image/jpeg;base64,' + response.base64)
     }
   }
 
   const renderFileData = () => {
-    if (fileData) {
-      return <Image source={{ uri: fileData }}
+    if (image) {
+      return <Image source={{ uri: image }}
         style={{
           width: 250,
           height: 250,
