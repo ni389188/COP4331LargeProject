@@ -25,6 +25,12 @@ function Register()
     var confirmPassword;    
     const [message,setMessage] = useState('');  
 
+    // Required for email verification
+    const mailgun = require("mailgun-js");
+    const DOMAIN = "sandboxef514b75a9714c9282339dd8b689bcb8.mailgun.org";
+    const mg = mailgun({apiKey: "27353fd7ce350bedb70f14a2d14060c7-a09d6718-746f6e51", domain: DOMAIN});
+
+
     const doRegister = async event =>     
     {   
         // Stops the page from refreshing
@@ -63,8 +69,19 @@ function Register()
             } 
             // The account was created.           
             else            
-            {                
-                setMessage('Account was successfully created');          
+            {          
+                // Setup email information to be sent to user
+                const data = {
+                    from: "Mailgun Sandbox <postmaster@sandboxef514b75a9714c9282339dd8b689bcb8.mailgun.org>",
+                    to: email.value,
+                    subject: "Email Verification",
+                    text: "Please confirm your email to activate your account! https://cop4331din.herokuapp.com"
+                };
+                setMessage('Account was successfully created! Please Verify your Account. An email has been sent to ' + email.value);   
+                // Send the email to the user
+                mg.messages().send(data, function (error, body) {
+                    console.log(body);
+                });    
             } 
             
             //setMessage("the lenght is: " + JSON.stringify(res));
