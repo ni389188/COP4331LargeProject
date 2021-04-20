@@ -35,34 +35,37 @@ const SearchPage = () => {
     const search = async () => {
         setLoading(!loading)
 
-        if (useCustom) {
-            // Call searchrecipe api
-            var js = JSON.stringify({ ingredients: ingredients.replace(" ", ""), limit: "10" });
-            try {
-                const response = await fetch(buildPath('api/searchrecipe'),
+        // if (useCustom)
+        // {
+        // Call searchrecipe api
+        var js = JSON.stringify({ ingredients: ingredients.replace(" ", ""), limit: "10" });
+
+        try {
+            const response = await fetch(buildPath('api/searchrecipe'),
+            {
+                method: 'POST',
+                body: js,
+                headers:
                 {
-                    method: 'post',
-                    body: js,
-                    headers:
-                    {
-                        'Content-Type': 'application/json'
-                    }
-                });
-
-                var res = JSON.parse(await response.text());
-
-                if (res.error) {
-                    alert(res.error);
+                    'Content-Type': 'application/json'
                 }
-                else {
-                    console.log(res)
-                    // storage.storeToken(res);
-                }
+            });
+
+            var res = JSON.parse(await response.text());
+
+            console.log(res)
+
+            if (!res.found) {
+                console.log(res.error);
             }
-            catch (e) {
-                alert(e.toString());
-                return;
+            else {
+                setResults(res.obj)
             }
+        }
+        catch (e) {
+            console.log(e.toString());
+            // return;
+        }
 
             // axios.post(buildPath('api/searchrecipe'),
             // {
@@ -76,15 +79,15 @@ const SearchPage = () => {
             // {
             //     console.log(error);
             // });
-        }
-        else {
-            axios
-            .get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
-            .then((response) => {
-                setResult(response.data)
-                setLoading(false)
-            })
-        }
+        // }
+        // else {
+        //     axios
+        //     .get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
+        //     .then((response) => {
+        //         setResult(response.data)
+        //         setLoading(false)
+        //     })
+        // }
     };
 
     const renderResults = ({ item }) => {

@@ -21,9 +21,6 @@ const ResultsPage = ({navigation, route : {params : {item}}}) =>
             <RecipeCard />
           </View>
         </View>
-        {/* <View style = {styles.footer}>
-          <NavigationBar />
-        </View> */}
       </View>
     );
 };
