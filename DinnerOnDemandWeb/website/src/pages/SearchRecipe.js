@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar';
 import { Card } from "react-bootstrap";
 import { Grid, Row, Col } from "react-bootstrap";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import FlatList from 'flatlist-react';
 
 // import { Container } from './styles';
 
@@ -28,7 +29,7 @@ const SearchRecipe = () => {
         e.preventDefault();
 
         // Call searchrecipe api
-        var js = JSON.stringify({ Ingredients: ingredients.replace(" ", ""), Limit: "10" });
+        var js = JSON.stringify({ Ingredients: ingredients.replace(" ", ""), Limit: "20" });
 
 
         try {
@@ -96,7 +97,70 @@ const SearchRecipe = () => {
 
     }
 
+    let col_1 = []
+    let col_2 = []
+    let col_3 = []
 
+    const doitem = (recipe) =>
+    {
+        return (
+            <div id={recipe.key}>
+                <Card style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={recipe.image} />
+                    <Card.Body>
+                        <Card.Title><h4>{recipe.title}</h4></Card.Title>
+                        <div>
+                            <p className="card-text text-dark">
+                                {
+                                    [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                                    <p>
+                                                        <h5>Ingredient: </h5>{ingredient.originalString}
+                                                    </p>
+                                                    <p>
+                                                        Amount: {ingredient.amount}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </p>
+                        </div>
+                        <>
+                            <ButtonGroup >
+                                <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
+                                <Button variant="outline-dark" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
+                            </ButtonGroup>
+                        </>
+                    </Card.Body>
+                </Card>
+            </div>
+        )
+    }
+
+    const renderResult = (item) => {
+        results.map((recipe, index) => {
+
+            let val = (index % 3) + 1
+
+            switch (val) {
+                case 1:
+                    col_1.push(doitem(recipe));
+                    break;
+                case 2:
+                    col_2.push(doitem(recipe));
+                    break;
+                case 3:
+                    col_3.push(doitem(recipe));
+                    break;
+                default:
+                    break;
+            }
+        })
+    }
 
     return (
         <>
@@ -116,56 +180,14 @@ const SearchRecipe = () => {
                     results.length === 0 ?
                         <p>Search for ingredients/recipes first then the results will be displayed here.</p>
                         :
-                        results.map(recipe => {
-                            return (
-                                <div id={recipe.key}>
-                                    <container>
-                                        <Row>
-                                            <Col>  This is 1st col  </Col>
-                                            <Col>  This is 2nd col  </Col>
-                                            <Col>  This is 3rd col  </Col>
-                                        </Row>
-
-
-                                    </container>
-                                    <Card style={{ width: '18rem' }}>
-                                        <Card.Img variant="top" src={recipe.image} />
-                                        <Card.Body>
-                                            <Card.Title><h4>{recipe.title}</h4></Card.Title>
-                                            <div>
-                                                <p className="card-text text-dark">
-                                                    {
-                                                        [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
-                                                            return (
-                                                                <div key={index}>
-                                                                    <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
-                                                                        <p>
-                                                                            <h5>Ingredient: </h5>{ingredient.originalString}
-                                                                        </p>
-                                                                        <p>
-                                                                            Amount: {ingredient.amount}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </p>
-                                            </div>
-                                            <>
-                                                <ButtonGroup >
-                                                    <Button variant="secondary"  onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
-                                                    <Button variant="outline-dark" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
-                                                </ButtonGroup>
-                                            </>
-
-
-                                        </Card.Body>
-                                    </Card>
-
-                                </div>
-                            )
-                        })
+                        <container>
+                            {renderResult()}
+                            <Row>
+                                <Col id={"col_1"}>  {col_1}  </Col>
+                                <Col id={"col_2"}>  {col_2}  </Col>
+                                <Col id={"col_3"}>  {col_3} </Col>
+                            </Row>
+                        </container>
                 }
             </div>
         </>
