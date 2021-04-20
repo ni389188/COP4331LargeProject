@@ -28,7 +28,7 @@ const Favorites = () =>
         // Takes in userID
         let userID = JSON.parse(localStorage.getItem('user_data')).id;
 
-        var js = JSON.stringify({ userID: userID });
+        var js = JSON.stringify({ UserID: userID });
 
         try {
             const response = await fetch(buildPath('api/getrecipes'),

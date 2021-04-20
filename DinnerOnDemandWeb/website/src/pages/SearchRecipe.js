@@ -28,7 +28,7 @@ const SearchRecipe = () => {
         e.preventDefault();
 
         // Call searchrecipe api
-        var js = JSON.stringify({ ingredients: ingredients.replace(" ", ""), limit: "10" });
+        var js = JSON.stringify({ Ingredients: ingredients.replace(" ", ""), Limit: "10" });
 
 
         try {
@@ -64,7 +64,7 @@ const SearchRecipe = () => {
         // Takes in userID, recipeID = id, title as body
         let userID = JSON.parse(localStorage.getItem('user_data')).id;
 
-        var js = JSON.stringify({ userID: userID, recipeID: id, title: title });
+        var js = JSON.stringify({ UserID: userID, RecipeID: id, Title: title });
 
         try {
             const response = await fetch(buildPath('api/addrecipe'),
