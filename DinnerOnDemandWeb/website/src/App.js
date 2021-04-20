@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import CardPage from './pages/RecipePage';
 import WelcomePage from './pages/WelcomePage';
-import HomePage from './pages/HomePage'
+import HomePage from './pages/HomePage';
 import SearchRecipe from './pages/SearchRecipe';
 import NavBar from './components/NavBar';
 import Favorites from './pages/Favorites';
@@ -29,7 +29,7 @@ function App() {
             <LoginPage />        
           </Route> 
           <Route path="/pages/HomePage" exact>          
-            <Home />        
+            <HomePage />        
           </Route>
           <Route path="/pages/search">
             <SearchRecipe />
