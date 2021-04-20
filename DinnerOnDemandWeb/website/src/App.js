@@ -5,7 +5,7 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import CardPage from './pages/RecipePage';
 import WelcomePage from './pages/WelcomePage';
-import Home from './pages/HomePageExtras/Home'
+import HomePage from './pages/HomePage'
 import SearchRecipe from './pages/SearchRecipe';
 import NavBar from './components/NavBar';
 import Favorites from './pages/Favorites';
@@ -28,7 +28,7 @@ function App() {
           <Route path="/pages/LoginPage" exact>          
             <LoginPage />        
           </Route> 
-          <Route path="/pages/HomePageExtras/Home" exact>          
+          <Route path="/pages/HomePage" exact>          
             <Home />        
           </Route>
           <Route path="/pages/search">
