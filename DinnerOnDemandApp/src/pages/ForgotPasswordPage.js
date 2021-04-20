@@ -26,8 +26,10 @@ const ForgotPasswordPage = ({navigation}) =>
     var js = JSON.stringify(obj);
     try        
     {                
-      const response = await fetch(buildPath('api/recover'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      const response = await fetch(buildPath('api/reset'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());
+      console.log(res);
+      return;
       if(res)            
       {                
         console.log(res);

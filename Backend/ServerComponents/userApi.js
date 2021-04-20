@@ -32,6 +32,12 @@ exports.setApp = function (app, MongoClient)
         // Stores into the DB.
         await newUser.save().then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
+            const data = {
+                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                to: req.body.Email,
+                subject: "Dinner on demand: Please verify your Email",
+                text: "Please confirm your email to activate your account! www.dinnerondemand.com/api/verify/"+randomNumber+"/"+ret.accessToken
+            };
             mailgun.messages().send(data, function (error, body) {
                 console.log(body);
                 res.status(200).json(ret);
@@ -118,10 +124,5 @@ exports.setApp = function (app, MongoClient)
             console.log(err);
             res.status(400).json(err);
         });
-    });
-
-    app.post('/api/recover', async (req, res, next) =>
-    {
-        res.status(200).json(req.body.Email)
     });
 }
