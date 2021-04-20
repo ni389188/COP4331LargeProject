@@ -16,12 +16,12 @@ exports.setAppCustomRecipe = function (app, MongoClient)
         // Create new Recipe using the recipe model.
         const newCustomRecipe = new CustomRecipe({ 
             _id: new mongoose.Types.ObjectId(),
-            UserID: req.body.userID,
-            Title: req.body.title,
-            Image: req.body.image,
-            Ingredients: req.body.ingredients,
-            Units: req.body.units,
-            Instructions: req.body.instructions
+            UserID: req.body.UserID,
+            Title: req.body.Title,
+            Image: req.body.Image,
+            Ingredients: req.body.Ingredients,
+            Units: req.body.Units,
+            Instructions: req.body.Instructions
         });
         
         // Stores into the DB.
@@ -52,18 +52,18 @@ exports.setAppCustomRecipe = function (app, MongoClient)
     });
 
     // Gets recipes the user has added.
-    app.post('/api/getrecipes', async (req, res, next) => 
+    app.post('/api/getcustomrecipes', async (req, res, next) => 
     {   
 
-        if (null == req.body.userID) {
+        if (null == req.body.UserID) {
             res.status(400).json({found:false, errors:'userID required'});
         }
 
         else {
-            var UserID = req.body.userID;
+            var UserID = req.body.UserID;
 
             // Stores into the DB.
-            Recipe.find({UserID:UserID}).then(result => {
+            CustomRecipe.find({UserID:UserID}).then(result => {
                 
                 if (result.length > 0) {
                     res.status(200).json({found:true, recipes: result});

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -7,36 +7,87 @@ import RecipeCard from '../components/RecipeCard';
 import { Button, Layout, Text } from '@ui-kitten/components';
 import axios from 'axios';
 
-const RecipeListPage = ({ navigation }) =>
+const RecipeListPage = ({ navigation }) => 
 {
-  useEffect(() =>
-  {
-    axios.get(``)
-    .then(res =>
-    {
-      
-    })
-    .catch(console.log)
-  }, []);
+  const [results, setResults] = useState([]);
+  const [main, setMain] = useState({});
+
+  useEffect(() => {
+    // getFavorites();
+  }, [])
+
+  const app_name = 'cop4331din';
+
+  const buildPath = (route) => {
+    if (process.env.NODE_ENV === 'production') {
+      return 'https://' + app_name + '.herokuapp.com/' + route;
+    }
+    else {
+      return 'http://localhost:5000/' + route;
+    }
+  };
+
+  const getFavorites = async () => {
+    // call api/getrecipe
+    // Takes in userID
+    let userID = JSON.parse(localStorage.getItem('user_data')).id;
+
+    var js = JSON.stringify({ userID: userID });
+
+    try {
+      const response = await fetch(buildPath('api/getrecipes'),
+        {
+          method: 'POST',
+          body: js,
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        });
+
+      var res = JSON.parse(await response.text());
+
+      if (res.found)
+      {
+        setMain(res.recipes[0])
+        setResults(res.recipes)
+      }
+      // else
+
+    }
+    catch (e) {
+      console.log(e.toString());
+    }
+  }
 
   return (
     <Layout style={styles.container}>
       <View style={styles.header}>
         <PageTitle text='Your Recipes' />
       </View>
-      <ScrollView style={{height: "95%"}}>
-        <View style={styles.body}>
-          <View style={styles.cards}>
-            <RecipeCard />
+      <FlatList
+        contentContainerStyle={styles.body}
+        data={results}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={1}
+        renderItem={({ item }) => <RecipeCard item={item} />}
+        ListHeaderComponent={
+          <View style={[styles.body, { marginBottom: 20 }]}>
+            <View style={styles.cards}>
+              <RecipeCard item={main} random/>
+            </View>
+            <Button onPress={() => { navigation.navigate('CreatePage') }}>
+              <Text>+ Add Custom Recipe</Text>
+            </Button>
           </View>
-          <Button
-            onPress={() => { navigation.navigate('CreatePage') }}
-            
-          >
-            <Text>+ Add Custom Recipe</Text>
-          </Button>
-        </View>
-      </ScrollView>
+        }
+        ListFooterComponent={
+          results.length === 0 ?
+            <Text>No Recipes try adding some!</Text>
+          :
+            null
+        }
+      />
     </Layout>
   );
 };
@@ -49,12 +100,11 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
+    marginVertical: 25
   },
   body: {
-    flex: 1,
     alignItems: 'center',
     width: '100%',
-    marginBottom: 50
   },
   cards: {
     marginTop: 20,

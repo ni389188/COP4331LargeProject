@@ -17,11 +17,11 @@ exports.setAppRecipe = function (app, MongoClient)
     app.post('/api/searchrecipe', async (req, res, next) =>
     {   
 
-        var ingredientList = req.body.ingredients;
+        var ingredientList = req.body.Ingredients;
         
         var limit = '7';
 
-        var toInt = parseInt(req.body.limit);
+        var toInt = parseInt(req.body.Limit);
 
         if (! isNaN(toInt)) {
             limit = toInt;
@@ -95,17 +95,17 @@ exports.setAppRecipe = function (app, MongoClient)
     {   
 
         // recipeID is an int.
-        if (Number.isInteger(req.body.recipeID)) {
+        if (Number.isInteger(req.body.RecipeID)) {
 
             // Convert Int to String.
-            var intRecipeID = String(req.body.recipeID);
+            var intRecipeID = String(req.body.RecipeID);
 
             // Create new Recipe using the recipe model.
             const newRecipe = new Recipe({ 
-                CompositeID: req.body.userID + intRecipeID,
-                UserID: req.body.userID,
-                RecipeID: req.body.recipeID,
-                Title: req.body.title, 
+                CompositeID: req.body.UserID + intRecipeID,
+                UserID: req.body.UserID,
+                RecipeID: req.body.RecipeID,
+                Title: req.body.Title, 
             });
             
             // Stores into the DB.
@@ -143,12 +143,12 @@ exports.setAppRecipe = function (app, MongoClient)
     app.post('/api/getrecipes', async (req, res, next) => 
     {   
 
-        if (null == req.body.userID) {
+        if (null == req.body.UserID) {
             res.status(400).json({found:false, errors:'userID required'});
         }
 
         else {
-            var UserID = req.body.userID;
+            var UserID = req.body.UserID;
 
             // Stores into the DB.
             Recipe.find({UserID:UserID}).then(result => {
@@ -175,7 +175,7 @@ exports.setAppRecipe = function (app, MongoClient)
     app.post('/api/getrecipedetails', async (req, res, next) =>
     {   
 
-        var RecipeID = req.body.recipeID;
+        var RecipeID = req.body.RecipeID;
         
         // String for request with parameters.
         var request = `https://api.spoonacular.com/recipes/${RecipeID}/information?&apiKey=${apiKey}`

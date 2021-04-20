@@ -23,6 +23,12 @@ exports.setApp = function (app, MongoClient)
             VerificationCode: randomNumber,
             IsVerified: false
         });
+        const data = {
+            from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+            to: req.body.Email,
+            subject: "Dinner on demand: Please verify your Email",
+            text: "Please confirm your email to activate your account! https://cop4331din.herokuapp.com"
+        };
         // Stores into the DB.
         await newUser.save().then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
