@@ -29,7 +29,7 @@ function Register()
     // Required for email verification
     const mailgun = require("mailgun-js");
     const DOMAIN = "sandboxef514b75a9714c9282339dd8b689bcb8.mailgun.org";
-    const mg = mailgun({apiKey: "27353fd7ce350bedb70f14a2d14060c7-a09d6718-746f6e51", domain: DOMAIN});
+    const mg = mailgun({apiKey: "TODO", domain: DOMAIN});
 
 
     const doRegister = async event =>     
@@ -46,7 +46,7 @@ function Register()
         // If passwords matched then continue
         else {
             
-            var obj = {firstName: firstName.value, lastName: lastName.value, email: email.value, password: password.value};  
+            var obj = {FirstName: firstName.value, LastName: lastName.value, Email: email.value, Password: password.value};  
             var js = JSON.stringify(obj);
             
             try        

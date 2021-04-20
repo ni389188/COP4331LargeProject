@@ -52,7 +52,7 @@ const RegisterPage = ({navigation, mapDispatchToProps, user}) =>
     try        
     {                
       const response = await fetch(buildPath('api/register'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
-      var res = JSON.parse(await response.text());       
+      var res = JSON.parse(await response.text());
       if( res.accessToken )            
       {                
         storage.storeToken(res);

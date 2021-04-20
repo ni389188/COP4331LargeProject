@@ -1,12 +1,11 @@
 import React from 'react';
-import NavBar from '../../components/NavBar';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import './HomePage.css';
+import './Home.css';
 
 
 
-function HomePage({
+function Home({
     lightBg, topLine, lightTextDesc, description, buttonName, img, alt, imgLeft
 }) {
     return (
@@ -41,4 +40,4 @@ function HomePage({
 }
 
 
-export default HomePage;
+export default Home;

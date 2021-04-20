@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Card } from '@ui-kitten/components';
 import { ThemeContext } from './theme-context';
 
-function RecipeCard({ item }) {
+function RecipeCard({ item }, random) {
   const navigation = useNavigation();
   const themeContext = React.useContext(ThemeContext);
 
@@ -20,6 +20,7 @@ function RecipeCard({ item }) {
     <Card header={header}
       style={{ margin: 2, width: "80%", alignSelf: "center", borderColor: "red", marginBottom: 15 }} 
       onPress={() => navigation.navigate('RecipePage', { item })}
+      disabled={random ? true : false}
     >
       <Image
         style={styles.image}

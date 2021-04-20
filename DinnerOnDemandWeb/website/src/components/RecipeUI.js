@@ -34,7 +34,7 @@ function RecipeUI() {
         event.preventDefault();        
 
         // TO-DO: Get title from tittle array in search.
-        var obj = {userId:userId,recipe:recipe.value};        
+        var obj = {UserId:userId,Recipe:recipe.value};        
         var js = JSON.stringify(obj);        
         
         try        
@@ -63,7 +63,7 @@ function RecipeUI() {
     {        
         event.preventDefault();     
          
-        var obj = {ingredients:search.value};        
+        var obj = {Ingredients:search.value};        
         var js = JSON.stringify(obj);  
 
         try        

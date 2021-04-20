@@ -15,13 +15,13 @@ exports.setApp = function (app, MongoClient)
         var randomNumber = Math.random().toString().substr(2,4);
 
         // Concats "cop4331" and password before hashing.
-        var hashedPassword = sha256("cop4331" + req.body.password).toString();
+        var hashedPassword = sha256("cop4331" + req.body.Password).toString();
 
         const newUser = new User({ 
             _id: new mongoose.Types.ObjectId(),
-            FirstName: req.body.firstName,
-            LastName: req.body.lastName, 
-            Email: req.body.email, 
+            FirstName: req.body.FirstName,
+            LastName: req.body.LastName, 
+            Email: req.body.Email, 
             Password: hashedPassword,
             VerificationCode: randomNumber,
             IsVerified: false
@@ -47,10 +47,10 @@ exports.setApp = function (app, MongoClient)
 
     app.post('/api/login', async (req, res, next) => 
     {  
-        var Email = req.body.email;
+        var Email = req.body.Email;
 
         // Concats "cop4331" and password before hashing.
-        var hashedPassword = sha256("cop4331" + req.body.password).toString();
+        var hashedPassword = sha256("cop4331" + req.body.Password).toString();
 
 
         User.findOne({Email:Email, Password:hashedPassword}, function(err, result) {

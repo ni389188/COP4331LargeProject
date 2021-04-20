@@ -15,6 +15,7 @@ function NavBar(){
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="../pages/WelcomePage">Home</Nav.Link>
+                    <Nav.Link href="../pages/HomePage">DashBoard</Nav.Link>
                     <Nav.Link href="../pages/LoginPage">Login</Nav.Link>
                     <Nav.Link href="../pages/AboutUs">About</Nav.Link>
                 </Nav>
