@@ -6,7 +6,7 @@ import './Home.css';
 
 
 function Home({
-    lightBg, topLine, lightTextDesc, description, buttonName, img, alt, imgLeft
+    lightBg, topLine, lightTextDesc, description, buttonName, img, alt, imgLeft,buttonVariant
 }) {
     return (
         <>
@@ -28,7 +28,8 @@ function Home({
                             <div className='imageWrapper'>
                                 <img src={img} alt={alt} className='homeImage' />
                                 <Link to={buttonName.includes("Search") ? '/pages/search' : buttonName.includes("Add") ? '/pages/customs' : '/pages/favorites'}>
-                                    <Button variant="primary" size="lg" block>{buttonName}</Button>
+                                    <Button variant= {buttonVariant} size="lg" block>{buttonName}</Button>
+                                  
                                 </Link>
                             </div>
                         </div>

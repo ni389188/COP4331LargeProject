@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import InputGroup from 'react-bootstrap/InputGroup'
-import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 import NavBar from '../components/NavBar';
 import { Card } from "react-bootstrap";
 import { Grid, Row, Col } from "react-bootstrap";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import FlatList from 'flatlist-react';
+
+
+import './searchRecipe.css'
+
+
+
 
 // import { Container } from './styles';
 
 const SearchRecipe = () => {
+    
     const [ingredients, setIngredients] = useState("")
     const [results, setResults] = useState([])
 
@@ -101,42 +105,49 @@ const SearchRecipe = () => {
     let col_2 = []
     let col_3 = []
 
-    const doitem = (recipe) =>
-    {
+    const doitem = (recipe) => {
         return (
+
             <div id={recipe.key}>
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={recipe.image} />
-                    <Card.Body>
-                        <Card.Title><h4>{recipe.title}</h4></Card.Title>
-                        <div>
-                            <p className="card-text text-dark">
-                                {
-                                    [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
-                                        return (
-                                            <div key={index}>
-                                                <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
-                                                    <p>
-                                                        <h5>Ingredient: </h5>{ingredient.originalString}
-                                                    </p>
-                                                    <p>
-                                                        Amount: {ingredient.amount}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </p>
+                <div className="container-fluid justify-center">
+                    <Card >
+                        <div class="card-header ">
+                            <h4>{recipe.title}</h4>
                         </div>
-                        <>
-                            <ButtonGroup >
-                                <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
-                                <Button variant="outline-dark" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
-                            </ButtonGroup>
-                        </>
-                    </Card.Body>
-                </Card>
+                        <Card.Img src={recipe.image} />
+                        <div className="card-body h-100 ">  
+                        
+                            <Card.Title><h4>{recipe.title}</h4></Card.Title>
+                            <div>
+                                <p className="card-text text-dark">
+                                    {
+                                        [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                                        <p>
+                                                            <h5>Ingredient: </h5>{ingredient.originalString}
+                                                        </p>
+                                                        <p>
+                                                            Amount: {ingredient.amount}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </p>
+                            </div>
+                            <>
+                                <ButtonGroup >
+                                    <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
+                                    <Button variant="outline-dark" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
+                                </ButtonGroup>
+                            </>
+                            </div>
+                        
+                    </Card>
+                </div>
             </div>
         )
     }
@@ -163,35 +174,45 @@ const SearchRecipe = () => {
     }
 
     return (
-        <>
+
+        
+        <>  
+            <div className="searchRecipeCard h-100"> 
             <NavBar />
-            <div style={{ justifyContent: "center" }}>
-                <form onSubmit={doSomething}>
-                    <input
-                        type="text"
-                        placeholder="Search for Ingredients/Recipes here"
-                        value={ingredients}
-                        onChange={e => setIngredients(e.target.value)}
-                        style={{ width: "50%" }}
-                    />
-                    <p>Hint: Seperate each ingredient with a comma, then Press enter when done</p>
-                </form>
-                {
-                    results.length === 0 ?
-                        <p>Search for ingredients/recipes first then the results will be displayed here.</p>
-                        :
-                        <container>
-                            {renderResult()}
-                            <Row>
-                                <Col id={"col_1"}>  {col_1}  </Col>
-                                <Col id={"col_2"}>  {col_2}  </Col>
-                                <Col id={"col_3"}>  {col_3} </Col>
-                            </Row>
-                        </container>
-                }
+            
+            <div className="container d-flex justify-content-center  "> 
+            <form onSubmit={doSomething}>
+                <input
+                    type="text"
+                    placeholder="Search for Ingredients/Recipes here"
+                    value={ingredients}
+                    onChange={e => setIngredients(e.target.value)}
+                    style={{ width: "100%" }}
+                />
+                <p>Hint: Seperate each ingredient with a comma, then Press enter when done</p>
+                
+            </form>
             </div>
+            {
+                results.length === 0 ?
+                    <p></p>
+                    :
+                    <div className="container-fluid  justify-content-center "> 
+                        {renderResult()}
+                      
+                        <Row>
+                            <Col id={"col_1"} >  {col_1}  </Col>
+                            <Col id={"col_2"}>  {col_2}  </Col>
+                            <Col id={"col_3"}>  {col_3} </Col>
+                        </Row>               
+                    </div>
+            }
+              </div>
         </>
+      
+     
     )
+
 }
 
 export default SearchRecipe;
