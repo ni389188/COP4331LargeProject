@@ -5,7 +5,7 @@ import NavBar from '../components/NavBar'
 
 const LoginPage = () => {
     return (
-            
+       
         <div>
           
             <NavBar />
@@ -13,7 +13,7 @@ const LoginPage = () => {
             <Login />     
           
         </div>
-        
+       
     );
 };
 
