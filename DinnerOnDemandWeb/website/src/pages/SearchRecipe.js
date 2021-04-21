@@ -110,16 +110,14 @@ const SearchRecipe = () => {
 
             <div id={recipe.key}>
                 <div className="container-fluid justify-center">
-                    <Card >
+                    <div class= "card text-white bg-dark mt-5" >
                         <div class="card-header ">
                             <h4>{recipe.title}</h4>
                         </div>
                         <Card.Img src={recipe.image} />
-                        <div className="card-body h-100 ">  
-                        
-                            <Card.Title><h4>{recipe.title}</h4></Card.Title>
+                        <div className="card-body"> 
                             <div>
-                                <p className="card-text text-dark">
+                                <p className="card-text text-white">
                                     {
                                         [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
                                             return (
@@ -141,12 +139,12 @@ const SearchRecipe = () => {
                             <>
                                 <ButtonGroup >
                                     <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
-                                    <Button variant="outline-dark" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
+                                    <Button variant="light" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
                                 </ButtonGroup>
                             </>
                             </div>
                         
-                    </Card>
+                    </div>
                 </div>
             </div>
         )
