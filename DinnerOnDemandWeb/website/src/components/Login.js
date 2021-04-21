@@ -52,8 +52,8 @@ function Login() {
 
     return (
 
-        <div className="container justify-content-center bg-dark ">
-            <div class="card text-white bg-dark mt-5" >
+        <div className="container justify-content-center  ">
+            <div class="card text-white  text-center bg-dark mt-5" >
                 <div class="card-header ">
                     <h4>Welcome Back. Log In Below!</h4>
                 </div>
@@ -67,7 +67,7 @@ function Login() {
                     <Button variant="light" type="submit" controlId="loginButton" onClick={doLogin}>Log In</Button>
                     <span id="loginResult">{message}</span>
                     <br />
-                    <a className="text-white "href="../pages/RegisterPage" >Need to Register? Click Here</a> <br />
+                    <a className="text-white " href="../pages/RegisterPage" >Need to Register? Click Here</a> <br />
                     <a className="text-white" href="../pages/PasswordResetPage">Forgot Your Password? Click Here</a>
                 </Form>
             </div>
