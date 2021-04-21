@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import Favorites from './pages/Favorites';
 import CustomRecipe from './pages/CustomRecipe';
 import VerifyPage from './pages/VerifyPage';
+import PWresetPage from './pages/PWresetPage';
 
 function App() {  
   return (
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/pages/VerifyPage" exact>          
             <VerifyPage />        
+          </Route>
+          <Route path="/pages/PWresetPage" exact>          
+            <PWresetPage />        
           </Route>
           <Route path="/pages/customs">
             <CustomRecipe />
