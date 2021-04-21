@@ -74,7 +74,8 @@ function Login()
                 <Button type="submit" controlId="loginButton" onClick={doLogin}>Log In</Button>
                 <span id="loginResult">{message}</span>
                 <br />
-                <a href="../pages/RegisterPage">Need to Register? Click Here</a>
+                <a href="../pages/RegisterPage">Need to Register? Click Here</a><br/>
+                <a href="../pages/PasswordResetPage">Forgot Your Password? Click Here</a>
             </Form>
         </Card >
     );
