@@ -1,4 +1,6 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
 
 function LoggedInName()
 {    
@@ -15,11 +17,15 @@ function LoggedInName()
         window.location.href = '/';    
     };      
     return(   
-    <div id="loggedInDiv">   
-    <span id="userName">Logged In As {firstName} {lastName} </span><br />   
-    <button type="button" id="logoutButton" class="buttons"      
-    onClick={doLogout}> Log Out </button>   
-    </div>  
+        <Card controlID="loggedInDiv">
+            <Card.Text controlID="userName">
+                Logged In As {firstName} {lastName} 
+            </Card.Text>
+            <Button type="button" controlID="logoutButton" className="buttons"
+                onClick={doLogout}>
+                    Log Out
+            </Button>
+        </Card>
     );
 };
 

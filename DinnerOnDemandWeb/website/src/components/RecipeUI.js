@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
 function RecipeUI() {
 
@@ -111,20 +114,35 @@ function RecipeUI() {
     };
 //*******************************************************************************************
     return (
-    <div id="accessUIDiv">  
-        <br />  
-        <input type="text" id="searchText" placeholder="What Recipe are we looking for ..."     
-            ref={(c) => search = c} />  
-        <button type="button" id="searchRecipeButton" class="buttons"     
-            onClick={searchRecipe}> Search Recipe</button><br />
-        <span id="recipeSearchResult">{searchResults}</span>  
-        <p id="recipeList">{recipeList}</p><br /><br />  
-        <input type="text" id="recipeText" placeholder="Recipe To Add"     
-            ref={(c) => recipe = c} />  
-        <button type="button" id="addRecipeButton" class="buttons"     
-            onClick={addRecipe}> Add Recipe </button><br />  
-        <span id="recipeAddResult">{message}</span>
-    </div>
+        <Card id="accessUIDiv">
+            <br/>
+            <Form>
+                <Form.Group controlId="searchText">
+                    <Form.Control type="text" placeholder="What Recipe Are We Looking For..."
+                        ref={(c) => search = c}/>
+                </Form.Group>
+                <Button type="button" controlI="searchRecipeButton" className="buttons"
+                    onClick={searchRecipe}>
+                        Search Recipe
+                </Button>
+                <span id="recipeSearchResult">{searchResults}</span>
+            </Form>
+            <Form>
+                <Card.Text controlId="recipeList">
+                    {recipeList}
+                </Card.Text>
+                <Form.Group controlId="recipeText">
+                    <Form.Control type="text" placeholder="Recipe"
+                        ref={(c) => recipe = c} />
+                </Form.Group>
+                <Button type="button" controlI="addRecipeButton" className="buttons"
+                    onClick={addRecipe}>
+                    Add Recipe
+                </Button>
+                <span id="recipeAddResult">{message}</span>
+            </Form>
+        </Card>
+        
     );
 }
 export default RecipeUI;
