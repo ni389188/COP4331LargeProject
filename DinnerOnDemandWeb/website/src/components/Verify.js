@@ -61,20 +61,10 @@ function Verify()
     return (
         <Card>
             <Card.Title>
-                Verify Account below!
+                Congratulations your account is now verified! 
+                Welcome to Dinner on Demand!
             </Card.Title>
-            <Form onSubmit={doVerify}>
-                <Form.Group controlId="loginName">
-                    <Form.Control type="email" placeholder="Enter Email" ref={(c) => loginName = c} />
-                </Form.Group>
-                <Form.Group controlId="verifyCode">
-                    <Form.Control type="password" placeholder="Enter Verification Code" ref={(c) => verifyCode = c}/>
-                </Form.Group>
-                <Button type="submit" controlId="loginButton" onClick={doVerify}>Verify</Button>
-                <span id="loginResult">{message}</span>
-                <br />
-                <a href="../pages/RegisterPage">Need to Register? Click Here</a>
-            </Form>
+            
         </Card >
     );
 };

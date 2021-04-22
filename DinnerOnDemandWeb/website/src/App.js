@@ -42,7 +42,7 @@ function App() {
           <Route path="/pages/VerifyPage" exact>          
             <VerifyPage />        
           </Route>
-          <Route path="/pages/PWresetPage" exact>          
+          <Route path="/pages/PWresetPage/:token" exact>          
             <PWresetPage />        
           </Route>
           <Route path="/pages/customs">

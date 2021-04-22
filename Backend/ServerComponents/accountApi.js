@@ -57,19 +57,24 @@ exports.setApp = function (app, MongoClient)
             var tok = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET);
             User.findById(tok.userId, function(err, result) {
                 if(result){
-                    res.send("working");
+                    if(process.env.NODE_ENV === 'production')
+                    {
+                        res.redirect("/pages/PWresetPage/"+req.params.token);
+                    }
+                    else
+                    {
+                        res.redirect("http://localhost:3000/pages/PWresetPage/"+req.params.token);
+                    }
                     res.status(200);
                 }
                 else
                 {
-                    res.send("invalid page");
                     res.status(400);
                 }
             })
         }
         catch(e)
         {
-            res.send("invalid page")
             res.status(400);
         };
     });
@@ -82,20 +87,25 @@ exports.setApp = function (app, MongoClient)
             User.findById(tok.userId, function(err, result) {
                 if(result.VerificationCode == req.params.verificationCode){
                     User.findByIdAndUpdate(tok.userId, {IsVerified: true}).then(result => {
-                        res.send("Your account has been verified!");
+                        if(process.env.NODE_ENV === 'production')
+                        {
+                            res.redirect("/pages/VerifyPage");
+                        }
+                        else
+                        {
+                            res.redirect("http://localhost:3000/pages/VerifyPage");
+                        }
                         res.status(200);
                     })
                 }
                 else
                 {
-                    res.send("invalid page");
                     res.status(400);
                 }
             })
         }
         catch(e)
         {
-            res.send("invalid page");
             res.status(400);
         };
     });
