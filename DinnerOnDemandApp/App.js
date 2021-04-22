@@ -49,7 +49,7 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider, Layout } from '@ui-kitten/components';
 import { ThemeContext } from './src/components/theme-context';
 
-import WIPPage from './src/components/NavigationBar';
+import WIPPage from './src/pages/AccountPage';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();

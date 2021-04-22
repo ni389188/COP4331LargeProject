@@ -30,11 +30,24 @@ exports.setApp = function (app, MongoClient)
             res.status(400).json(message);
             return;
         };
-        const data = {
-            from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
-            to: req.body.Email,
-            subject: "Dinner on demand: Password recovery",
-            text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://www.dinnerondemand.me/api/reset/"+tok.accessToken
+        var data;
+        if(process.env.NODE_ENV === 'production')
+        {
+            data = {
+                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                to: req.body.Email,
+                subject: "Dinner on demand: Password recovery",
+                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://www.dinnerondemand.me/api/reset/"+tok.accessToken
+            };
+        }
+        else
+        {
+            data = {
+                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                to: req.body.Email,
+                subject: "Dinner on demand: Password recovery",
+                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://localhost:5000/api/reset/"+tok.accessToken
+            };
         };
         try
         {
@@ -47,6 +60,34 @@ exports.setApp = function (app, MongoClient)
         {
             console.log(e);
             res.status(400).json("Error sending email");
+        }
+    });
+
+    app.post('/api/reset/confirm', async (req, res, next) =>
+    {
+        try
+        {
+            if(req.body.Password == '' || req.body.Password == undefined)
+            {
+                res.status(400).json("Please enter all fields");
+                return;
+            };
+            await User.findByIdAndUpdate(req.body._id, {Password:sha256("cop4331"+req.body.Password).toString()}).then(result => 
+            {
+                if(result!=null)
+                {
+                    res.status(200).json("Password update successfully!");
+                }
+                else
+                {
+                    res.status(400).json("Failed to update password");
+                }
+            });
+        }
+        catch(e)
+        {
+            console.log(e);
+            res.status(400).json(e)
         }
     });
 
@@ -86,7 +127,7 @@ exports.setApp = function (app, MongoClient)
             var tok = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET);
             User.findById(tok.userId, function(err, result) {
                 if(result.VerificationCode == req.params.verificationCode){
-                    User.findByIdAndUpdate(tok.userId, {IsVerified: true}).then(result => {
+                    User.findByIdAndUpdate(tok.userId, {IsVerified: true, $unset:{"VerificationCode":1}}).then(result => {
                         if(process.env.NODE_ENV === 'production')
                         {
                             res.redirect("/pages/VerifyPage");
