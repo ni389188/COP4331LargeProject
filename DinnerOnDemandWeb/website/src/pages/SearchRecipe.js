@@ -175,7 +175,7 @@ const SearchRecipe = () => {
 
         
         <>  
-            <div className="searchRecipeCard h-100"> 
+            <div className="searchRecipeCard h-auto"> 
             <NavBar />
             
             <div className="container d-flex justify-content-center  "> 

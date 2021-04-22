@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import NavBar from '../components/NavBar';
 import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 // import { Container } from './styles';
 
 const CustomRecipe = () => {
@@ -23,8 +24,7 @@ const CustomRecipe = () => {
         }
     };
 
-    const addRecipe = async () =>
-    {
+    const addRecipe = async () => {
         var list = document.getElementById('ingredientsList').getElementsByTagName("li");
 
         let temp1 = [];
@@ -74,12 +74,10 @@ const CustomRecipe = () => {
 
             console.log(res)
 
-            if (res.Added)
-            {
+            if (res.Added) {
                 // let the user know
             }
-            else
-            {
+            else {
                 // let them know it hasnt
             }
         }
@@ -106,59 +104,72 @@ const CustomRecipe = () => {
 
     return (
         <>
-            <NavBar />
-            <div>
-                <Form>
-                    <Form.Group controlId="formTitle">
-                        <Form.Label>Title</Form.Label>
-                        <Form.Control type="text" placeholder="Enter title" onChange={e => setTitle(e.target.value)} />
-                    </Form.Group>
-                    <Form.Group controlId="formIngredients">
-                        <Form.Label>Ingredients</Form.Label>
-                        <div id="ingredientsList" class="editable" contentEditable="true">
-                            <ul>
-                                <li>List item</li>
-                            </ul>
-                        </div>
-                    </Form.Group>
-                    <Form.Group controlId="formInstructions">
-                        <Form.Label>Instructions</Form.Label>
-                        <div id="instructionsList" class="editable" contentEditable="true">
-                            <ul>
-                                <li>List item</li>
-                            </ul>
-                        </div>
-                    </Form.Group>
-                    <Form.Group>
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            ref={imageUploader}
-                            style={{
-                                display: "none" 
-                            }}
-                        />
-                        <div
-                            style={{
-                                height: "50%",
-                                width: "50%",
-                                border: "1px dashed black"
-                            }}
-                            onClick={() => imageUploader.current.click()}
-                        >
-                            <img
-                                ref={uploadedImage}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                }}
-                            />
-                        </div>
-                        <p>Click box to add image (optional)</p>
-                    </Form.Group>
-                </Form>
-                <button onClick={() => addRecipe()}>Add Recipe</button>
+            <div className="searchRecipeCard">
+                <NavBar />
+                <div>
+                    <div className="container  justify-content-center  mt-5 bg-dark ">
+                        <Form >
+                            <Form.Group controlId="formTitle " className="text-white ">
+                                <Form.Label>Title</Form.Label>
+                                <Form.Control type="text" placeholder="Enter title" onChange={e => setTitle(e.target.value)} />
+                            </Form.Group>
+
+                            <Form.Group controlId="formIngredients" className="text-white ">
+                                <Form.Label>Ingredients</Form.Label>
+                                <div className="container  justify-content-center bg-secondary ">
+                                    <div id="ingredientsList" class="editable" contentEditable="true">
+                                        <ul>
+                                            <li>List items</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </Form.Group>
+
+                            <Form.Group controlId="formInstructions ">
+                                <Form.Label className="text-white ">Instructions</Form.Label>
+                                <div className="container  justify-content-center bg-secondary ">
+                                    <div id="instructionsList" class="editable" contentEditable="true">
+
+                                        <ul>
+                                            <li className="text-white ">List items</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </Form.Group>
+
+                            <Form.Group >
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    ref={imageUploader}
+                                    style={{
+                                        display: "none"
+                                    }}
+                                />
+                                <div
+                                    style={{
+                                        height: "50%",
+                                        width: "50%",
+                                        border: "1px dashed black"
+                                    }}
+                                    onClick={() => imageUploader.current.click()}
+                                >
+                                    <img
+                                        ref={uploadedImage}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                        }}
+                                    />
+                                </div>
+                                <p className="text-white ">Click box to add image (optional)</p>
+
+                            </Form.Group>
+                            <Button class=" btn-block btn-lg mb-5" variant="light" onClick={() => addRecipe()}>Add Recipe</Button>
+                        </Form >
+                    </div>
+                </div>
             </div>
         </>
     )
