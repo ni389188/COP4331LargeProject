@@ -12,6 +12,7 @@ exports.setApp = function (app, MongoClient)
 {
     app.post('/api/register', async (req, res, next) => 
     {  
+        var ret;
         var randomNumber = Math.random().toString().substr(2,4);
         var hashedPassword = sha256("cop4331" + req.body.Password).toString();
         const newUser = new User({ 
@@ -23,30 +24,46 @@ exports.setApp = function (app, MongoClient)
             VerificationCode: randomNumber,
             IsVerified: false
         });
-        const data = {
-            from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
-            to: req.body.Email,
-            subject: "Dinner on demand: Please verify your Email",
-            text: "Please confirm your email to activate your account! https://cop4331din.herokuapp.com"
-        };
         // Stores into the DB.
         await newUser.save().then(result => {
             ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
-            const data = {
-                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
-                to: req.body.Email,
-                subject: "Dinner on demand: Please verify your Email",
-                text: "Please confirm your email to activate your account! www.dinnerondemand.com/api/verify/"+randomNumber+"/"+ret.accessToken
-            };
-            mailgun.messages().send(data, function (error, body) {
-                console.log(body);
-                res.status(200).json(ret);
-            });
         })
         .catch(err => {
             console.log(err);
             res.status(400).json(err);
         });
+        var data;
+        if(process.env.NODE_ENV === 'production')
+        {
+            data = {
+                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                to: req.body.Email,
+                subject: "Dinner on demand: Please verify your Email",
+                text: "Please confirm your email to activate your account! www.dinnerondemand.com/api/verify/"+randomNumber+"/"+ret.accessToken
+            };
+        }
+        else
+        {
+            data = {
+                from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                to: req.body.Email,
+                subject: "Dinner on demand: Please verify your Email",
+                text: "Please confirm your email to activate your account! http://localhost:5000/api/verify/"+randomNumber+"/"+ret.accessToken
+            };
+        };
+        try
+        {
+            mailgun.messages().send(data, function (error, body) {
+                console.log(body);
+                ret.notification = "An email to verify your account was sent to "+req.body.Email;
+                res.status(200).json(ret);
+            });
+        }
+        catch(e)
+        {
+            console.log(e);
+            res.status(400).json(e);
+        }
     });
 
     app.post('/api/login', async (req, res, next) => 
@@ -85,7 +102,7 @@ exports.setApp = function (app, MongoClient)
         {
             obj.LastName = req.body.LastName;
         }
-        if(req.body.password != '' && req.body.Password != undefined)
+        if(req.body.Password != '' && req.body.Password != undefined)
         {
             await User.findById(req.body._id, function(err, result) {
                 if (result.Password == sha256("cop4331" + req.body.OldPassword).toString()){

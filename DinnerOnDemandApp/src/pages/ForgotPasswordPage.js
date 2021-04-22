@@ -21,23 +21,20 @@ const ForgotPasswordPage = ({navigation}) =>
   };
   const doSearch = async event =>
   {
-    console.log(email);
     var obj = {Email:email};
     var js = JSON.stringify(obj);
     try        
     {                
       const response = await fetch(buildPath('api/reset'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());
-      console.log(res);
-      return;
-      if(res)            
+      if(res != "Error sending email")            
       {                
-        console.log(res);
+        alert(res);
         navigation.goBack();   
       }            
       else
       {
-        alert("This email address is not registered"); 
+        alert("An issue was encountered. Please try again later"); 
       }        
     }        
     catch(e)        
