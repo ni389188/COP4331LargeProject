@@ -33,6 +33,9 @@ recipeRoutes.setAppRecipe(app);
 var accountRoutes = require("./ServerComponents/accountApi.js");
 accountRoutes.setApp(app);
 
+var customRecipe = require("./ServerComponents/customRecipeApi.js");
+customRecipe.setAppCustomRecipe(app);
+
 // **********************HARD CODED API*********************************
 
 var recipeList = [  'Tomato',  'Cheese',  'Apple',  'Pepper',  'Potato'];
