@@ -5,6 +5,7 @@ import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
+import ProfileImage from '../components/ProfileImage';
 
 const ProfilePage = ({navigation}) =>
 {
@@ -24,10 +25,7 @@ const ProfilePage = ({navigation}) =>
       </View>
       <View style = {styles.body}>
         <View style = {styles.imageSection}>
-          <Image
-          style={styles.image}
-          source={require('../components/defaultProfileImage.png')}
-          />
+          <ProfileImage/>
         </View>
         <View style = {styles.textSection}>
           <Text style = {{fontSize:23}}>Welcome,</Text>
