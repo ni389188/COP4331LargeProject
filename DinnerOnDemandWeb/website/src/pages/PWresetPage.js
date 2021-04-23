@@ -10,7 +10,7 @@ const PWresetPage = () => {
         <div>
             <NavBar />
             <PageTitle />
-            <PWreset />
+            <PWreset tok = {match.token}/>
         </div>
     );
 };
