@@ -80,6 +80,9 @@ exports.setApp = function (app, MongoClient)
             if (result){
                 ret = jwt.createToken( result.FirstName, result.LastName, result._id);
                 ret.LoggedIn = true;
+                ret.FirstName = result.FirstName;
+                ret.LastName = result.LastName;
+                ret._id = result._id;
                 res.status(200).json(ret);
             }
 

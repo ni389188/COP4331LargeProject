@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/InsideNavBar';
 import { Card } from "react-bootstrap";
 import { Grid, Row, Col } from "react-bootstrap";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -49,8 +49,6 @@ const SearchRecipe = () => {
 
             var res = JSON.parse(await response.text());
 
-            console.log(res)
-
             if (!res.found) {
                 console.log(res.error);
             }
@@ -64,7 +62,7 @@ const SearchRecipe = () => {
         }
     }
 
-    const addToFav = async (id, title) => {
+    const addToFav = async (id, title, index) => {
         // call api/addrecipe
         // Takes in userID, recipeID = id, title as body
         let userID = JSON.parse(localStorage.getItem('user_data')).id;
@@ -86,9 +84,11 @@ const SearchRecipe = () => {
 
             if (res.Added) {
                 // Let the user know it has been added to favorites
+                document.getElementById(index).innerHTML = "Recipe has been added to Favorites!"
             }
             else {
                 // Let them know an error occured
+                document.getElementById(index).innerHTML = res.error
             }
         }
         catch (e) {
@@ -105,7 +105,7 @@ const SearchRecipe = () => {
     let col_2 = []
     let col_3 = []
 
-    const doitem = (recipe) => {
+    const doitem = (recipe, index) => {
         return (
 
             <div id={recipe.key}>
@@ -137,10 +137,11 @@ const SearchRecipe = () => {
                                 </p>
                             </div>
                             <>
-                                <ButtonGroup >
-                                    <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title)}> Add To Favorites</Button>
-                                    <Button variant="light" onClick={() => addToShop(recipe.id, recipe.title)}> Add To Shopping List</Button>
+                                <ButtonGroup>
+                                    <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, index)}>Add To Favorites</Button>
+                                    <Button variant="light" onClick={() => addToShop(recipe.id, recipe.title)}>Add To Shopping List</Button>
                                 </ButtonGroup>
+                                <p id={index}></p>
                             </>
                             </div>
                         
@@ -157,13 +158,13 @@ const SearchRecipe = () => {
 
             switch (val) {
                 case 1:
-                    col_1.push(doitem(recipe));
+                    col_1.push(doitem(recipe, index));
                     break;
                 case 2:
-                    col_2.push(doitem(recipe));
+                    col_2.push(doitem(recipe, index));
                     break;
                 case 3:
-                    col_3.push(doitem(recipe));
+                    col_3.push(doitem(recipe, index));
                     break;
                 default:
                     break;

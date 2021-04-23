@@ -32,17 +32,15 @@ function Login() {
             var res = JSON.parse(await response.text());
 
             // TO-DO add error handling.
-            if (res.loggedIn === false) {
+            if (res.LoggedIn === false) {
                 setMessage('User/Password combination incorrect');
             }
             else {
-                var user = { firstName: res.FirstName, lastName: res.LastName, id: res.ID }
+                var user = { firstName: res.FirstName, lastName: res.LastName, id: res._id }
                 localStorage.setItem('user_data', JSON.stringify(user));
                 setMessage('');
-                window.location.href = '/pages/HomePageExtras/Home';
+                window.location.href = '../pages/HomePage';
             }
-
-
         }
         catch (e) {
             alert(e.toString());
