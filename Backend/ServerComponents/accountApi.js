@@ -76,7 +76,7 @@ exports.setApp = function (app, MongoClient)
             {
                 if(result!=null)
                 {
-                    res.status(200).json("Password update successfully!");
+                    res.status(200).json("Password updated successfully!");
                 }
                 else
                 {
