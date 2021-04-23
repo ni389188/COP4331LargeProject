@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import jwt_decode from "jwt-decode";
 
 function Login() {
 
@@ -36,8 +37,7 @@ function Login() {
                 setMessage('User/Password combination incorrect');
             }
             else {
-                var user = { firstName: res.FirstName, lastName: res.LastName, id: res._id }
-                localStorage.setItem('user_data', JSON.stringify(user));
+                localStorage.setItem('user_data', JSON.stringify(jwt_decode(res.accessToken)));
                 setMessage('');
                 window.location.href = '../pages/HomePage';
             }

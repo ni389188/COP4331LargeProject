@@ -65,7 +65,7 @@ const SearchRecipe = () => {
     const addToFav = async (id, title, index) => {
         // call api/addrecipe
         // Takes in userID, recipeID = id, title as body
-        let userID = JSON.parse(localStorage.getItem('user_data')).id;
+        let userID = JSON.parse(localStorage.getItem('user_data')).userId;
 
         var js = JSON.stringify({ UserID: userID, RecipeID: id, Title: title });
 
