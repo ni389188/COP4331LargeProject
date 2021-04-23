@@ -172,7 +172,7 @@ const SettingsPage = ({navigation}) =>
             </View>
             <View style = {[styles.section, {alignItems:'center'}]}>
               <NavigationButton
-              name = 'save'
+              name = 'Save'
               doFunction = {doSave}
               />
             </View>
