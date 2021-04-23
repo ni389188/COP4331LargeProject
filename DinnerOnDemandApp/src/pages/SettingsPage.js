@@ -5,7 +5,9 @@ import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
+import ProfileImage from '../components/ProfileImage';
 import jwt_decode from 'jwt-decode';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const SettingsPage = ({navigation}) =>
 {
@@ -14,6 +16,7 @@ const SettingsPage = ({navigation}) =>
   const [text, onChangeText] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [image, setImage] = useState('');
 
   const app_name = 'cop4331din';
   function buildPath(route)
@@ -58,7 +61,7 @@ const SettingsPage = ({navigation}) =>
   {
     event.preventDefault();
     var ud = await jwt_decode(await storage.retrieveToken());
-    var obj = {FirstName:firstName,LastName:lastName, _id:ud.userId};
+    var obj = {FirstName:firstName,LastName:lastName, _id:ud.userId, Image: image};
     var js = JSON.stringify(obj);
     try        
     {                
@@ -93,10 +96,24 @@ const SettingsPage = ({navigation}) =>
         state == 0 || state == 3
         ?
         <View style = {styles.imageSection}>
-          <Image
-          style={styles.image}
-          source={require('../components/defaultProfileImage.png')}
-          />
+          {
+            text == '' && image == ''
+            ?
+            <ProfileImage/>
+            :
+            image == ''
+            ?
+            <Image 
+            style = {styles.image}
+            source={{uri: text}}
+            />
+            :
+            <Image 
+            style = {styles.image}
+            source={{uri: image}}
+            />
+          }
+          
           <View style = {styles.button}>
             {
               state == 0
@@ -221,19 +238,20 @@ const SettingsPage = ({navigation}) =>
             <View style = {styles.section}>
               <NavigationButton
               name = 'Choose an image'
-              doFunction = {() => {setState(0)}}
+              doFunction = {() => launchImageLibrary({includeBase64: true, mediaType: 'photo', maxHeight: 150, maxWidth: 150}, 
+              (response)=>{if(response.base64)onChangeText('data:image/png;base64,'+response.base64)})}
               />
             </View>
             <View style = {styles.section}>
               <NavigationButton
               name = 'Save'
-              doFunction = {() => setState(0)}
+              doFunction = {() => {setState(0), setImage(text), onChangeText('')}}
               />
             </View>
             <View style = {styles.section}>
               <NavigationButton
               name = 'Cancel'
-              doFunction = {() => setState(0)}
+              doFunction = {() => {setState(0), onChangeText('')}}
               />
             </View>
             <View style = {{flex:1}}/>
@@ -313,11 +331,6 @@ const styles = StyleSheet.create({
     flex: 1.5,
     width: '100%',
   },
-  image: {
-      height: 150,
-      width: 150,
-      marginBottom: 25,
-  },
   section:{
     flex: 1,
     width: '100%',
@@ -352,8 +365,14 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
   },
+  image: {
+    height: 150,
+    width: 150,
+    borderRadius: 100,
+  },
   button:{
     width: '50%',
+    marginTop: 25,
   },
   text: {
     fontSize: 25,

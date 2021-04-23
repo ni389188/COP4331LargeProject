@@ -60,8 +60,8 @@ function Verify()
 
     return (
         <Card>
-            <Card.Title>
-                Congratulations your account is now verified! 
+            <Card.Title className="text-center">
+                Congratulations, your account is now verified!
                 Welcome to Dinner on Demand!
             </Card.Title>
             

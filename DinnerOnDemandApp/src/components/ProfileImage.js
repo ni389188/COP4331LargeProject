@@ -11,10 +11,21 @@ function ProfileImage()
     var ud = jwt_decode(tok);
   }
   return(
-    <Image
-    style={{height:150, width:150}}
-    source={require('./defaultProfileImage.png')}
-    />
+    <>
+        {
+            ud.image == null
+            ?
+            <Image
+            style={{height:150, width:150, borderRadius: 100}}
+            source={require('./defaultProfileImage.png')}
+            />
+            :
+            <Image 
+            style = {{height:150, width:150, borderRadius: 100}}
+            source={{uri: ud.image}}
+            />
+        }
+    </>
   );
 };
 
