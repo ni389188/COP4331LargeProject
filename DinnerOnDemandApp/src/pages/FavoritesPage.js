@@ -7,12 +7,12 @@ import NavigationButton from '../components/NavigationButton';
 import RecipeCard from '../components/RecipeCard';
 import Counter from '../components/Counter';
 
-const ShoppingListPage = ({navigation}) =>
+const FavoritesPage = ({navigation}) =>
 {
     return(
       <View style = {styles.container}>
         <View style = {styles.header}>
-          <PageTitle text = 'My Shopping List' />
+          <PageTitle text = 'Favorites' />
         </View>
         <View style = {styles.body}>
           <View style = {styles.button}>
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ShoppingListPage;
+export default FavoritesPage;

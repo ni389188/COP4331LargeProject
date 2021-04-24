@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -7,8 +7,16 @@ import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
 import ProfileImage from '../components/ProfileImage';
 
+import { Layout, Toggle, Text } from '@ui-kitten/components';
+import { ThemeContext } from '../components/theme-context';
+import { light } from '@eva-design/eva';
+
+// 🌜
+// 🌞
+
 const ProfilePage = ({navigation}) =>
 {
+  const themeContext = React.useContext(ThemeContext);
   const storage = require('../tokenStorage.js');
   const doLogout = async event =>     
   {
@@ -23,7 +31,12 @@ const ProfilePage = ({navigation}) =>
       <View style = {styles.header}>
         <PageTitle text = 'Your Profile' />
       </View>
-      <View style = {styles.body}>
+      <Layout style = {styles.body}>
+        <Toggle style={{position: "absolute", left: 225, top: 10}} checked={themeContext.theme === "light" ? false : true}
+          onChange={() => themeContext.toggleTheme()}
+        >
+          {<Text style={{fontSize: 20}}>{themeContext.theme === "light" ? "🌞" : "🌜"}</Text>}
+        </Toggle>
         <View style = {styles.imageSection}>
           <ProfileImage/>
         </View>
@@ -53,10 +66,7 @@ const ProfilePage = ({navigation}) =>
           doFunction = {doLogout}
           />
         </View>
-      </View>
-      {/* <View style = {styles.footer}>
-        <NavigationBar />
-      </View> */}
+      </Layout>
     </View>
   );
 };
@@ -76,7 +86,6 @@ const styles = StyleSheet.create({
     flex: 11,
     alignItems: 'center',
     width: '85%',
-    backgroundColor: 'white',
     borderRadius: 20,
     marginVertical: 20,
   },

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import jwt_decode from 'jwt-decode';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -7,13 +8,20 @@ import RecipeCard from '../components/RecipeCard';
 import { Button, Layout, Text } from '@ui-kitten/components';
 import axios from 'axios';
 
-const RecipeListPage = ({ navigation }) => 
-{
+const RecipeListPage = ({ navigation }) => {
   const [results, setResults] = useState([]);
   const [main, setMain] = useState({});
+  const storage = require('../tokenStorage.js');
+  var userID = '';
 
   useEffect(() => {
-    // getFavorites();
+    var tok = storage.retrieveToken();
+
+    if (tok != null) {
+      var ud = jwt_decode(tok);
+      userID = ud.userId;
+      getCustom();
+    }
   }, [])
 
   const app_name = 'cop4331din';
@@ -23,15 +31,44 @@ const RecipeListPage = ({ navigation }) =>
       return 'https://' + app_name + '.herokuapp.com/' + route;
     }
     else {
-      return 'http://localhost:5000/' + route;
+      return 'http://10.0.2.2:5000/' + route;
     }
   };
+
+  const getCustom = async () => {
+    // call api/getcustomrecipes
+    // Takes in userID
+    var js = JSON.stringify({ UserID: userID });
+
+    try {
+      const response = await fetch(buildPath('api/getcustomrecipes'),
+        {
+          method: 'POST',
+          body: js,
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        });
+
+      var res = JSON.parse(await response.text());
+
+      if (res.found) {
+        // console.log(res.recipes[0])
+        setMain(res.recipes[0])
+        setResults(res.recipes)
+      }
+      // else
+
+    }
+    catch (e) {
+      console.log(e.toString());
+    }
+  }
 
   const getFavorites = async () => {
     // call api/getrecipe
     // Takes in userID
-    let userID = JSON.parse(localStorage.getItem('user_data')).id;
-
     var js = JSON.stringify({ userID: userID });
 
     try {
@@ -47,8 +84,7 @@ const RecipeListPage = ({ navigation }) =>
 
       var res = JSON.parse(await response.text());
 
-      if (res.found)
-      {
+      if (res.found) {
         setMain(res.recipes[0])
         setResults(res.recipes)
       }
@@ -70,11 +106,11 @@ const RecipeListPage = ({ navigation }) =>
         data={results}
         keyExtractor={(item, index) => index.toString()}
         numColumns={1}
-        renderItem={({ item }) => <RecipeCard item={item} />}
+        renderItem={({ item }) => <RecipeCard item={item} custom={true}/>}
         ListHeaderComponent={
           <View style={[styles.body, { marginBottom: 20 }]}>
             <View style={styles.cards}>
-              <RecipeCard item={main} random/>
+              <RecipeCard item={main} custom={true} />
             </View>
             <Button onPress={() => { navigation.navigate('CreatePage') }}>
               <Text>+ Add Custom Recipe</Text>
@@ -84,7 +120,7 @@ const RecipeListPage = ({ navigation }) =>
         ListFooterComponent={
           results.length === 0 ?
             <Text>No Recipes try adding some!</Text>
-          :
+            :
             null
         }
       />

@@ -19,7 +19,6 @@ const SearchPage = () => {
     const [ingredients, setIngredients] = useState("");
     const [results, setResult] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [useCustom, setUseCustom] = useState(false);
 
     const app_name = 'cop4331din';
 
@@ -28,17 +27,15 @@ const SearchPage = () => {
             return 'https://' + app_name + '.herokuapp.com/' + route;
         }
         else {
-            return 'http://localhost:5000/' + route;
+            return 'http://10.0.2.2:5000/' + route;
         }
     };
 
     const search = async () => {
         setLoading(!loading)
 
-        // if (useCustom)
-        // {
         // Call searchrecipe api
-        var js = JSON.stringify({ ingredients: ingredients.replace(" ", ""), limit: "10" });
+        var js = JSON.stringify({ Ingredients: ingredients, Limit: "10" });
 
         try {
             const response = await fetch(buildPath('api/searchrecipe'),
@@ -53,46 +50,22 @@ const SearchPage = () => {
 
             var res = JSON.parse(await response.text());
 
-            console.log(res)
-
             if (!res.found) {
-                console.log(res.error);
+                alert(res.error);
             }
             else {
-                setResults(res.obj)
+                setResult(res.obj)
+                setLoading(!loading)
             }
         }
         catch (e) {
-            console.log(e.toString());
-            // return;
+            alert(e.toString());
         }
-
-            // axios.post(buildPath('api/searchrecipe'),
-            // {
-            //     ingredients: "apples",
-            //     limit: "10"
-            // })
-            // .then((response) =>
-            // {
-            //     console.log(response);
-            // }, (error) =>
-            // {
-            //     console.log(error);
-            // });
-        // }
-        // else {
-        //     axios
-        //     .get(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.replace(" ", "+")}&apiKey=${APIKEY}`)
-        //     .then((response) => {
-        //         setResult(response.data)
-        //         setLoading(false)
-        //     })
-        // }
     };
 
     const renderResults = ({ item }) => {
         return (
-            <RecipeCard item={item} />
+            <RecipeCard item={item} custom={false} />
         )
     };
 
@@ -105,9 +78,6 @@ const SearchPage = () => {
                     </View>
                     <View style={styles.body}>
                         <View style={{ flexDirection: "column", alignItems: "center", paddingTop:10 }}>
-                            <CheckBox checked={useCustom} onChange={() => setUseCustom(!useCustom)}>
-                                <Text>Search Custom Recipes</Text>
-                            </CheckBox>
                             <Input
                                 placeholder={"Search for Ingredients/Recipes here"}
                                 value={ingredients}
