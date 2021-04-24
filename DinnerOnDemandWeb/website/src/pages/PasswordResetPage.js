@@ -30,7 +30,7 @@ function ResetPassword() {
 
             var res = JSON.parse(await response.text());
 
-            setMessage(`If an account for ${loginName.value} exists then a reset email was sent.`);
+            setMessage(`A password reset link was sent to ${loginName.value}, if an account exists.`);
         }
         catch (e) {
             alert(e.toString());
