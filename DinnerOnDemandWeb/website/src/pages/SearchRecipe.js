@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import NavBar from '../components/InsideNavBar';
-import { Card } from "react-bootstrap";
+import { Card, FormText } from "react-bootstrap";
 import { Grid, Row, Col } from "react-bootstrap";
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Form from 'react-bootstrap/Form'
 
 
 import './searchRecipe.css'
@@ -107,46 +108,35 @@ const SearchRecipe = () => {
 
     const doitem = (recipe, index) => {
         return (
-
-            <div id={recipe.key}>
-                <div className="container-fluid justify-center">
-                    <div class= "card text-white bg-dark mt-5" >
-                        <div class="card-header ">
-                            <h4>{recipe.title}</h4>
-                        </div>
-                        <Card.Img src={recipe.image} />
-                        <div className="card-body"> 
-                            <div>
-                                <p className="card-text text-white">
-                                    {
-                                        [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
-                                            return (
-                                                <div key={index}>
-                                                    <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
-                                                        <p>
-                                                            <h5>Ingredient: </h5>{ingredient.originalString}
-                                                        </p>
-                                                        <p>
-                                                            Amount: {ingredient.amount}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
-                                </p>
-                            </div>
-                            <>
-                                <ButtonGroup>
-                                    <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, index)}>Add To Favorites</Button>
-                                    <Button variant="light" onClick={() => addToShop(recipe.id, recipe.title)}>Add To Shopping List</Button>
-                                </ButtonGroup>
-                                <p id={index}></p>
-                            </>
-                            </div>
-                        
-                    </div>
-                </div>
+            <div>
+                <Card controlId={recipe.key} border="light" style={{ width: '35rem', padding: "10px" }}>
+                    <Card.Title>
+                        {recipe.title}
+                    </Card.Title>
+                    <Card.Img src={recipe.image} />
+                    <Card.Body>
+                        {
+                            [...recipe.usedIngredients, ...recipe.missedIngredients].map((ingredient, index) => {
+                                return (
+                                    <div key={index}>
+                                        <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                            <Card.Text>
+                                                <h5>Ingredient: </h5>{ingredient.originalString}
+                                            </Card.Text>
+                                            <Card.Text>
+                                                Amount: {ingredient.amount}
+                                            </Card.Text>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        <ButtonGroup>
+                            <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, index)}>Add To Favorites</Button>
+                        </ButtonGroup>
+                    </Card.Body>
+                </Card>
+                <br />
             </div>
         )
     }
@@ -177,35 +167,31 @@ const SearchRecipe = () => {
         
         <>  
             <div className="searchRecipeCard h-auto"> 
-            <NavBar />
-            
-            <div className="container d-flex justify-content-center  "> 
-            <form onSubmit={doSomething}>
-                <input
-                    type="text"
-                    placeholder="Search for Ingredients/Recipes here"
-                    value={ingredients}
-                    onChange={e => setIngredients(e.target.value)}
-                    style={{ width: "100%" }}
-                />
-                <p>Hint: Seperate each ingredient with a comma, then Press enter when done</p>
-                
-            </form>
-            </div>
-            {
-                results.length === 0 ?
-                    <p></p>
-                    :
-                    <div className="container-fluid  justify-content-center "> 
-                        {renderResult()}
-                      
-                        <Row>
-                            <Col id={"col_1"} >  {col_1}  </Col>
-                            <Col id={"col_2"}>  {col_2}  </Col>
-                            <Col id={"col_3"}>  {col_3} </Col>
-                        </Row>               
-                    </div>
-            }
+                <NavBar />
+                <br />
+                <div className="container d-flex justify-content-center  "> 
+                    <Form onSubmit={doSomething}>
+                        <Form.Group>
+                            <Form.Control type="text" placeholder="Search for Ingredients/Recipes Here"
+                                value={ingredients} onChange={e => setIngredients(e.target.value)} />
+                        </Form.Group>
+                        <p>Hint: Seperate each ingredient with a comma, then Press enter when done</p>
+                    </Form>
+                </div>
+                {
+                    results.length === 0 ?
+                        <p></p>
+                        :
+                        <div className="container-fluid  justify-content-center "> 
+                            {renderResult()}
+                        
+                            <Row>
+                                <Col id={"col_1"} >  {col_1}  </Col>
+                                <Col id={"col_2"}>  {col_2}  </Col>
+                                <Col id={"col_3"}>  {col_3} </Col>
+                            </Row>               
+                        </div>
+                }
               </div>
         </>
       

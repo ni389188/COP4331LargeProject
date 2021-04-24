@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { Card, CardColumns } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner'
 import NavBar from '../components/InsideNavBar';
 
@@ -61,16 +62,18 @@ const Favorites = () =>
                 <NavBar/>
                 {
                     results.length === 0 ?
-                        <div>
-                            <p>Search up some recipes and favorite them</p>
-                        </div>
+                        <Card>
+                            <Card.Title>Search up some recipes and favorite them</Card.Title>
+                        </Card>
                     :
                         results.map((item, index) =>
                         {
                             return (
-                                <div>
-                                    <p key={index}>{item.Title}</p>
-                                </div>
+                                <CardColumns>
+                                    <Card>
+                                        <p key={index}>{item.Title}</p>
+                                    </Card>
+                                </CardColumns>
                             )
                         })
                 }

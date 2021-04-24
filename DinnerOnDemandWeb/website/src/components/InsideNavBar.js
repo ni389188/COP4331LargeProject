@@ -16,7 +16,8 @@ function InsideNavBar() {
                 <Nav className="mr-auto">
                     <Nav.Link href="../pages/HomePage">Dashboard</Nav.Link>
                     <Nav.Link href="../pages/search">Recipe Lookup</Nav.Link>
-                    <Nav.Link href="../pages/favorites">Saved Recipes</Nav.Link>
+                    <Nav.Link href="../pages/favorites">Favorites</Nav.Link>
+                    <Nav.Link href="../pages/WelcomePage">Log Off</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
