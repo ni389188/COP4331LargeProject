@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Spinner from 'react-bootstrap/Spinner'
+import NavBar from '../components/InsideNavBar';
+
 // import { Container } from './styles';
 
 const Favorites = () => 
@@ -56,6 +58,7 @@ const Favorites = () =>
     return (
         <>
             <div>
+                <NavBar/>
                 {
                     results.length === 0 ?
                         <div>
