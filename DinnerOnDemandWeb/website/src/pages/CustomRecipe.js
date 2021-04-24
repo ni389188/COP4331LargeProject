@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/InsideNavBar';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 // import { Container } from './styles';
@@ -32,8 +32,6 @@ const CustomRecipe = () => {
         for (let i = 0; i < list.length; i++)
             temp1.push(list[i].innerText);
 
-        // setIngredients(temp);
-
         list = document.getElementById('instructionsList').getElementsByTagName("li");
 
         let temp = [];
@@ -41,22 +39,18 @@ const CustomRecipe = () => {
         for (let i = 0; i < list.length; i++)
             temp.push(list[i].innerText);
 
-        // setInstructions(temp);
-
-
         // Call addcustomrecipe api
         // Takes userID, title, image, ingredients, units, instructions
-
-        let userID = JSON.parse(localStorage.getItem('user_data')).id;
+        let userID = JSON.parse(localStorage.getItem('user_data')).userId;
 
         var js = JSON.stringify(
             {
-                userID: userID,
-                title: title,
-                image: image,
-                ingredients: temp1,
-                units: units,
-                instructions: temp
+                UserID: userID,
+                Title: title,
+                Image: image,
+                Ingredients: temp1,
+                Units: units,
+                Instructions: temp
             });
 
         try {
@@ -76,14 +70,15 @@ const CustomRecipe = () => {
 
             if (res.Added) {
                 // let the user know
+                document.getElementById("added").innerHTML = "Custom Recipe has been added!";
             }
             else {
                 // let them know it hasnt
+                document.getElementById("added").innerHTML = res.error;
             }
         }
         catch (e) {
             console.log(e.toString());
-            // return;
         }
     }
 
@@ -166,7 +161,8 @@ const CustomRecipe = () => {
                                 <p className="text-white ">Click box to add image (optional)</p>
 
                             </Form.Group>
-                            <Button class=" btn-block btn-lg mb-5" variant="light" onClick={() => addRecipe()}>Add Recipe</Button>
+                            <Button style={{marginBottom: 10}} class=" btn-block btn-lg mb-5" variant="light" onClick={() => addRecipe()}>Add Recipe</Button>
+                            <p style={{marginBottom: 10}} id="added"></p>
                         </Form >
                     </div>
                 </div>

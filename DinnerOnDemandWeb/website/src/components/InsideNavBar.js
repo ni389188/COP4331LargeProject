@@ -14,7 +14,7 @@ function InsideNavBar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="../pages/LoggedIn/HomePage">Dashboard</Nav.Link>
+                    <Nav.Link href="../pages/HomePage">Dashboard</Nav.Link>
                     <Nav.Link href="../pages/LoggedIn/LoginPage">Recipe Lookup</Nav.Link>
                     <Nav.Link href="../pages/LoggedIn/AboutUs">Saved Recipes</Nav.Link>
                 </Nav>
