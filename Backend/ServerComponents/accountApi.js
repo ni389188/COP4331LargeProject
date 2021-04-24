@@ -22,7 +22,7 @@ exports.setApp = function (app, MongoClient)
             }
             // If found
             if (result){
-                tok = createTok.createToken( result.FirstName, result.LastName, result._id);
+                tok = createTok.createToken( result.FirstName, result.LastName, result._id, result.Image);
             }
         });
         if(!tok)

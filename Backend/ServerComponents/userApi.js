@@ -21,12 +21,13 @@ exports.setApp = function (app, MongoClient)
             LastName: req.body.LastName, 
             Email: req.body.Email, 
             Password: hashedPassword,
+            Image: null,
             VerificationCode: randomNumber,
             IsVerified: false
         });
         // Stores into the DB.
         await newUser.save().then(result => {
-            ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
+            ret = jwt.createToken( result.FirstName, result.LastName, result._id, result.Image);
         })
         .catch(err => {
             console.log(err);
@@ -78,7 +79,7 @@ exports.setApp = function (app, MongoClient)
 
             // If found
             if (result){
-                ret = jwt.createToken( result.FirstName, result.LastName, result._id);
+                ret = jwt.createToken( result.FirstName, result.LastName, result._id, result.Image);
                 ret.LoggedIn = true;
                 res.status(200).json(ret);
             }
@@ -102,6 +103,10 @@ exports.setApp = function (app, MongoClient)
         {
             obj.LastName = req.body.LastName;
         }
+        if(req.body.Image != '' && req.body.Image != undefined)
+        {
+            obj.Image = req.body.Image;
+        }
         if(req.body.Password != '' && req.body.Password != undefined)
         {
             await User.findById(req.body._id, function(err, result) {
@@ -119,10 +124,10 @@ exports.setApp = function (app, MongoClient)
         {
             res.status(200).json("empty");
             return;
-        }
+        };
         // Update user DB.
         User.findByIdAndUpdate(req.body._id, obj, {new: true}).then(result => {
-            ret = jwt.createToken( result.FirstName, result.LastName, result._id, );
+            ret = jwt.createToken( result.FirstName, result.LastName, result._id, result.Image);
             res.status(200).json(ret);
         })
         .catch(err => {

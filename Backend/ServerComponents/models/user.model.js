@@ -16,6 +16,7 @@ const userModel = mongoose.Schema({
     Password: reqString,
     FirstName: reqString, 
     LastName: reqString, 
+    Image: {type: String},
     VerificationCode: reqString,
     IsVerified: {
         type: Boolean,
