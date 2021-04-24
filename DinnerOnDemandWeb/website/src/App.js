@@ -12,6 +12,7 @@ import Favorites from './pages/Favorites';
 import CustomRecipe from './pages/CustomRecipe';
 import VerifyPage from './pages/VerifyPage';
 import PWresetPage from './pages/PWresetPage';
+import PasswordResetPage from './pages/PasswordResetPage'
 
 function App() {  
   return (
@@ -41,6 +42,9 @@ function App() {
           </Route>
           <Route path="/pages/VerifyPage" exact>          
             <VerifyPage />        
+          </Route>
+          <Route path="/pages/PasswordResetPage" exact>          
+            <PasswordResetPage />        
           </Route>
           <Route path="/pages/PWresetPage/:token" exact>          
             <PWresetPage />        
