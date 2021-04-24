@@ -87,7 +87,7 @@ exports.setApp = function (app, MongoClient)
             // If not found
             else {
                 console.log('Failed Login');
-                res.status(400).json({loggedIn:false});
+                res.status(400).json({LoggedIn:false});
             }
         })
     });
