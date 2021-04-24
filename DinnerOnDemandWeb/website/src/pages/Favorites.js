@@ -26,7 +26,7 @@ const Favorites = () =>
     {
         // call api/getrecipe
         // Takes in userID
-        let userID = JSON.parse(localStorage.getItem('user_data')).id;
+        let userID = JSON.parse(localStorage.getItem('user_data')).userId;
 
         var js = JSON.stringify({ UserID: userID });
 
