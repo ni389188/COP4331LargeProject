@@ -25,11 +25,16 @@ exports.setApp = function (app, MongoClient)
                 tok = createTok.createToken( result.FirstName, result.LastName, result._id, result.Image);
             }
         });
+
+        // Token could not be created, thus account does not exist.
         if(!tok)
         {
-            res.status(400).json(message);
+            //NOTE: Remove 400 response when account is not found. This can 
+            //      be used by an attacker to find out if an email has an account.
+            res.status(200).json({message});
             return;
         };
+        
         var data;
         if(process.env.NODE_ENV === 'production')
         {
@@ -95,8 +100,13 @@ exports.setApp = function (app, MongoClient)
     {
         try
         {
+
+            // Checks if token signature is valid. Using the Secret in the .env file.
             var tok = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET);
+
+            // After decoding: Find the user by the userId contained in the token.
             User.findById(tok.userId, function(err, result) {
+                // If an user is found.
                 if(result){
                     if(process.env.NODE_ENV === 'production')
                     {
@@ -123,10 +133,16 @@ exports.setApp = function (app, MongoClient)
     app.get('/api/verify/:verificationCode/:token', async (req, res, next) =>
     {
         try
-        {
+        {   
+            
+            // Checks if token signature is valid. Using the Secret in the .env file.
             var tok = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET);
+
+            // Finds user by userId in token.
             User.findById(tok.userId, function(err, result) {
+                // verification code in DB is the same as in the ger request param.
                 if(result.VerificationCode == req.params.verificationCode){
+                    // Update user IsVerified field to true.
                     User.findByIdAndUpdate(tok.userId, {IsVerified: true, $unset:{"VerificationCode":1}}).then(result => {
                         if(process.env.NODE_ENV === 'production')
                         {
