@@ -57,7 +57,7 @@ const Favorites = () =>
             var res = JSON.parse(await response.text());
 
             // Commented out, but res.recipes is an array of objects that contain the recipes and
-            // Fields that describe the recipe ex. res.recipes[0].title.
+            // Fields that describe the recipe ex. res.recipes[0].Title.
             /*if (res.found)
                 setResults(res.recipes)
             // else*/
