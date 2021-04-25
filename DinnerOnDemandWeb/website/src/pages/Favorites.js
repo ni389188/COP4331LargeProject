@@ -71,7 +71,26 @@ const Favorites = () =>
                             return (
                                 <CardColumns>
                                     <Card>
-                                        <p key={index}>{item.Title}</p>
+                                        <Card.Title key={index}>{item.Title}</Card.Title>
+                                        <Card.Img src={item.image}/>
+                                        <Card.Body>
+                                            {
+                                                [...item.usedIngredients, ...item.missedIngredients].map((ingredient, index) => {
+                                                    return (
+                                                        <div key={index}>
+                                                            <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                                                <Card.Text>
+                                                                    <h5>Ingredient: </h5>{ingredient.originalString}
+                                                                </Card.Text>
+                                                                <Card.Text>
+                                                                    Amount: {ingredient.amount}
+                                                                </Card.Text>
+                                                            </div>
+                                                        </div>
+                                                    )
+                                                    })
+                                            }
+                                        </Card.Body>
                                     </Card>
                                 </CardColumns>
                             )
