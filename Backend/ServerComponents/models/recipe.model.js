@@ -19,6 +19,17 @@ const recipeModel = mongoose.Schema({
         required: true,
     },
     Title: reqString, 
+
+    // These two fields are not required so that mobile does not have
+    // To implement this chages.
+    Image: {
+        type: String,
+        required: false
+    },
+    Ingredients: {
+        type: [String],
+        required: false
+    }
 })
 recipeModel.plugin(uniqueValidator)
 
