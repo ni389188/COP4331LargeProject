@@ -33,6 +33,12 @@ const SearchRecipe = () => {
     const doSomething = async (e) => {
         e.preventDefault();
 
+        if (localStorage.getItem('user_data') === null) {
+            console.log('undefined');
+            window.location.href = "../pages/LoginPage";
+            return;
+        }
+
         // Call searchrecipe api
         var js = JSON.stringify({ Ingredients: ingredients.replace(" ", ""), Limit: "20" });
 

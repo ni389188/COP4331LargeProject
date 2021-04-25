@@ -25,6 +25,15 @@ const CustomRecipe = () => {
     };
 
     const addRecipe = async () => {
+        
+        // If the user data was deleted then go to login if attempt to search.
+        // TO-DO: Make it so that it verifies the token instead.
+        if (localStorage.getItem('user_data') === null) {
+            console.log('undefined');
+            window.location.href = "../pages/LoginPage";
+            return;
+        }
+
         var list = document.getElementById('ingredientsList').getElementsByTagName("li");
 
         let temp1 = [];

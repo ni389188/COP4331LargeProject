@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Card, CardColumns } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner'
 import NavBar from '../components/InsideNavBar';
+const jwt = require("jsonwebtoken");
+
 
 // import { Container } from './styles';
 
@@ -26,8 +28,16 @@ const Favorites = () =>
     };
 
     const getFavorites = async () =>
-    {
-        // call api/getrecipe
+    {   
+
+        // If the user data was deleted then go to login if attempt to search.
+        // TO-DO: Make it so that it verifies the token instead.
+        if (localStorage.getItem('user_data') === null) {
+            console.log('undefined');
+            window.location.href = "../pages/LoginPage";
+            return;
+        }
+
         // Takes in userID
         let userID = JSON.parse(localStorage.getItem('user_data')).userId;
 
@@ -53,7 +63,7 @@ const Favorites = () =>
         }
         catch (e) {
             console.log(e.toString());
-        }
+        }   
     }
 
     return (
