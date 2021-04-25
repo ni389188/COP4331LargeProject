@@ -44,7 +44,7 @@ exports.setApp = function (app, MongoClient)
                 from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
                 to: req.body.Email,
                 subject: "Dinner on demand: Please verify your Email",
-                text: "Please confirm your email to activate your account! www.dinnerondemand.com/api/verify/"+randomNumber+"/"+ret.accessToken
+                text: "Please confirm your email to activate your account! www.dinnerondemand.me/api/verify/"+randomNumber+"/"+ret.accessToken
             };
         }
         else
