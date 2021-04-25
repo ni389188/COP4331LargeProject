@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
@@ -29,29 +29,76 @@ const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
     try {
       const response = await fetch(buildPath('api/login'), { method: 'post', body: js, headers: { 'Content-Type': 'application/json' } });
       var res = JSON.parse(await response.text());
-      if (res.LoggedIn) {
-        storage.storeToken(res);
-        navigation.push('NavigationBar');
-      }
-      else {
-        alert("Invalid email or password");
-      }
-    }
-    catch (e) {
-      alert(e.toString());
-    }
+      if(res.LoggedIn)            
+      {                
+        if(res.IsVerified)
+        {
+          storage.storeToken(res);
+          navigation.push('NavigationBar');   
+        }
+        else
+        {
+          Alert.alert(
+            "Please verify your email first",
+            "Would you like to resend the verification email?",
+            [
+              {
+                text: "Cancel"
+              },
+              {
+                text: "Resend",
+                onPress: doResend
+              },
+            ],
+          );
+        }
+      }            
+      else
+      {
+        alert("Invalid email or password"); 
+      }        
+    }        
+    catch(e)        
+    {            
+        alert(e.toString());                 
+    }      
   };
 
-  return (
-    <View style={styles.container}>
-      <Layout style={styles.body}>
-        <View style={styles.background}>
-          <Text style={styles.loginTitle}>Sign In{"\n"}</Text>
-          <Text style={styles.inputTitle}> Email</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Please enter email"
-            onChangeText={onChangeEmail}
+  const doResend = async event =>
+  {   
+    var js = JSON.stringify({Email:email});
+    try        
+    {                
+      const response = await fetch(buildPath('api/resend'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());
+      if(res)
+      {
+        alert("An email was sent to "+email);
+      }
+      else
+      {
+        alert("An issue was encountered, please try again");
+      }
+    }
+    catch(e)        
+    {            
+        alert(e.toString());                 
+    }   
+  }
+
+  return(
+    <View style = {styles.container}>
+      <View style = {styles.header}>
+        <PageTitle text = "Dinner on Demand"/>
+      </View>
+      <Layout style = {styles.body}>
+        <View style = {styles.background}>
+          <Text style = {styles.loginTitle}>Sign In{"\n"}</Text>
+          <Text style = {styles.inputTitle}> Email</Text>
+          <TextInput 
+          style = {styles.input} 
+          placeholder="Please enter email"
+          onChangeText = {onChangeEmail}
           />
           <Text style={styles.inputTitle}> Password</Text>
           <TextInput
