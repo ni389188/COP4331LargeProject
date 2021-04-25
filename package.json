@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cd Backend && npm install && npm start",
-    "heroku-postbuild": "cd DinnerOnDemandWeb/website && npm install && npm run build"
+    "heroku-postbuild": "cd ../DinnerOnDemandWeb/website && npm install && npm run build"
   },
   "repository": {
     "type": "git",
