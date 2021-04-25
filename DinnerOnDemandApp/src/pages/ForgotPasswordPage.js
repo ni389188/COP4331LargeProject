@@ -3,20 +3,20 @@ import { View, StyleSheet, Text, TextInput } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationButton from '../components/NavigationButton';
+import { Layout } from '@ui-kitten/components';
 
 const ForgotPasswordPage = ({navigation}) =>
 {
   const [email, onChangeEmail] = useState('');
+
   const app_name = 'cop4331din';
-  function buildPath(route)
-  {    
-    if (process.env.NODE_ENV === 'production')     
-    {        
-      return 'https://' + app_name +  '.herokuapp.com/' + route;
+
+  const buildPath = (route) => {
+    if (process.env.NODE_ENV === 'production') {
+      return 'https://' + app_name + '.herokuapp.com/' + route;
     }
-    else
-    {
-      return 'http://10.0.2.2:5000/' + route;   
+    else {
+      return 'http://10.0.2.2:5000/' + route;
     }
   };
   const doSearch = async event =>
@@ -51,7 +51,7 @@ const ForgotPasswordPage = ({navigation}) =>
         navigate = {navigation}
         />
       </View>
-      <View style = {styles.body}>
+      <Layout style = {styles.body}>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Forgot{"\n"}Password?</Text>
           <Text style = {styles.inputTitle}> Email</Text>
@@ -65,7 +65,7 @@ const ForgotPasswordPage = ({navigation}) =>
           doFunction = {doSearch}
           />
         </View>
-      </View>
+      </Layout>
     </View>
   );
 };

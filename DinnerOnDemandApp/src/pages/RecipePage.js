@@ -7,7 +7,6 @@ import jwtDecode from 'jwt-decode';
 import { Layout, Text } from '@ui-kitten/components';
 import { ThemeContext } from '../components/theme-context';
 
-const app_name = 'cop4331din'
 const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 
 const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
@@ -39,14 +38,16 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
     }
   }, []);
 
+  const app_name = 'cop4331din';
+
   const buildPath = (route) => {
     if (process.env.NODE_ENV === 'production') {
       return 'https://' + app_name + '.herokuapp.com/' + route;
     }
     else {
-      return 'http://localhost:5000/' + route;
+      return 'http://10.0.2.2:5000/' + route;
     }
-  }
+  };
 
   const addToShop = () => {
     let obj =
@@ -86,7 +87,7 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
       }
       else {
         // Let them know an error occured
-        alert(res.error)
+        alert("Error or recipe added already")
       }
     }
     catch (e) {
@@ -137,11 +138,6 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/unlike.png')} />
                 <Text>Add Recipe</Text>
               </TouchableOpacity>
-              {/* Add to Shopping List */}
-              {/* <TouchableOpacity style={{marginHorizontal: 50, alignItems: "center"}} onPress={() => null}>
-                <Image style={{width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white"}} source={require('../components/plus.png')} />
-                <Text>Add to Cart</Text>
-              </TouchableOpacity> */}
               {/* Share */}
               <TouchableOpacity onPress={() => tweetNow()} style={{ alignItems: "center" }}>
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/share.png')} />
@@ -164,8 +160,9 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
                     >
                       <Image
                         style={{ width: 50, height: 50 }}
-                        source={ custom ? require("../components/Logo.png") : { uri: ingredient.image }}
+                        source={ !custom && ingredient.image !== undefined ? { uri: ingredient.image } : require("../components/Logo.png")}
                       />
+                      {console.log(ingredient.image)}
                       <View style={{ flexDirection: "column", marginStart: 5, width: "80%", }}>
                         <Text style={{color: "black"}}>
                           Ingredient: {custom ? ingredient : ingredient.originalString}
@@ -202,7 +199,7 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
                     instructions[0].steps.map((desc, index) => {
                       steps.push({ step: desc.step });
                       return (
-                        <Text key={index} style={{ marginBottom: 5 }}>
+                        <Text key={index} style={{ marginBottom: 5, color: "black" }}>
                           {`${index + 1}. ${desc.step}`}
                         </Text>
                       )

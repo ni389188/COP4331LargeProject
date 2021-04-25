@@ -41,8 +41,7 @@ const styles = StyleSheet.create({
       width: 200,
   },
   logoOrientation: {
-    paddingTop: 125,
-    paddingBottom: 50,
+    marginVertical: 50
   },
   buttonOrientation: {
     width: '85%',
