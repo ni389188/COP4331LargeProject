@@ -88,9 +88,6 @@ const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
 
   return(
     <View style = {styles.container}>
-      <View style = {styles.header}>
-        <PageTitle text = "Dinner on Demand"/>
-      </View>
       <Layout style = {styles.body}>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Sign In{"\n"}</Text>
