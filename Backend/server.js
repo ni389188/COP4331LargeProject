@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production')
     
     app.get('*', (req, res) =>  
     {    
-        res.sendFile(path.resolve(__dirname, 'website', 'build', 'index.html')); // changed frontend to websiteb bc thats what its called for ours
+        res.sendFile(path.resolve('DinnerOnDemandWeb', 'website', 'build', 'index.html')); // changed frontend to websiteb bc thats what its called for ours
     });
 }
 
