@@ -80,6 +80,7 @@ exports.setApp = function (app, MongoClient)
             // If found
             if (result){
                 ret = jwt.createToken( result.FirstName, result.LastName, result._id, result.Image);
+                ret.IsVerified = result.IsVerified;
                 ret.LoggedIn = true;
                 res.status(200).json(ret);
             }

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
@@ -41,8 +41,27 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
       var res = JSON.parse(await response.text());
       if(res.LoggedIn)            
       {                
-        storage.storeToken(res);
-        navigation.push('NavigationBar');   
+        if(res.IsVerified)
+        {
+          storage.storeToken(res);
+          navigation.push('NavigationBar');   
+        }
+        else
+        {
+          Alert.alert(
+            "Please verify your email first",
+            "Would you like to resend the verification email?",
+            [
+              {
+                text: "Cancel"
+              },
+              {
+                text: "Resend",
+                onPress: doResend
+              },
+            ],
+          );
+        }
       }            
       else
       {
@@ -54,6 +73,28 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
         alert(e.toString());                 
     }      
   };
+
+  const doResend = async event =>
+  {   
+    var js = JSON.stringify({Email:email});
+    try        
+    {                
+      const response = await fetch(buildPath('api/resend'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());
+      if(res)
+      {
+        alert("An email was sent to "+email);
+      }
+      else
+      {
+        alert("An issue was encountered, please try again");
+      }
+    }
+    catch(e)        
+    {            
+        alert(e.toString());                 
+    }   
+  }
 
   return(
     <View style = {styles.container}>
