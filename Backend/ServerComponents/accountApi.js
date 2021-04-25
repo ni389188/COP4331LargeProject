@@ -139,7 +139,7 @@ exports.setApp = function (app, MongoClient)
             var tok = jwt.verify(req.params.token, process.env.ACCESS_TOKEN_SECRET);
 
             // Finds user by userId in token.
-            User.findById(tok.userId, function(err, result) {
+            await User.findById(tok.userId, function(err, result) {
                 // verification code in DB is the same as in the ger request param.
                 if(result.VerificationCode == req.params.verificationCode){
                     // Update user IsVerified field to true.
