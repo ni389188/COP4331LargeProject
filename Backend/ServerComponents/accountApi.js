@@ -166,4 +166,49 @@ exports.setApp = function (app, MongoClient)
             res.status(400);
         };
     });
+
+    app.post('/api/resend', async (req, res, next) =>
+    {
+        try
+        {
+            var randomNumber;
+            await User.findOne({Email:req.body.Email}, function(err, result) {
+                if(result){
+                    ret = createTok.createToken( result.FirstName, result.LastName, result._id, result.Image);
+                    randomNumber = result.VerificationCode;
+                }
+            });
+            if(!ret)
+            {
+                res.status(400).json(false);
+                return;
+            };
+            if(process.env.NODE_ENV === 'production')
+            {
+                data = {
+                    from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                    to: req.body.Email,
+                    subject: "Dinner on demand: Please verify your Email",
+                    text: "Please confirm your email to activate your account! www.dinnerondemand.com/api/verify/"+randomNumber+"/"+ret.accessToken
+                };
+            }
+            else
+            {
+                data = {
+                    from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
+                    to: req.body.Email,
+                    subject: "Dinner on demand: Please verify your Email",
+                    text: "Please confirm your email to activate your account! http://localhost:5000/api/verify/"+randomNumber+"/"+ret.accessToken
+                };
+            };
+            mailgun.messages().send(data, function (error, body) {
+                console.log(body);
+                res.status(200).json(true);
+            });
+        }
+        catch(e)
+        {
+            res.status(400).json(false);
+        };
+    });
 }

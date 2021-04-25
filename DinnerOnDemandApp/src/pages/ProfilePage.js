@@ -7,6 +7,7 @@ import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
 import ProfileImage from '../components/ProfileImage';
 
+
 import { Layout, Toggle, Text } from '@ui-kitten/components';
 import { ThemeContext } from '../components/theme-context';
 import { light } from '@eva-design/eva';
