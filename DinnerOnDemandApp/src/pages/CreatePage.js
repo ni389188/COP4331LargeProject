@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity, Alert, Image, ScrollView } from 'react-native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import jwt_decode from 'jwt-decode';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -19,6 +20,16 @@ const CreatePage = ({ navigation }) => {
   const [units, setUnits] = useState([""]);
   const [instructions, setInstructions] = useState(null);
 
+  const storage = require('../tokenStorage.js');  
+  var tok = storage.retrieveToken();
+  var userID = '';
+
+  if(tok != null)
+  {
+    var ud = jwt_decode(tok);
+    userID = ud.userId;
+  }
+
   const app_name = 'cop4331din';
 
   const buildPath = (route) => {
@@ -26,7 +37,7 @@ const CreatePage = ({ navigation }) => {
       return 'https://' + app_name + '.herokuapp.com/' + route;
     }
     else {
-      return 'http://localhost:5000/' + route;
+      return 'http://10.0.2.2:5000/' + route;
     }
   };
 
@@ -35,16 +46,14 @@ const CreatePage = ({ navigation }) => {
     // Call addcustomrecipe api
     // Takes userID, title, image, ingredients, units, instructions
 
-    let userID = JSON.parse(localStorage.getItem('user_data')).id;
-
     var js = JSON.stringify(
       {
-        userID: userID,
-        title: title,
-        image: image,
-        ingredients: tempIngre,
-        units: units,
-        instructions: tempInstr
+          UserID: userID,
+          Title: title,
+          Image: image,
+          Ingredients: tempIngre,
+          Units: units,
+          Instructions: tempInstr
       });
 
     try {
@@ -60,17 +69,21 @@ const CreatePage = ({ navigation }) => {
 
       var res = JSON.parse(await response.text());
 
-      console.log(res)
-
       if (res.Added) {
         // let the user know
+        alert("Recipe has been added");
+        setImage("")
+        setTitle("")
+        setIngredients("")
+        setInstructions("")
       }
       else {
         // let them know it hasnt
+        alert(res.error)
       }
     }
     catch (e) {
-      console.log(e.toString());
+      alert(e.toString());
       // return;
     }
   }
@@ -128,19 +141,20 @@ const CreatePage = ({ navigation }) => {
       <View style={styles.body}>
         <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
           <View style={styles.background}>
-            <TextInput style={styles.input} placeholder="Add name of dish" textAlign='center'
+            <TextInput style={styles.input} placeholder="Add name of dish" textAlign='center' value={title}
               onChangeText={setTitle}
             />
             <Text style={{ color: "red" }}>**Required**</Text>
           </View>
           <View style={styles.background}>
             <TextInput style={styles.input} placeholder="Add Ingredients one at a time" textAlign='left' multiline
-              onChangeText={setIngredients}
+              onChangeText={setIngredients} value={ingredients}
             />
             <Text style={{ color: "red" }}>**Each ingredient on there own line**</Text>
           </View>
           <View style={styles.background}>
             <TextInput style={styles.input} placeholder="Add Instuctions step-by-step" textAlign='left'
+              multiline value={instructions}
               onChangeText={setInstructions}
             />
             <Text style={{ color: "red" }}>**Each instruction on there own line**</Text>

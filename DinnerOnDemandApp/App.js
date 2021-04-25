@@ -28,15 +28,11 @@ import AccountPage from './src/pages/AccountPage';
 import LoginPage from './src/pages/LoginPage';
 import ForgotPasswordPage from './src/pages/ForgotPasswordPage';
 import RegisterPage from './src/pages/RegisterPage';
-import RecipeListPage from './src/pages/RecipeListPage';
-import SearchPage from './src/pages/SearchPage';
-import ShoppingListPage from './src/pages/ShoppingListPage';
 import SettingsPage from './src/pages/SettingsPage';
 import RecipePage from './src/pages/RecipePage';
 import CreatePage from './src/pages/CreatePage';
 import ResultsPage from './src/pages/ResultsPage';
 import CurrentRecipesPage from './src/pages/CurrentRecipesPage';
-import ProfilePage from './src/pages/ProfilePage';
 import ChangePasswordPage from './src/pages/ChangePasswordPage';
 
 import { NavigationContainer } from '@react-navigation/native';

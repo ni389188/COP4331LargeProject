@@ -1,6 +1,7 @@
 import { HeaderBackButton } from '@react-navigation/stack';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Layout, Text } from '@ui-kitten/components';
 
 function PageTitle({text, back, navigate})
 {
@@ -41,7 +42,6 @@ const styles = StyleSheet.create({
    },
    text: {
       flex: 6,
-      color: 'white',
       fontSize: 20,
       textAlign: 'center',
       textAlignVertical: "center"

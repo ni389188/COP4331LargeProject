@@ -3,7 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RecipeListPage from '../pages/RecipeListPage';
-import ShoppingListPage from '../pages/ShoppingListPage';
+import FavoritesPage from '../pages/FavoritesPage';
 import SearchPage from '../pages/SearchPage';
 import ProfilePage from '../pages/ProfilePage';
 import { Layout, useTheme } from '@ui-kitten/components';
@@ -34,8 +34,6 @@ function MyTabBar({ state, descriptors, navigation }) {
                     if (!isFocused && !event.defaultPrevented) {
                         navigation.navigate(route.name);
                     }
-
-                    themeContext.toggleTheme()
                 };
 
                 const onLongPress = () => {
@@ -62,8 +60,8 @@ function MyTabBar({ state, descriptors, navigation }) {
                                 label === 'Recipe' ?
                                     require('./recipesIcon.png')
                                 :
-                                label === 'Shopping' ?
-                                    require('./ingredientsIcon.png')
+                                label === 'Favorites' ?
+                                    require('./heart-492.png')
                                 :
                                 label === 'Search' ?
                                     require('./searchIcon.png')
@@ -88,7 +86,7 @@ const NavigationBar = () => {
         <>
             <Tab.Navigator tabBar={props => <MyTabBar {...props} />}>
                 <Tab.Screen name="Recipe" component={RecipeListPage} />
-                <Tab.Screen name="Shopping" component={ShoppingListPage} />
+                <Tab.Screen name="Favorites" component={FavoritesPage} />
                 <Tab.Screen name="Search" component={SearchPage} />
                 <Tab.Screen name="Profile" component={ProfilePage} />
             </Tab.Navigator>

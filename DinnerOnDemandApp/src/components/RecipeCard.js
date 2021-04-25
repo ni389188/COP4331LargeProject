@@ -4,14 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { Card } from '@ui-kitten/components';
 import { ThemeContext } from './theme-context';
 
-function RecipeCard({ item }, random) {
+function RecipeCard({ item, custom }) {
   const navigation = useNavigation();
   const themeContext = React.useContext(ThemeContext);
 
   const header = () => {
     return (
       <Text style={[styles.buttonText, {color: themeContext.theme === "light" ? "black" : "white"}]}>
-        {item !== undefined ? item.title : ""}
+        {item !== undefined ? item.Title ? item.Title : item.title : ""}
       </Text>
     )
   }
@@ -19,12 +19,11 @@ function RecipeCard({ item }, random) {
   return (
     <Card header={header}
       style={{ margin: 2, width: "80%", alignSelf: "center", borderColor: "red", marginBottom: 15 }} 
-      onPress={() => navigation.navigate('RecipePage', { item })}
-      disabled={random ? true : false}
+      onPress={() => navigation.navigate('RecipePage', { item, custom })}
     >
       <Image
         style={styles.image}
-        source={{ uri: item !== undefined ? item.image : null }}
+        source={{ uri: item !== undefined ? item.Image ? item.Image :  item.image : null }}
       />
     </Card>
   );
