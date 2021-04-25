@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Card, CardColumns } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner'
 import NavBar from '../components/InsideNavBar';
-const jwt = require("jsonwebtoken");
+//const jwt = require("jsonwebtoken");
 
 
 // import { Container } from './styles';
@@ -83,24 +83,7 @@ const Favorites = () =>
                                     <Card>
                                         <Card.Title key={index}>{item.Title}</Card.Title>
                                         <Card.Img src={item.image}/>
-                                        <Card.Body>
-                                            {
-                                                [...item.usedIngredients, ...item.missedIngredients].map((ingredient, index) => {
-                                                    return (
-                                                        <div key={index}>
-                                                            <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
-                                                                <Card.Text>
-                                                                    <h5>Ingredient: </h5>{ingredient.originalString}
-                                                                </Card.Text>
-                                                                <Card.Text>
-                                                                    Amount: {ingredient.amount}
-                                                                </Card.Text>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                    })
-                                            }
-                                        </Card.Body>
+                                        
                                     </Card>
                                 </CardColumns>
                             )
