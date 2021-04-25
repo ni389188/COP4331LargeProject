@@ -107,6 +107,8 @@ exports.setAppRecipe = function (app, MongoClient)
                 UserID: req.body.UserID,
                 RecipeID: req.body.RecipeID,
                 Title: req.body.Title, 
+                Image: req.body.Image,
+                Ingredients: req.body.Ingredients
             });
             
             // Stores into the DB.
