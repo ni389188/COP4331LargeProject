@@ -4,8 +4,7 @@
   "description": "Testing Discord Integration Test 4 Cop4331",
   "main": "index.js",
   "scripts": {
-    "start": "node ./Backend/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ./DinnerOnDemandWeb/website && npm run build --prefix ./DinnerOnDemandWeb/website"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
