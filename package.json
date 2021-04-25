@@ -4,8 +4,8 @@
   "description": "Testing Discord Integration Test 4 Cop4331",
   "main": "index.js",
   "scripts": {
-    "start": "node Backend/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=true && cd DinnerOnDemandWeb/website && npm install && npm run build"
+    "start": "cd Backend && npm install && npm start",
+    "heroku-postbuild": "cd DinnerOnDemandWeb/website && npm install && npm run build"
   },
   "repository": {
     "type": "git",
