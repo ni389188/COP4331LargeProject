@@ -34,6 +34,10 @@ exports.setApp = function (app, MongoClient)
             res.status(400).json(err);
         });
         var data;
+        if(!ret)
+        {
+            return;
+        }
         if(process.env.NODE_ENV === 'production')
         {
             data = {
