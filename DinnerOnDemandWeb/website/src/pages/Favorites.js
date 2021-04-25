@@ -82,7 +82,7 @@ const Favorites = () =>
                                 <CardColumns>
                                     <Card>
                                         <Card.Title key={index}>{item.Title}</Card.Title>
-                                        <Card.Img src={item.image}/>
+                                        <Card.Img src={item.Image}/>
                                         
                                     </Card>
                                 </CardColumns>
