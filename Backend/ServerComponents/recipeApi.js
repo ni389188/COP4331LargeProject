@@ -11,8 +11,9 @@ const Recipe = require('./models/recipe.model');
 // Search recipes by ingredients using Spoonacular.
 exports.setAppRecipe = function (app, MongoClient)
 {
-
-    const apiKey = '7bfd691826fd4d31834f7728f67c9b3e'
+    // Ran out of calls on 4/25
+    //const apiKey = '7bfd691826fd4d31834f7728f67c9b3e'
+    const apiKey = 'e580c0a7455f403886931920580241be'
 
     app.post('/api/searchrecipe', async (req, res, next) =>
     {   
