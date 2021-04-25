@@ -69,12 +69,12 @@ const SearchRecipe = () => {
         }
     }
 
-    const addToFav = async (id, title, index) => {
+    const addToFav = async (id, title, image, index) => {
         // call api/addrecipe
         // Takes in userID, recipeID = id, title as body
         let userID = JSON.parse(localStorage.getItem('user_data')).userId;
 
-        var js = JSON.stringify({ UserID: userID, RecipeID: id, Title: title });
+        var js = JSON.stringify({ UserID: userID, RecipeID: id, Title: title, Image: image});
 
         try {
             const response = await fetch(buildPath('api/addrecipe'),
@@ -138,7 +138,7 @@ const SearchRecipe = () => {
                             })
                         }
                         <ButtonGroup>
-                            <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, index)}>Add To Favorites</Button>
+                            <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, recipe.image, index)}>Add To Favorites</Button>
                         </ButtonGroup>
                     </Card.Body>
                 </Card>
