@@ -16,11 +16,11 @@ app.use(bodyParser.json());
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') 
 {  // Set static folder  
-    app.use(express.static('website/build'));
+    app.use(express.static('../DinnerOnDemandWeb/website/build'));
     
     app.get('*', (req, res) =>  
     {    
-        res.sendFile(path.resolve('DinnerOnDemandWeb', 'website', 'build', 'index.html')); // changed frontend to websiteb bc thats what its called for ours
+        res.sendFile(path.resolve(__dirname, '../DinnerOnDemandWeb/website/build/index.html')); // changed frontend to websiteb bc thats what its called for ours
     });
 }
 
