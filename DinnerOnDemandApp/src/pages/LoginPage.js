@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, TextInput, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import { connect } from "react-redux";
 import SaveUser from "../redux/Actions/SaveUser";
 
@@ -7,38 +7,51 @@ import PageTitle from '../components/PageTitle';
 import NavigationButton from '../components/NavigationButton';
 import { Layout } from '@ui-kitten/components';
 
-const LoginPage = ({navigation, mapDispatchToProps, user}) =>
-{
+const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
   const storage = require('../tokenStorage.js');
 
   const app_name = 'cop4331din';
-  function buildPath(route)
-  {    
-    if (process.env.NODE_ENV === 'production')     
-    {        
-      return 'https://' + app_name +  '.herokuapp.com/' + route;
+  function buildPath(route) {
+    if (process.env.NODE_ENV === 'production') {
+      return 'https://' + app_name + '.herokuapp.com/' + route;
     }
-    else
-    {
-      return 'http://10.0.2.2:5000/' + route;   
+    else {
+      return 'http://10.0.2.2:5000/' + route;
     }
   };
 
-  const doLogin = async event =>     
-  {
-    event.preventDefault();        
-    var obj = {Email:email,Password:password};
+  const doLogin = async event => {
+    event.preventDefault();
+    var obj = { Email: email, Password: password };
     var js = JSON.stringify(obj);
-    try        
-    {                
-      const response = await fetch(buildPath('api/login'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+    try {
+      const response = await fetch(buildPath('api/login'), { method: 'post', body: js, headers: { 'Content-Type': 'application/json' } });
       var res = JSON.parse(await response.text());
       if(res.LoggedIn)            
       {                
-        storage.storeToken(res);
-        navigation.push('NavigationBar');   
+        if(res.IsVerified)
+        {
+          storage.storeToken(res);
+          navigation.push('NavigationBar');   
+        }
+        else
+        {
+          Alert.alert(
+            "Please verify your email first",
+            "Would you like to resend the verification email?",
+            [
+              {
+                text: "Cancel"
+              },
+              {
+                text: "Resend",
+                onPress: doResend
+              },
+            ],
+          );
+        }
       }            
       else
       {
@@ -51,11 +64,30 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
     }      
   };
 
+  const doResend = async event =>
+  {   
+    var js = JSON.stringify({Email:email});
+    try        
+    {                
+      const response = await fetch(buildPath('api/resend'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());
+      if(res)
+      {
+        alert("An email was sent to "+email);
+      }
+      else
+      {
+        alert("An issue was encountered, please try again");
+      }
+    }
+    catch(e)        
+    {            
+        alert(e.toString());                 
+    }   
+  }
+
   return(
     <View style = {styles.container}>
-      <View style = {styles.header}>
-        <PageTitle text = "Dinner on Demand"/>
-      </View>
       <Layout style = {styles.body}>
         <View style = {styles.background}>
           <Text style = {styles.loginTitle}>Sign In{"\n"}</Text>
@@ -65,24 +97,24 @@ const LoginPage = ({navigation, mapDispatchToProps, user}) =>
           placeholder="Please enter email"
           onChangeText = {onChangeEmail}
           />
-          <Text style = {styles.inputTitle}> Password</Text>
-          <TextInput 
-          style = {styles.input} 
-          placeholder="Please enter password" 
-          onChangeText = {onChangePassword}
-          secureTextEntry = {true}
+          <Text style={styles.inputTitle}> Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Please enter password"
+            onChangeText={onChangePassword}
+            secureTextEntry={true}
           />
-          <TouchableOpacity onPress = {() => navigation.navigate('ForgotPasswordPage')}>
-            <Text style = {styles.forgotPasswordText}>Forgot Password?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgotPasswordPage')}>
+            <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
           </TouchableOpacity>
-          <NavigationButton 
-          name = 'Login'
-          doFunction = {doLogin}
+          <NavigationButton
+            name='Login'
+            doFunction={doLogin}
           />
-          <View style = {styles.registerText}>
-            <Text style = {{color: 'black'}}>Don't have an account?</Text>
-            <TouchableOpacity onPress = {() => navigation.navigate('RegisterPage')}>
-              <Text style = {styles.signUpText}>{"\t"}Sign Up</Text>
+          <View style={styles.registerText}>
+            <Text style={{ color: 'black' }}>Don't have an account?</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('RegisterPage')}>
+              <Text style={styles.signUpText}>{"\t"}Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -120,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontSize: 40,
   },
-  inputTitle:{
+  inputTitle: {
     color: 'black',
     marginTop: 10,
   },
@@ -141,23 +173,10 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   registerText: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
   },
 })
 
-const mapStateToProps = ({UserReducer: { user }}) =>
-{
-  return {
-    user
-  }
-}
-
-const mapDispatchToProps = (dispatch) =>{
-  return {
-    reduxSaveUser:(user) => dispatch(SaveUser(user))
-  }
-}
-
-export default connect(mapStateToProps, { mapDispatchToProps })(LoginPage);
+export default LoginPage;

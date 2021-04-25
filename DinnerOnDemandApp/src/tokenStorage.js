@@ -37,3 +37,31 @@ exports.removeToken = function ()
     }
     return ud;
 }
+
+exports.saveDarkMode = function (val)
+{
+  var ud;
+  try
+  {
+    ud = localStorage.setItem('darkMode', val);
+  }
+  catch(e)
+  {
+    console.log(e.message)
+  }
+  return ud;
+}
+
+exports.getDarkMode = function ()
+{
+  var ud;
+  try
+  {
+    ud = localStorage.getItem('darkMode');
+  }
+  catch(e)
+  {
+    console.log(e.message)
+  }
+  return ud;
+}

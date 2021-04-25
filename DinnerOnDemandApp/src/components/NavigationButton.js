@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Layout, Text, Button } from '@ui-kitten/components';
+// import { ThemeContext } from './src/components/theme-context';
 
 function NavigationButton({name, doFunction, custom})
 {
   const navigation = useNavigation();
   return(
     <View style = {styles.container}>
-      <TouchableOpacity 
+      <Button 
         style = {[styles.buttonBackground, custom]}
         onPress = {doFunction}
         >
         <Text style = {styles.buttonText}>{name}</Text>
-      </TouchableOpacity>
+      </Button>
     </View>
   );
 };
@@ -23,7 +25,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonBackground: {
-    backgroundColor: 'blue',
     width: '100%',
     borderWidth: 1,
   },
@@ -31,6 +32,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 23,
     margin: 10,
+    color: "white"
   },
 })
 

@@ -7,6 +7,7 @@ import NavigationButton from '../components/NavigationButton';
 import LoggedInName from '../components/LoggedInName';
 import ProfileImage from '../components/ProfileImage';
 
+
 import { Layout, Toggle, Text } from '@ui-kitten/components';
 import { ThemeContext } from '../components/theme-context';
 import { light } from '@eva-design/eva';
@@ -14,56 +15,50 @@ import { light } from '@eva-design/eva';
 // 🌜
 // 🌞
 
-const ProfilePage = ({navigation}) =>
-{
+const ProfilePage = ({ navigation }) => {
   const themeContext = React.useContext(ThemeContext);
   const storage = require('../tokenStorage.js');
-  const doLogout = async event =>     
-  {
-    if(storage.retrieveToken('user_data') != null)
-    {
+  const doLogout = async event => {
+    if (storage.retrieveToken('user_data') != null) {
       storage.removeToken('user_data');
     }
     navigation.navigate('AccountPage');
   };
-  return(
-    <View style = {styles.container}>
-      <View style = {styles.header}>
-        <PageTitle text = 'Your Profile' />
-      </View>
-      <Layout style = {styles.body}>
-        <Toggle style={{position: "absolute", left: 225, top: 10}} checked={themeContext.theme === "light" ? false : true}
+  return (
+    <View style={styles.container}>
+      <Layout style={styles.body}>
+        <Toggle style={{ position: "absolute", left: 200, top: 10 }} checked={themeContext.theme === "light" ? false : true}
           onChange={() => themeContext.toggleTheme()}
         >
-          {<Text style={{fontSize: 20}}>{themeContext.theme === "light" ? "🌞" : "🌜"}</Text>}
+          {<Text style={{ fontSize: 20 }}>{themeContext.theme === "light" ? "🌞" : "🌜"}</Text>}
         </Toggle>
-        <View style = {styles.imageSection}>
+        <View style={styles.imageSection}>
           <ProfileImage/>
         </View>
-        <View style = {styles.textSection}>
-          <Text style = {{fontSize:23}}>Welcome,</Text>
-            <LoggedInName 
-            size = 'full'
+        <View style={styles.textSection}>
+          <Text style={{ fontSize: 23 }}>Welcome,</Text>
+          <LoggedInName
+            size='full'
             font={23}
-            align = 'center'
-            />
-        </View>
-        <View style = {styles.button}>
-          <NavigationButton
-          name = 'Edit Profile'
-          doFunction = {() => navigation.push('SettingsPage')}
+            align='center'
           />
         </View>
-        <View style = {styles.button}>
+        <View style={styles.button}>
           <NavigationButton
-          name = 'Change Password'
-          doFunction = {() => navigation.navigate('ChangePasswordPage')}
+            name='Edit Profile'
+            doFunction={() => navigation.push('SettingsPage')}
           />
         </View>
-        <View style = {styles.button}>
+        <View style={styles.button}>
           <NavigationButton
-          name = 'Log Out'
-          doFunction = {doLogout}
+            name='Change Password'
+            doFunction={() => navigation.navigate('ChangePasswordPage')}
+          />
+        </View>
+        <View style={styles.button}>
+          <NavigationButton
+            name='Log Out'
+            doFunction={doLogout}
           />
         </View>
       </Layout>
@@ -103,22 +98,22 @@ const styles = StyleSheet.create({
     width: 300,
   },
   imageSection: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: 150,
-      width: 150,
-      marginTop: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 150,
+    width: 150,
+    marginTop: 20,
   },
   textSection: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '15%',
-      width: '85%',
-      marginTop: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '15%',
+    width: '85%',
+    marginTop: 30,
   },
   image: {
-      height: 150,
-      width: 150,
+    height: 150,
+    width: 150,
   },
   buttonText: {
     fontSize: 23,

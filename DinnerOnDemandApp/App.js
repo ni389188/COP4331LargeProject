@@ -46,17 +46,21 @@ import { ApplicationProvider, Layout } from '@ui-kitten/components';
 import { ThemeContext } from './src/components/theme-context';
 
 import WIPPage from './src/pages/AccountPage';
+import { getDarkMode, saveDarkMode } from './src/tokenStorage';
 {/* Change location to work on desired work in progress page */}
 
 const Stack = createStackNavigator();
 
 const App: () => React$Node = () =>
 {
-  const [theme, setTheme] = React.useState('dark');
+  const mode = getDarkMode();
+
+  const [theme, setTheme] = React.useState(mode !== null ? mode : 'light');
 
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(nextTheme);
+    saveDarkMode(nextTheme);
   };
 
   return (
