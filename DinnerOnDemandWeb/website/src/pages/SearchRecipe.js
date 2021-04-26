@@ -127,16 +127,15 @@ const SearchRecipe = () => {
                                     <div key={index}>
                                         <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
                                             <Card.Text>
-                                                <h5>Ingredient: </h5>{ingredient.originalString}
-                                            </Card.Text>
-                                            <Card.Text>
-                                                Amount: {ingredient.amount}
+                                                <h5>Ingredient: </h5>{ingredient.originalString}<br />
+                                                Amount: {ingredient.amount}<br />
                                             </Card.Text>
                                         </div>
                                     </div>
                                 )
                             })
                         }
+                        <br />
                         <ButtonGroup>
                             <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, recipe.image, index)}>Add To Favorites</Button>
                         </ButtonGroup>
@@ -171,7 +170,7 @@ const SearchRecipe = () => {
     return (
 
         
-        <>  
+        <div class="bg-secondary" style={{ height: "100vh" }}>
             <div className="searchRecipeCard h-auto"> 
                 <NavBar />
                 <br />
@@ -199,7 +198,7 @@ const SearchRecipe = () => {
                         </div>
                 }
               </div>
-        </>
+        </div>
       
      
     )

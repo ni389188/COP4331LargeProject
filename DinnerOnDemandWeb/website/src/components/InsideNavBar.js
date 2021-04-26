@@ -26,7 +26,8 @@ function InsideNavBar() {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     <Nav.Link href="../pages/HomePage">Dashboard</Nav.Link>
-                    <Nav.Link href="../pages/search">Recipe Lookup</Nav.Link>
+                    <Nav.Link href="../pages/search">Search Recipes</Nav.Link>
+                    <Nav.Link href="../pages/customs"> Create Your Own</Nav.Link>
                     <Nav.Link href="../pages/favorites">Favorites</Nav.Link>
                 </Nav>
                 <Nav class="nav justify-content-end">

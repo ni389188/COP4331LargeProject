@@ -51,7 +51,7 @@ function Login() {
     return (
         
         <div className="container justify-content-center  ">
-            <div class="card text-white  text-center bg-dark mt-5" >
+            <div class="card text-white text-center bg-dark pl-5 pr-5 mt-5" >
                 <div class="card-header ">
                     <h4>Welcome Back. Log In Below!</h4>
                 </div>

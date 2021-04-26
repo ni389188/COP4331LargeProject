@@ -6,12 +6,12 @@ import NavBar from '../components/NavBar'
 const LoginPage = () => {
     return (
        
-        <div>
-          
-            <NavBar />
-            <PageTitle />
-            <Login />     
-          
+        <div class="bg-secondary" style={{height: "100vh"}}>
+            <div>
+                <NavBar />
+                <PageTitle />
+                <Login />     
+            </div>
         </div>
        
     );

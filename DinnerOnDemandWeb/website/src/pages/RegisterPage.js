@@ -6,7 +6,7 @@ import NavBar from '../components/NavBar'
 
 const RegisterPage = () => {
     return (
-        <div>
+        <div class="bg-secondary" style={{ height: "100vh" }}>
             <NavBar />
             <PageTitle />
             <Register />

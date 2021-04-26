@@ -90,10 +90,11 @@ function Register() {
                     <Form.Group controlId="confirmPassword">
                         <Form.Control type="password" placeholder="Please Re-Enter Password" ref={(c) => confirmPassword = c} />
                     </Form.Group>
-                    
                     <span id="registerResult">{message}</span>
+                    <Button variant="light" type="submit" controlId="login==Button" onClick={doRegister}>Register</Button>
+                    <br />
+                    <a className="text-white " href="../pages/LoginPage">Already Registered? Click Here</a> <br />
                 </Form>
-                <Button class ="btn-block btn-lg mb-5" variant="light" type="submit" controlId="loginButton" onClick={doRegister}>Register</Button>
             </div>
         </div>
     );

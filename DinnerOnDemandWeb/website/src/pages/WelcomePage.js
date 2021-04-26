@@ -8,25 +8,30 @@ import image1 from '../images/Burger.png';
 import image2 from '../images/Toast.png';
 import image3 from '../images/Pizza.png';
 import appIcon from '../images/logo.png';
+import image4 from '../images/screenshot1.png'
+import image5 from '../images/screenshot2.png'
+import image6 from '../images/screenshot3.png'
 
 
 const WelcomePage = () => {
     return (
-        <div>
+        <div className="bg-secondary">
             <NavBar />
             <PageTitle />
-            <Card border="light">
-                <Card.Header>
-                    What is Dinner-On-Demand?
-                </Card.Header>
-                <Card.Body>
-                    <Card.Text>
-                        Dinner-On-Demand is a platform for recipe lookup and design.<br />
-                        Have no idea what to cook? Dinner-On-Demand can take in a few ingredients and help you find the perfect reciepe.<br />
-                        Already have your favorite recipe? That's okay too. You can store it here to make it easy to find next time.<br />
-                    </Card.Text>
-                </Card.Body>
-            </Card>
+            <CardDeck style={{padding: "10px"}}>
+                <Card border="light">
+                    <Card.Header>
+                        What is Dinner-On-Demand?
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Text>
+                            Dinner-On-Demand is a platform for recipe lookup and design.<br />
+                            Have no idea what to cook? Dinner-On-Demand can take in a few ingredients and help you find the perfect reciepe.<br />
+                            Already have your favorite recipe? That's okay too. You can store it here to make it easy to find next time.<br />
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </CardDeck>
             <br />
             <CardDeck style={{padding: "10px"}}>
                 <Card border="light" style={{ width: '30rem' }}>
@@ -37,7 +42,7 @@ const WelcomePage = () => {
                         Once signed in you will be redirected to your dashbaord. Once their you will have the ability to create a list. 
                         This list will act as the foundation of your recipe search.
                         After making your list. You will able to look up all sorts of receipes that use those ingredients. 
-                        [INSERT SCREENSHOT OF ADDING INGREDIENTS]
+                        <Card.Img variant="bottom" src={image4} alt="" />
                     </Card.Text>
                 </Card>
 
@@ -48,7 +53,7 @@ const WelcomePage = () => {
                     <Card.Text>
                         After searching through recipes if you found the perfect one just save it.
                         Once saved you will always be able to fo back and look it up again.
-                        [INSERT SCREENSHOT OF RECIPE SAVING]
+                        <Card.Img variant="bottom" src={image5} alt="" />
                     </Card.Text>
                 </Card>
                 
@@ -59,14 +64,17 @@ const WelcomePage = () => {
                     <Card.Text>
                         Alongside the recipes you have found you can create your own recipes.
                         After your done saving recipes you can go ahead and start adding your own. 
-                        [INSERT SCREENSHOT OF ADDING RECIPE]
+                        <Card.Img variant="bottom" src={image6} alt="" />
                     </Card.Text>
                 </Card>
             </CardDeck>
             <br />
-            <h2>
-                Here are a few exmaples of recipes you may find on our platform:
-            </h2>
+            <CardDeck style={{ padding: "10px" }}>
+                <h2 class="text-center" style={{color: 'black'}}>
+                    &nbsp;&nbsp;&nbsp;Here are a few exmaples of recipes you may find on our platform:
+                </h2>
+            </CardDeck>
+
             <CardDeck style={{ padding: "10px" }}>
                 <br />
                 <Card border="light" style={{ width: '30rem' }}>
@@ -74,8 +82,14 @@ const WelcomePage = () => {
                     <Card.Img variant="top" src={image1} alt=""/>
                     <Card.Body>
                         <Card.Text>
-                            This is a smakin burger with fries
-                        </Card.Text>
+                            <h5>Ingredient:</h5>
+                                Brioche Bun
+                            <h5>Ingredient:</h5>
+                                16 oz of Ground Beef
+                            <h5>Ingredient:</h5>
+                                Cheddar Cheese Slice
+                            <h5>Ingredient:</h5>
+                                French Fries                        </Card.Text>
                     </Card.Body>
                 </Card>
                 
@@ -84,8 +98,14 @@ const WelcomePage = () => {
                     <Card.Img variant="top" src={image2} alt="" />
                     <Card.Body>
                         <Card.Text>
-                            Light toasted bread with a light spread of butter topped with 
-                            Mashed Avacado and Poached Eggs
+                            <h5>Ingredient:</h5>
+                               Egg
+                            <h5>Ingredient:</h5>
+                                Avocado
+                            <h5>Ingredient:</h5>
+                                Spinach
+                            <h5>Ingredient:</h5>
+                                Multi-Grain Bread
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -95,25 +115,18 @@ const WelcomePage = () => {
                     <Card.Img variant="top" src={image3} alt="" />
                     <Card.Body>
                         <Card.Text>
-                            Awesome sauce pizza
+                            <h5>Ingredient:</h5>
+                                Brioche Bun
+                            <h5>Ingredient:</h5>
+                                16 oz of Ground Beef
+                            <h5>Ingredient:</h5>
+                                Cheddar Cheese Slice
+                            <h5>Ingredient:</h5>
+                                French Fries
                         </Card.Text>
                     </Card.Body>
                 </Card>
             </CardDeck>
-
-            <Figure>
-                <Figure.Caption>
-                    Try out our Mobile App!
-                </Figure.Caption>
-                <a href="../pages/RegisterPage">
-                    <Figure.Image
-                        width={150}
-                        height={150}
-                        alt="150x150"
-                        src={appIcon}
-                    />
-                </a>                
-            </Figure>
         </div>
     );
 }

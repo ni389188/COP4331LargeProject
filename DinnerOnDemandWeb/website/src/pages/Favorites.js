@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Card, CardColumns } from 'react-bootstrap';
+import { Card, CardDeck } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner'
 import NavBar from '../components/InsideNavBar';
 //const jwt = require("jsonwebtoken");
@@ -68,7 +68,7 @@ const Favorites = () =>
 
     return (
         <>
-            <div>
+            <div class="bg-secondary" style={{ height: "100vh" }}>
                 <NavBar/>
                 {
                     results.length === 0 ?
@@ -79,13 +79,12 @@ const Favorites = () =>
                         results.map((item, index) =>
                         {
                             return (
-                                <CardColumns>
-                                    <Card>
+                                <CardDeck style={{ padding: "10px" }}>
+                                    <Card border="light" style={{ width: '30rem' }}>
                                         <Card.Title key={index}>{item.Title}</Card.Title>
                                         <Card.Img src={item.Image}/>
-                                        
                                     </Card>
-                                </CardColumns>
+                                </CardDeck>
                             )
                         })
                 }
