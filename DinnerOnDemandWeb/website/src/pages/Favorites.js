@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { Card, CardDeck } from 'react-bootstrap';
 import Spinner from 'react-bootstrap/Spinner'
 import NavBar from '../components/InsideNavBar';
+import Button from 'react-bootstrap/Button'
 //const jwt = require("jsonwebtoken");
 
 
@@ -78,11 +79,25 @@ const Favorites = () =>
                     :
                         results.map((item, index) =>
                         {
-                            return (
+                            return(
                                 <CardDeck style={{ padding: "10px" }}>
-                                    <Card border="light" style={{ width: '30rem' }}>
+                                    <Card border="light" style={{ width: '35rem', padding: "10px" }}>
                                         <Card.Title key={index}>{item.Title}</Card.Title>
                                         <Card.Img src={item.Image}/>
+                                        <div>
+                                            <Button variant="danger" type="submit" size="sm" controlId="deleteButton"  
+                                                onClick={() => {
+                                                    const confirmBox = window.confirm(
+                                                        "Are you sure you would like to delete this recipe?"
+                                                    )
+                                                    if (confirmBox === true) {
+                                                        
+                                                    }
+                                                }}>
+                                                Delete Recipe
+                                            </Button>
+                                            <span id="deleteRecipe">{}</span>
+                                        </div> 
                                     </Card>
                                 </CardDeck>
                             )
