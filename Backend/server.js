@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 // Server static assets if in production
 if (process.env.NODE_ENV === 'production') 
 {  // Set static folder  
-   // app.use(express.static('../DinnerOnDemandWeb/website/build'));
+    app.use(express.static('../DinnerOnDemandWeb/website/build'));
     
     app.get('*', (req, res) =>  
     {    
