@@ -130,7 +130,7 @@ exports.setApp = function (app, MongoClient)
         };
     });
 
-    app.get('/api/verify/:verificationCode/:token', async (req, res, next) =>
+    app.post('/api/verify/:verificationCode/:token', async (req, res, next) =>
     {
         try
         {   
