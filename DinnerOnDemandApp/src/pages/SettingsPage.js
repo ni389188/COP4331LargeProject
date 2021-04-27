@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -43,7 +43,15 @@ const SettingsPage = ({navigation}) =>
       var res = JSON.parse(await response.text());   
       if(res == 'success')
       {
-        alert("Account has been deleted. Thank you for using Dinner On Demand!");
+        Alert.alert(
+          "Account deleted",
+          "Thank you for using Dinner On Demand!",
+          [
+            {
+              text: "Bye!"
+            },
+          ],
+        );
         navigation.navigate('AccountPage');
       }
       else
@@ -345,7 +353,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonDivide:{
-    flex:1,
+    flex:1.5,
     height:'100%',
     width:'100%',
     justifyContent: 'center',
@@ -376,6 +384,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
+    color: 'black',
   },
   textBox: {
     flex:1, 

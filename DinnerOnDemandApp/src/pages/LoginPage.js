@@ -10,6 +10,7 @@ import { Layout } from '@ui-kitten/components';
 const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
   const [email, onChangeEmail] = useState('');
   const [password, onChangePassword] = useState('');
+  const [message, setMessage] = useState('');
   const storage = require('../tokenStorage.js');
 
   const app_name = 'cop4331din';
@@ -55,7 +56,7 @@ const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
       }            
       else
       {
-        alert("Invalid email or password"); 
+        setMessage("Invalid email or password"); 
       }        
     }        
     catch(e)        
@@ -73,7 +74,15 @@ const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
       var res = JSON.parse(await response.text());
       if(res)
       {
-        alert("An email was sent to "+email);
+        Alert.alert(
+          "Email confirmation",
+          "An email was sent to "+email,
+          [
+            {
+              text: "Ok"
+            },
+          ],
+        );
       }
       else
       {
@@ -116,6 +125,9 @@ const LoginPage = ({ navigation, mapDispatchToProps, user }) => {
             <TouchableOpacity onPress={() => navigation.navigate('RegisterPage')}>
               <Text style={styles.signUpText}>{"\t"}Sign Up</Text>
             </TouchableOpacity>
+          </View>
+          <View style = {{alignItems:'center', marginTop: 20}}>
+            <Text style = {{color:'red'}}>{message}</Text>
           </View>
         </View>
       </Layout>
