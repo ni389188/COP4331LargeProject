@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-
-import PageTitle from '../components/PageTitle';
-import NavigationBar from '../components/NavigationBar';
-import NavigationButton from '../components/NavigationButton';
 import RecipeCard from '../components/RecipeCard';
-import Counter from '../components/Counter';
 import { Button, Card, Layout, Modal, Text } from '@ui-kitten/components';
 import jwtDecode from 'jwt-decode';
 
@@ -53,8 +48,6 @@ const FavoritesPage = ({ navigation }) => {
         });
 
       var res = JSON.parse(await response.text());
-
-      console.log(res)
 
       if (res.found) {
         setResults(res.recipes)

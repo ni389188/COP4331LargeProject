@@ -31,7 +31,6 @@ import RegisterPage from './src/pages/RegisterPage';
 import SettingsPage from './src/pages/SettingsPage';
 import RecipePage from './src/pages/RecipePage';
 import CreatePage from './src/pages/CreatePage';
-import ResultsPage from './src/pages/ResultsPage';
 import CurrentRecipesPage from './src/pages/CurrentRecipesPage';
 import ChangePasswordPage from './src/pages/ChangePasswordPage';
 
@@ -81,7 +80,6 @@ const App: () => React$Node = () =>
                   <Stack.Screen name="SettingsPage" component={SettingsPage} />
                   <Stack.Screen name="RecipePage" component={RecipePage} />
                   <Stack.Screen name="CreatePage" component={CreatePage} />
-                  <Stack.Screen name="ResultsPage" component={ResultsPage} />
                   <Stack.Screen name="CurrentRecipesPage" component={CurrentRecipesPage} />
                 </Stack.Navigator>
               </NavigationContainer>

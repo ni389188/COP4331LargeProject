@@ -4,7 +4,6 @@ import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import RecipeCard from '../components/RecipeCard';
-import Counter from '../components/Counter';
 
 const CurrentRecipesPage = ({navigation}) =>
 {

@@ -57,8 +57,6 @@ const RecipeListPage = ({ navigation }) => {
 
       var res = JSON.parse(await response.text());
 
-      console.log(res)
-
       if (res.found) {
         setResults(res.recipes)
       }
