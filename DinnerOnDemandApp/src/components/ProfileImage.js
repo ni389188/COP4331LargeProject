@@ -6,14 +6,15 @@ function ProfileImage()
 {
   const storage = require('../tokenStorage.js');  
   var tok = storage.retrieveToken();
+  var ud = null;
   if(tok != null)
   {
-    var ud = jwt_decode(tok);
+    ud = jwt_decode(tok);
   }
   return(
     <>
         {
-            ud.image == null
+            ud === null
             ?
             <Image
             style={{height:150, width:150, borderRadius: 100}}

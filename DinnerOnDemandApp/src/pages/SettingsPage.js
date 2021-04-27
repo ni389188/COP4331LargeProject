@@ -168,7 +168,7 @@ const SettingsPage = ({ navigation }) => {
                   style={{width: "85%"}}>
                   <Card disabled={true}>
                     <Text status='danger'>Are you sure you want to delete your account? This action is IRREVERSIBLE.</Text>
-                    <Button onPress={() => doDelete()} status='danger' style={{marginVertical: 10}}>YES</Button>
+                    <Button onPress={() => setVisible(false) & doDelete()} status='danger' style={{marginVertical: 10}}>YES</Button>
 
                     <Button onPress={() => setVisible(false)}>NO</Button>
                   </Card>

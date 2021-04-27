@@ -69,7 +69,7 @@ function RecipeCard({ item, custom, favorite }) {
     >
       <Image
         style={styles.image}
-        source={{ uri: favorite ? results.image : item !== undefined ? item.Image ? item.Image : item.image : null }}
+        source={custom && item.Image === '' ? require("./Logo.png") :{ uri: favorite ? results.image : item !== undefined ? item.Image ? item.Image : item.image : null }}
       />
     </Card>
   );

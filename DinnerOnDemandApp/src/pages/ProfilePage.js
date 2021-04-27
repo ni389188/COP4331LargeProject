@@ -68,7 +68,7 @@ const ProfilePage = ({ navigation }) => {
             onBackdropPress={() => setVisible(false)}>
             <Card disabled={true}>
               <Text>Are you sure you want to log out?</Text>
-              <Button onPress={() => doLogout()} status='danger' style={{marginVertical: 10}}>YES</Button>
+              <Button onPress={() => setVisible(false) & doLogout()} status='danger' style={{marginVertical: 10}}>YES</Button>
 
               <Button onPress={() => setVisible(false)}>NO</Button>
             </Card>
