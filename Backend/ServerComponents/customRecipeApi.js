@@ -12,7 +12,7 @@ exports.setAppCustomRecipe = function (app, MongoClient)
     // User adds a custom Recipe to the DB.
     app.post('/api/addcustomrecipe', async (req, res, next) =>
     {
-        CustomRecipe.findOne({Title: req.body.Title})
+        CustomRecipe.findOne({UserID: req.body.UserID, Title: req.body.Title})
         .then(result =>
         {
             if (result === null)
@@ -95,4 +95,29 @@ exports.setAppCustomRecipe = function (app, MongoClient)
         }
     });
 
+    app.post('/api/removecustom', async (req, res, next) => 
+    {   
+        if (null == req.body.ID || req.body.ID === '') 
+        {
+            res.status(400).json({found:false, errors:'Recipe ID required'});
+        }
+        else
+        {
+            var ID = req.body.ID;
+
+            // Stores into the DB.
+            CustomRecipe.findByIdAndDelete(ID).then(result => 
+            {
+                res.status(200).json({removed:true});
+            })
+            // Catch Error.
+            .catch(err => {
+                // Display error.
+                console.log(err);   
+
+                // Respond with error.
+                res.status(400).json({removed:false, error: err});
+            });
+        }
+    });
 }
