@@ -73,9 +73,6 @@ const SearchPage = () => {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <KeyboardAvoidingView behavior={"height"} style={{ flex: 1 }}>
                 <Layout style={{ flex: 1 }}>
-                    <View style={styles.header}>
-                        <PageTitle text='Search for Recipes' />
-                    </View>
                     <View style={styles.body}>
                         <View style={{ flexDirection: "column", alignItems: "center", paddingTop:10 }}>
                             <Input
