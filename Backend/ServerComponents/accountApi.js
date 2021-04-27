@@ -42,7 +42,7 @@ exports.setApp = function (app, MongoClient)
                 from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
                 to: req.body.Email,
                 subject: "Dinner on demand: Password recovery",
-                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://www.dinnerondemand.me/api/reset/"+tok.accessToken
+                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://www.dinnerondemand.me/reset/"+tok.accessToken
             };
         }
         else
@@ -51,7 +51,7 @@ exports.setApp = function (app, MongoClient)
                 from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
                 to: req.body.Email,
                 subject: "Dinner on demand: Password recovery",
-                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://localhost:5000/api/reset/"+tok.accessToken
+                text: "A request to recover your password was made. Please follow this link if you made this request.\nhttp://localhost:3000/reset/"+tok.accessToken
             };
         };
         try
@@ -167,6 +167,34 @@ exports.setApp = function (app, MongoClient)
         };
     });
 
+    app.post('/api/verify', async (req, res, next) =>
+    {
+        try
+        {   
+            // Checks if token signature is valid. Using the Secret in the .env file.
+            var tok = jwt.verify(req.body.Token, process.env.ACCESS_TOKEN_SECRET);
+
+            // Finds user by userId in token.
+            await User.findById(tok.userId, function(err, result) {
+                // verification code in DB is the same as in the ger request param.
+                if(result.VerificationCode == req.body.VerificationCode){
+                    // Update user IsVerified field to true.
+                    User.findByIdAndUpdate(tok.userId, {IsVerified: true, $unset:{"VerificationCode":1}}).then(result => {
+                        res.status(200).json("success");
+                    })
+                }
+                else
+                {
+                    res.status(400);
+                }
+            })
+        }
+        catch(e)
+        {
+            res.status(400);
+        };
+    });
+
     app.post('/api/resend', async (req, res, next) =>
     {
         try
@@ -189,7 +217,7 @@ exports.setApp = function (app, MongoClient)
                     from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
                     to: req.body.Email,
                     subject: "Dinner on demand: Please verify your Email",
-                    text: "Please confirm your email to activate your account! www.dinnerondemand.me/api/verify/"+randomNumber+"/"+ret.accessToken
+                    text: "Please confirm your email to activate your account! www.dinnerondemand.me/verify/"+randomNumber+"/"+ret.accessToken
                 };
             }
             else
@@ -198,7 +226,7 @@ exports.setApp = function (app, MongoClient)
                     from: "Dinnerondemand <NoReply@"+process.env.MAILGUN_DOMAIN+">",
                     to: req.body.Email,
                     subject: "Dinner on demand: Please verify your Email",
-                    text: "Please confirm your email to activate your account! http://localhost:5000/api/verify/"+randomNumber+"/"+ret.accessToken
+                    text: "Please confirm your email to activate your account! http://localhost:3000/verify/"+randomNumber+"/"+ret.accessToken
                 };
             };
             mailgun.messages().send(data, function (error, body) {

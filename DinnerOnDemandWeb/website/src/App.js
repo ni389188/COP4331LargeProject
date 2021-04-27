@@ -12,7 +12,8 @@ import Favorites from './pages/Favorites';
 import CustomRecipe from './pages/CustomRecipe';
 import VerifyPage from './pages/VerifyPage';
 import PWresetPage from './pages/PWresetPage';
-import PasswordResetPage from './pages/PasswordResetPage'
+import PasswordResetPage from './pages/PasswordResetPage';
+import VerifyRoute from './components/VerifyRoute';
 
 function App() {  
   return (
@@ -52,9 +53,9 @@ function App() {
           <Route path="/pages/customs">
             <CustomRecipe />
           </Route>
-          <Route path="/api/reset/:token" exact />
-          <Route path="/api/verify/:verificationCode/:token" exact >
-            <VerifyPage />
+          <Route path="/reset/:token" exact />
+          <Route path="/verify/:verificationCode/:token" exact>
+            <VerifyRoute />
           </Route>
           <Redirect to="/" />  
         </Switch>       
