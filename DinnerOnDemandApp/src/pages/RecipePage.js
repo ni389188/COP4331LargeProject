@@ -110,10 +110,11 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
       if (res.removed) {
         // Let the user know it has been added to favorites
         alert("Recipe Removed")
+        navigation.pop();
       }
       else {
         // Let them know an error occured
-        alert("Error or recipe added already")
+        alert(res.error)
       }
     }
     catch (e)
@@ -157,16 +158,16 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
             />
             <View style={{ flexDirection: "row", marginTop: 10 }}>
               {/* Add/Remove from Recipes */}
-              <TouchableOpacity onPress={() => custom || favoriteItem ? null : favorite()} style={{ alignItems: "center" }}>
+              <TouchableOpacity onPress={() => custom || favoriteItem ? null : favorite()} style={{ alignItems: "center", display: custom || favoriteItem ? "none" : null }}>
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/heart-492.png')} />
-                <Text>Add Recipe</Text>
+                <Text>Add</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => favoriteItem ? unFavorite() : null} style={{ alignItems: "center" }}>
-                <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/heart-492.png')} />
-                <Text>Add Recipe</Text>
+              <TouchableOpacity onPress={() => favoriteItem ? unFavorite() : null} style={{ alignItems: "center", display: favoriteItem ? null : "none", marginHorizontal: custom || favoriteItem ? 0 : 50, }}>
+                <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/brokenHeart.png')} />
+                <Text>Remove</Text>
               </TouchableOpacity>
               {/* Share */}
-              <TouchableOpacity onPress={() => tweetNow()} style={{ alignItems: "center" }}>
+              <TouchableOpacity onPress={() => tweetNow()} style={{ alignItems: "center", marginLeft: 50 }}>
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/share.png')} />
                 <Text>Share</Text>
               </TouchableOpacity>
