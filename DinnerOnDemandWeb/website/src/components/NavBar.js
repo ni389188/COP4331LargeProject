@@ -16,7 +16,6 @@ function NavBar(){
                 <Nav className="mr-auto">
                     <Nav.Link href="../pages/WelcomePage">Home</Nav.Link>
                     <Nav.Link href="../pages/LoginPage">Login</Nav.Link>
-                    <Nav.Link href="../pages/HomePage">Temp Dashboard</Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

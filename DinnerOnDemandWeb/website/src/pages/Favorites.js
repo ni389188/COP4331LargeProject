@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import { Card, CardDeck } from 'react-bootstrap';
-import Spinner from 'react-bootstrap/Spinner'
+import { Card, CardDeck, Row, Col } from 'react-bootstrap';
 import NavBar from '../components/InsideNavBar';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
 //const jwt = require("jsonwebtoken");
 
 
@@ -101,68 +100,94 @@ const Favorites = () =>
         }
     }
 
+    const whatever = (item, index) => {
+        return (
+            <CardDeck style={{ padding: "10px" }}>
+                <Card border="light" style={{ width: '35rem', padding: "10px" }}>
+                    <Card.Title key={index}>{item.Title}</Card.Title>
+                    <Card.Img src={item.Image} />
+                    <div>
+                        <Button variant="danger" type="submit" size="sm" controlId="deleteButton"
+                            onClick={() => {
+                                if (true) {
+
+                                    // Saves the title before removing it.
+                                    // May not be needed.
+                                    var deletedTitle = item.Title;
+
+                                    // If recipe is deleted returns true.
+                                    var deleted = doDelete(item._id);
+
+                                    // If a recipe was deleted.
+                                    if (deleted) {
+                                        // Displays which recipe was deleted.
+                                        window.alert(`${deletedTitle} was deleted`);
+
+                                        // Refreshes the page.
+                                        window.location.reload();
+                                    }                                    
+                                }
+                            }}>
+                            Delete Recipe
+                        </Button>
+                        <span id="deleteRecipe">{ }</span>
+                    </div>
+                </Card>
+            </CardDeck>
+        )
+    }
+
+    let col_1 = []
+    let col_2 = []
+    let col_3 = []
+
+    const renderResult = () => {
+        results.map((item, index) => {
+            let val = (index % 3) + 1
+
+            switch (val) {
+                case 1:
+                    col_1.push(whatever(item, index));
+                    break;
+                case 2:
+                    col_2.push(whatever(item, index));
+                    break;
+                case 3:
+                    col_3.push(whatever(item, index));
+                    break;
+                default:
+                    break;
+            }
+        })
+    }
+
     const doRefresh = async () => {
         window.location.reload();
     }
 
     return (
-        <>
-            <div class="bg-secondary" style={{ height: "100vh" }}>
-                <NavBar/>
-                {
-                    results.length === 0 ?
-                        <Card>
-                            <Card.Title>Search up some recipes and favorite them</Card.Title>
-                        </Card>
-                    :
-                        results.map((item, index) =>
-                        {
-                            return(
-                                <CardDeck style={{ padding: "10px" }}>
-                                    <Card border="light" style={{ width: '35rem', padding: "10px" }}>
-                                        <Card.Title key={index}>{item.Title}</Card.Title>
-                                        <Card.Img src={item.Image}/>
-                                        <div>
-                                            <Button variant="danger" type="submit" size="sm" controlId="deleteButton"  
-                                                onClick={() => {
-                                                    const confirmBox = window.confirm(
-                                                        "Are you sure you would like to delete this recipe?"
-                                                    )
-                                                    if (confirmBox === true) {
-                                                        
-                                                        // Saves the title before removing it.
-                                                        // May not be needed.
-                                                        var deletedTitle = item.Title;
+        <div class="bg-secondary" style={{ height: "100vh" }}>
+            <NavBar/>
+            {
+                results.length === 0 ?
+                    <div class="text-center">
+                        <h2 class="banner">
+                            Search some recipes to have them show up here. 
+                        </h2>
+                    </div>
+                    
+                :
+                    <div className="container-fluid  justify-content-center ">
+                        {renderResult()}
 
-                                                        // If recipe is deleted returns true.
-                                                        var deleted = doDelete(item._id);
-
-                                                        // If a recipe was deleted.
-                                                        if (deleted) {
-                                                            // Displays which recipe was deleted.
-                                                            window.alert(`${deletedTitle} was deleted`);
-
-                                                            // Refreshes the page.
-                                                            window.location.reload();
-                                                        }
-
-                                                        // If deletion failed.
-                                                        else {
-                                                            window.alert(`Could not delete ${deletedTitle}. Please try again.`);        
-                                                        }
-                                                    }
-                                                }}>
-                                                Delete Recipe
-                                            </Button>
-                                            <span id="deleteRecipe">{}</span>
-                                        </div> 
-                                    </Card>
-                                </CardDeck>
-                            )
-                        })
-                }
-            </div>
-        </>
+                        <Row>
+                            <Col id={"col_1"} >  {col_1}  </Col>
+                            <Col id={"col_2"}>  {col_2}  </Col>
+                            <Col id={"col_3"}>  {col_3} </Col>
+                        </Row>
+                    </div>
+            }          
+        </div>
     )
 }
 
