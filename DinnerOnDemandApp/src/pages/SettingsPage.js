@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { View, StyleSheet, Text, TextInput, Image, TouchableOpacity, Alert } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
@@ -34,11 +34,21 @@ const SettingsPage = ({ navigation }) => {
     await storage.removeToken('user_data');
     var obj = { _id: ud.userId };
     var js = JSON.stringify(obj);
-    try {
-      const response = await fetch(buildPath('api/delete'), { method: 'post', body: js, headers: { 'Content-Type': 'application/json' } });
-      var res = JSON.parse(await response.text());
-      if (res == 'success') {
-        alert("Account has been deleted. Thank you for using Dinner On Demand!");
+    try        
+    {                
+      const response = await fetch(buildPath('api/delete'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
+      var res = JSON.parse(await response.text());   
+      if(res == 'success')
+      {
+        Alert.alert(
+          "Account deleted",
+          "Thank you for using Dinner On Demand!",
+          [
+            {
+              text: "Bye!"
+            },
+          ],
+        );
         navigation.navigate('AccountPage');
       }
       else {
@@ -292,10 +302,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: "column"
   },
-  buttonDivide: {
-    flex: 1,
-    height: '100%',
-    width: '100%',
+  buttonDivide:{
+    flex:1.5,
+    height:'100%',
+    width:'100%',
     justifyContent: 'center',
   },
   namePart: {
@@ -324,6 +334,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
+    color: 'black',
   },
   textBox: {
     

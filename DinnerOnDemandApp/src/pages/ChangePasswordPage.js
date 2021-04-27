@@ -7,6 +7,7 @@ import jwt_decode from 'jwt-decode';
 
 const ChangePasswordPage = ({ navigation }) => {
   const storage = require('../tokenStorage');
+  const [message, setMessage] = useState('');
   const [oPassword, onChangeOPassword] = useState('');
   const [password, onChangePassword] = useState('');
   const [cPassword, onChangeCPassword] = useState('');
@@ -21,12 +22,14 @@ const ChangePasswordPage = ({ navigation }) => {
   };
   const doSave = async event => {
     var valid = isValid()
-    if (valid != '') {
-      alert(valid);
+    if(valid != '')
+    {
+      setMessage(valid);
       return;
     }
-    if (password != cPassword) {
-      alert('Passwords do not match');
+    if(password != cPassword)
+    {
+      setMessage('Passwords do not match');
       return
     }
     event.preventDefault();
@@ -84,14 +87,15 @@ const ChangePasswordPage = ({ navigation }) => {
           <TextInput
             style={[styles.input, { marginBottom: 30 }]}
             placeholder="Please confirm your new password"
-            onChangeText={onChangeCPassword}
-            secureTextEntry={true}
-          />
-          <NavigationButton
-            name="Save"
-            doFunction={doSave}
-          />
-        </Layout>
+            onChangeText = {onChangeCPassword}
+            secureTextEntry = {true}
+            />
+            <NavigationButton
+            name = "Save"
+            doFunction = {doSave}
+            />
+            <Text style = {{color:'red', marginTop: 20}}>{message}</Text>
+        </View>
       </View>
     </View>
   );

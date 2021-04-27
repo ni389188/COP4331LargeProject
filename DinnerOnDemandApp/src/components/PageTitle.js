@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
       flex: 6,
       fontSize: 20,
       textAlign: 'center',
-      textAlignVertical: "center"
+      textAlignVertical: "center",
+      color: 'white',
    },
 });
 
