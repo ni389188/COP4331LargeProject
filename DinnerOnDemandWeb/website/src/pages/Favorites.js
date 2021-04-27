@@ -67,6 +67,44 @@ const Favorites = () =>
         }   
     }
 
+    // Deletes a recipe.
+    const doDelete = async (ID) => {
+        // call api/addrecipe
+
+        var js = JSON.stringify({ID});
+
+        try {
+            const response = await fetch(buildPath('api/removerecipe'),
+                {
+                    method: 'POST',
+                    body: js,
+                    headers:
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+            var res = JSON.parse(await response.text());
+
+            if (res.removed) {
+                // Returns true if the recipe was deleted.
+                return true;
+            }
+            else {
+                // Returns false if the recipe was not deleted.
+                return false;
+            }
+        }
+        catch (e) {
+            console.log(e.toString());
+            // return;
+        }
+    }
+
+    const doRefresh = async () => {
+        window.location.reload();
+    }
+
     return (
         <>
             <div class="bg-secondary" style={{ height: "100vh" }}>
@@ -92,6 +130,24 @@ const Favorites = () =>
                                                     )
                                                     if (confirmBox === true) {
                                                         
+                                                        // Saves the title before removing it.
+                                                        // May not be needed.
+                                                        var deletedTitle = item.Title;
+
+                                                        // If recipe is deleted returns true.
+                                                        var deleted = doDelete(item._id);
+
+                                                        // If a recipe was deleted.
+                                                        if (deleted) {
+                                                            // Displays which recipe was deleted.
+                                                            window.alert(`${deletedTitle} was deleted`);
+
+                                                            // Refreshes the page.
+                                                            window.location.reload();
+                                                        }
+                                                        else {
+                                                            window.alert(`Could not delete ${deletedTitle}. Please try again.`);        
+                                                        }
                                                     }
                                                 }}>
                                                 Delete Recipe
