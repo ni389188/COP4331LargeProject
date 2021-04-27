@@ -22,13 +22,11 @@ const ChangePasswordPage = ({ navigation }) => {
   };
   const doSave = async event => {
     var valid = isValid()
-    if(valid != '')
-    {
+    if (valid != '') {
       setMessage(valid);
       return;
     }
-    if(password != cPassword)
-    {
+    if (password != cPassword) {
       setMessage('Passwords do not match');
       return
     }
@@ -87,15 +85,15 @@ const ChangePasswordPage = ({ navigation }) => {
           <TextInput
             style={[styles.input, { marginBottom: 30 }]}
             placeholder="Please confirm your new password"
-            onChangeText = {onChangeCPassword}
-            secureTextEntry = {true}
-            />
-            <NavigationButton
-            name = "Save"
-            doFunction = {doSave}
-            />
-            <Text style = {{color:'red', marginTop: 20}}>{message}</Text>
-        </View>
+            onChangeText={onChangeCPassword}
+            secureTextEntry={true}
+          />
+          <NavigationButton
+            name="Save"
+            doFunction={doSave}
+          />
+          <Text style={{ color: 'red', marginTop: 20 }}>{message}</Text>
+        </Layout>
       </View>
     </View>
   );
