@@ -145,7 +145,7 @@ exports.setApp = function (app, MongoClient)
     {  
         // Update user DB.
         User.findByIdAndRemove(req.body._id).then(result => {
-            res.status(200).json("success");
+            res.status(200).json({deleted:true});
         })
         .catch(err => {
             console.log(err);
