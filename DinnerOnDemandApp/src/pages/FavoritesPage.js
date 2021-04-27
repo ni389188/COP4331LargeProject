@@ -33,6 +33,8 @@ const FavoritesPage = ({ navigation }) =>
   {
     var tok = storage.retrieveToken();
 
+    setResults([])
+
     if (tok != null)
     {
       var ud = jwtDecode(tok);
