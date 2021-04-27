@@ -1,6 +1,5 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
-import LoggedInName from '../components/LoggedInName';
 
 const VerifyRoute = () =>
 {    

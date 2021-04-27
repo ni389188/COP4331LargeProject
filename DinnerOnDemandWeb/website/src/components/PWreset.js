@@ -43,7 +43,7 @@ function Reset({tok})
         var js = JSON.stringify(obj);        
         try        
         {                
-            const response = await fetch(buildPath('api/reset/confirm'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+            const response = await fetch(buildPath('api/reset'), {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
             var res = JSON.parse(await response.text());  
         }
         catch(e)        
