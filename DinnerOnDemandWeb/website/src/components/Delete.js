@@ -17,7 +17,9 @@ function Delete() {
                         {
                             if (deleted) {
                                 window.alert(`Your account was deleted`);
-
+                                
+                                // Deleted token.
+                                localStorage.clear();
                                 // Refreshes the page.
                                 window.location.href = "../pages/LoginPage";
                             }
