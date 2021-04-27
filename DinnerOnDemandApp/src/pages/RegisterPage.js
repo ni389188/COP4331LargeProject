@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     color: 'blue',
   },
   buttonBackground: {
-    width: '100%',
+    // width: '100%',
     borderWidth: 1,
     marginTop: 20,
   },

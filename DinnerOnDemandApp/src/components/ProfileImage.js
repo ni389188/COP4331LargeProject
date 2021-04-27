@@ -14,7 +14,7 @@ function ProfileImage()
   return(
     <>
         {
-            ud === null
+            ud.image === null
             ?
             <Image
             style={{height:150, width:150, borderRadius: 100}}

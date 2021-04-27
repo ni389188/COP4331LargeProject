@@ -19,7 +19,7 @@ function LoggedInName({size, font, align})
   {
     return(
       <View style = {{flex:1, alignItems:align, width: '100%', height:"100%"}}>
-        <Text style = {{fontSize:font, color: 'black'}}>{firstName}</Text>
+        <Text style = {{fontSize:font,}}>{firstName}</Text>
       </View>
     );
   }
@@ -27,7 +27,7 @@ function LoggedInName({size, font, align})
   {
     return(
       <View style = {{flex:1, alignItems:align, width: '100%', height:"100%"}}>
-        <Text style = {{fontSize:font, color: 'black'}}>{lastName}</Text>
+        <Text style = {{fontSize:font,}}>{lastName}</Text>
       </View>
     )
   }

@@ -38,7 +38,7 @@ const SettingsPage = ({ navigation }) => {
     {                
       const response = await fetch(buildPath('api/delete'), {method:'post',body:js,headers:{'Content-Type': 'application/json'}});
       var res = JSON.parse(await response.text());   
-      if(res == 'success')
+      if(res.deleted)
       {
         Alert.alert(
           "Account deleted",
@@ -334,7 +334,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 25,
-    color: 'black',
   },
   textBox: {
     
