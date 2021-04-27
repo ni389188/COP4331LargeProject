@@ -9,19 +9,13 @@ import { Button, Layout, Text } from '@ui-kitten/components';
 import axios from 'axios';
 
 const RecipeListPage = ({ navigation }) => {
+  const [refresh, setRefresh] = useState(false);
   const [results, setResults] = useState([]);
-  const [main, setMain] = useState({});
   const storage = require('../tokenStorage.js');
   var userID = '';
 
   useEffect(() => {
-    var tok = storage.retrieveToken();
-
-    if (tok != null) {
-      var ud = jwt_decode(tok);
-      userID = ud.userId;
-      getCustom();
-    }
+    getCustom();
   }, [])
 
   const app_name = 'cop4331din';
@@ -36,6 +30,14 @@ const RecipeListPage = ({ navigation }) => {
   };
 
   const getCustom = async () => {
+    var tok = storage.retrieveToken();
+
+    if (tok != null)
+    {
+      var ud = jwt_decode(tok);
+      userID = ud.userId;
+    }
+
     // call api/getcustomrecipes
     // Takes in userID
     var js = JSON.stringify({ UserID: userID });
@@ -54,42 +56,14 @@ const RecipeListPage = ({ navigation }) => {
       var res = JSON.parse(await response.text());
 
       if (res.found) {
-        // console.log(res.recipes[0])
-        setMain(res.recipes[0])
         setResults(res.recipes)
       }
-      // else
-
-    }
-    catch (e) {
-      console.log(e.toString());
-    }
-  }
-
-  const getFavorites = async () => {
-    // call api/getrecipe
-    // Takes in userID
-    var js = JSON.stringify({ userID: userID });
-
-    try {
-      const response = await fetch(buildPath('api/getrecipes'),
-        {
-          method: 'POST',
-          body: js,
-          headers:
-          {
-            'Content-Type': 'application/json'
-          }
-        });
-
-      var res = JSON.parse(await response.text());
-
-      if (res.found) {
-        setMain(res.recipes[0])
-        setResults(res.recipes)
+      else
+      {
+// 
       }
-      // else
 
+      setRefresh(false);
     }
     catch (e) {
       console.log(e.toString());
@@ -98,23 +72,20 @@ const RecipeListPage = ({ navigation }) => {
 
   return (
     <Layout style={styles.container}>
-      <View style={styles.header}>
-        <PageTitle text='Your Recipes' />
-      </View>
       <FlatList
         contentContainerStyle={styles.body}
         data={results}
         keyExtractor={(item, index) => index.toString()}
         numColumns={1}
+        onRefresh={() => setRefresh(true) & getCustom()}
+        refreshing={refresh}
         renderItem={({ item }) => <RecipeCard item={item} custom={true}/>}
         ListHeaderComponent={
-          <View style={[styles.body, { marginBottom: 20 }]}>
-            <View style={styles.cards}>
-              <RecipeCard item={main} custom={true} />
-            </View>
+          <View style={[styles.body, { marginVertical: 20 }]}>
             <Button onPress={() => { navigation.navigate('CreatePage') }}>
               <Text>+ Add Custom Recipe</Text>
             </Button>
+            <Text>Pull down to refresh list</Text>
           </View>
         }
         ListFooterComponent={

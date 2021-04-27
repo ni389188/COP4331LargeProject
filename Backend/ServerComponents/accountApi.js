@@ -151,6 +151,34 @@ exports.setApp = function (app, MongoClient)
         };
     });
 
+    app.post('/api/verify', async (req, res, next) =>
+    {
+        try
+        {   
+            // Checks if token signature is valid. Using the Secret in the .env file.
+            var tok = jwt.verify(req.body.Token, process.env.ACCESS_TOKEN_SECRET);
+
+            // Finds user by userId in token.
+            await User.findById(tok.userId, function(err, result) {
+                // verification code in DB is the same as in the ger request param.
+                if(result.VerificationCode == req.body.VerificationCode){
+                    // Update user IsVerified field to true.
+                    User.findByIdAndUpdate(tok.userId, {IsVerified: true, $unset:{"VerificationCode":1}}).then(result => {
+                        res.status(200).json("success");
+                    })
+                }
+                else
+                {
+                    res.status(400);
+                }
+            })
+        }
+        catch(e)
+        {
+            res.status(400);
+        };
+    });
+
     app.post('/api/resend', async (req, res, next) =>
     {
         try

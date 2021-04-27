@@ -225,4 +225,66 @@ exports.setAppRecipe = function (app, MongoClient)
         }
     });
 
+    app.post('/api/removerecipe', async (req, res, next) => 
+    {  
+        console.log('ID is:' + req.body.ID);
+        var ID = req.body.ID;
+
+        if (null === ID || ID === '')
+        {
+            res.status(400).json({removed:false, errors:'Recipe ID required'});
+        }
+        else
+        {
+            Recipe.findByIdAndRemove(ID).then(result => {
+                res.status(200).json({removed:true});
+            })
+            // Catch Error.
+            .catch(err => {
+                // Display error.
+                console.log(err);   
+
+                // Respond with error.
+                res.status(400).json({removed:false, error: err});
+            });
+        }
+    });
+
+    /*
+    // Carl
+    app.post('/api/removerecipe', async (req, res, next) =>
+    {
+        var RecipeID = req.body.RecipeID;
+        var UserID = req.body.UserID;
+        var Title = req.body.Title;
+
+        if (null === UserID || UserID === '')
+        {
+            res.status(400).json({removed:false, errors:'userID required'});
+        }
+        else
+        {
+            Recipe.deleteOne({UserID: UserID, RecipeID: RecipeID, Title: Title}).then(result =>
+            {
+                console.log(result.deletedCount);
+
+                if (result.deletedCount > 0)
+                {
+                    res.status(200).json({removed:true, error: "n/a"});
+                }
+                else
+                {
+                    res.status(400).json({removed:false, error: "There was a problem or already deleted."});
+                }
+            })
+            // Catch Error.
+            .catch(err => {
+                // Display error.
+                console.log(err);   
+
+                // Respond with error.
+                res.status(400).json({removed:false, error: err});
+            });
+        }
+    });*/
 }

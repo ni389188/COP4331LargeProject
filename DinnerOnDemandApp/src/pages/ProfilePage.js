@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
@@ -8,9 +8,8 @@ import LoggedInName from '../components/LoggedInName';
 import ProfileImage from '../components/ProfileImage';
 
 
-import { Layout, Toggle, Text } from '@ui-kitten/components';
+import { Layout, Toggle, Text, Modal, Card, Button } from '@ui-kitten/components';
 import { ThemeContext } from '../components/theme-context';
-import { light } from '@eva-design/eva';
 
 // 🌜
 // 🌞
@@ -18,6 +17,9 @@ import { light } from '@eva-design/eva';
 const ProfilePage = ({ navigation }) => {
   const themeContext = React.useContext(ThemeContext);
   const storage = require('../tokenStorage.js');
+
+  const [visible, setVisible] = useState(false);
+
   const doLogout = async event => {
     if (storage.retrieveToken('user_data') != null) {
       storage.removeToken('user_data');
@@ -27,7 +29,7 @@ const ProfilePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Layout style={styles.body}>
-        <Toggle style={{ position: "absolute", left: 200, top: 10 }} checked={themeContext.theme === "light" ? false : true}
+        <Toggle style={{ position: "absolute", alignSelf: "flex-end", top: 10 }} checked={themeContext.theme === "light" ? false : true}
           onChange={() => themeContext.toggleTheme()}
         >
           {<Text style={{ fontSize: 20 }}>{themeContext.theme === "light" ? "🌞" : "🌜"}</Text>}
@@ -58,8 +60,19 @@ const ProfilePage = ({ navigation }) => {
         <View style={styles.button}>
           <NavigationButton
             name='Log Out'
-            doFunction={doLogout}
+            doFunction={() => setVisible(true)}
           />
+          <Modal
+            visible={visible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setVisible(false)}>
+            <Card disabled={true}>
+              <Text>Are you sure you want to log out?</Text>
+              <Button onPress={() => doLogout()} status='danger' style={{marginVertical: 10}}>YES</Button>
+
+              <Button onPress={() => setVisible(false)}>NO</Button>
+            </Card>
+          </Modal>
         </View>
       </Layout>
     </View>
@@ -80,7 +93,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 11,
     alignItems: 'center',
-    width: '85%',
+    width: '90%',
     borderRadius: 20,
     marginVertical: 20,
   },
@@ -122,6 +135,9 @@ const styles = StyleSheet.create({
   button: {
     width: '85%',
     marginTop: 20,
+  },
+  backdrop: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
 });
 
