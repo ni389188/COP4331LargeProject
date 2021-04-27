@@ -141,14 +141,15 @@ const CreatePage = ({ navigation }) => {
       <View style={styles.body}>
         <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
           <View style={styles.background}>
-            <TextInput style={styles.input} placeholder="Add name of dish" textAlign='center' value={title}
-              onChangeText={setTitle}
+            <TextInput style={styles.input} placeholder="Add name of dish" textAlign='left' value={title}
+              onChangeText={setTitle} placeholderTextColor="white"
             />
             <Text style={{ color: "red" }}>**Required**</Text>
           </View>
           <View style={styles.background}>
             <TextInput style={styles.input} placeholder="Add Ingredients one at a time" textAlign='left' multiline
               onChangeText={setIngredients} value={ingredients}
+              placeholderTextColor="white"
             />
             <Text style={{ color: "red" }}>**Each ingredient on there own line**</Text>
           </View>
@@ -156,6 +157,7 @@ const CreatePage = ({ navigation }) => {
             <TextInput style={styles.input} placeholder="Add Instuctions step-by-step" textAlign='left'
               multiline value={instructions}
               onChangeText={setInstructions}
+              placeholderTextColor="white"
             />
             <Text style={{ color: "red" }}>**Each instruction on there own line**</Text>
           </View>
@@ -202,11 +204,12 @@ const styles = StyleSheet.create({
     width: '85%',
   },
   input: {
-    color: 'black',
+    color: 'white',
     borderColor: 'grey',
     borderWidth: 2,
     borderRadius: 10,
     marginTop: 2.5,
+    backgroundColor: "black"
   },
 });
 

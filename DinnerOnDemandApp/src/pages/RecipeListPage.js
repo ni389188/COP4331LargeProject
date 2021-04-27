@@ -30,6 +30,8 @@ const RecipeListPage = ({ navigation }) => {
   };
 
   const getCustom = async () => {
+    setResults([])
+
     var tok = storage.retrieveToken();
 
     if (tok != null)
@@ -55,12 +57,10 @@ const RecipeListPage = ({ navigation }) => {
 
       var res = JSON.parse(await response.text());
 
+      console.log(res)
+
       if (res.found) {
         setResults(res.recipes)
-      }
-      else
-      {
-// 
       }
 
       setRefresh(false);

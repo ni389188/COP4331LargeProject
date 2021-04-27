@@ -53,7 +53,7 @@ function RecipeCard({ item, custom, favorite }) {
         alert(res.error);
       }
       else {
-        res.obj[0].RecipeID = item.RecipeID;
+        res.obj[0]._id = item._id;
         setResults(res.obj[0])
       }
     }

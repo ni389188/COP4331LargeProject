@@ -4,7 +4,7 @@ import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { Layout, Text } from '@ui-kitten/components';
+import { Button, Card, Layout, Modal, Text } from '@ui-kitten/components';
 import { ThemeContext } from '../components/theme-context';
 
 const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
@@ -18,7 +18,9 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
     ? [...item.usedIngredients, ...item.missedIngredients] : [...item.Ingredients] : null
   let newIngredientObj = []
   let steps = []
-
+  const [deleteCustomVisible, setDeleteCustomVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [success, setSuccess] = useState('');
   const storage = require('../tokenStorage.js');
   var userID = '';
   var tok = storage.retrieveToken();
@@ -75,22 +77,25 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
 
       if (res.Added) {
         // Let the user know it has been added to favorites
-        alert("Recipe has been added to Favorites!")
+        setSuccess("Recipe has been added to Favorites!")
+        setVisible(true);
       }
       else {
         // Let them know an error occured
-        alert("Error or recipe added already")
+        setSuccess("Error or recipe added already")
+        setVisible(true);
       }
     }
     catch (e) {
-      alert(e.toString());
+      setSuccess(e.toString());
+      setVisible(true);
       // return;
     }
   }
 
   const unFavorite = async () =>
   {
-    var js = JSON.stringify({ UserID: userID, RecipeID: item.RecipeID, Title: item.title});
+    var js = JSON.stringify({ID: item._id});
 
     try {
       const response = await fetch(buildPath('api/removerecipe'),
@@ -109,17 +114,57 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
 
       if (res.removed) {
         // Let the user know it has been added to favorites
-        alert("Recipe Removed")
-        navigation.pop();
+        setSuccess("Recipe Removed")
+        setVisible(true);
       }
       else {
         // Let them know an error occured
-        alert(res.error)
+        setSuccess(res.error)
+        setVisible(true);
       }
     }
     catch (e)
     {
-      alert(e.toString());
+      setSuccess(e.toString());
+      setVisible(true);
+      // return;
+    }
+  }
+
+  const deleteCustom = async () =>
+  {
+    var js = JSON.stringify({ID: item._id});
+
+    try {
+      const response = await fetch(buildPath('api/removecustom'),
+        {
+          method: 'POST',
+          body: js,
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        });
+
+      var res = JSON.parse(await response.text());
+
+      console.log(res);
+
+      if (res.removed) {
+        // Let the user know it has been added to favorites
+        setSuccess("Recipe Removed")
+        setVisible(true);
+      }
+      else {
+        // Let them know an error occured
+        setSuccess(res.error)
+        setVisible(true);
+      }
+    }
+    catch (e)
+    {
+      setSuccess(e.toString());
+      setVisible(true);
       // return;
     }
   }
@@ -154,7 +199,7 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
                 backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
                 borderWidth: 1, borderRadius: 5,
               }]}
-              source={{ uri: custom ? item.Image : item.image }}
+              source={custom && item.Image === '' ? require("../components/Logo.png") : { uri: custom ? item.Image : item.image }}
             />
             <View style={{ flexDirection: "row", marginTop: 10 }}>
               {/* Add/Remove from Recipes */}
@@ -162,10 +207,17 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/heart-492.png')} />
                 <Text>Add</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => favoriteItem ? unFavorite() : null} style={{ alignItems: "center", display: favoriteItem ? null : "none", marginHorizontal: custom || favoriteItem ? 0 : 50, }}>
+              <TouchableOpacity onPress={() => favoriteItem ? unFavorite() : setDeleteCustomVisible(true)} style={{ alignItems: "center", display: favoriteItem || custom ? null : "none", marginHorizontal: custom || favoriteItem ? 0 : 50, }}>
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/brokenHeart.png')} />
                 <Text>Remove</Text>
               </TouchableOpacity>
+              <Modal visible={deleteCustomVisible} style={{width: "60%"}}>
+                <Card disabled={true}>
+                  <Text status='danger' style={{textAlign: "center"}}>Are you sure you want to remove this recipe?</Text>
+                  <Button onPress={() => setDeleteCustomVisible(false) & deleteCustom()} status='danger' style={{marginVertical: 10}}>YES</Button>
+                  <Button onPress={() => setDeleteCustomVisible(false)}>NO</Button>
+                </Card>
+              </Modal>
               {/* Share */}
               <TouchableOpacity onPress={() => tweetNow()} style={{ alignItems: "center", marginLeft: 50 }}>
                 <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/share.png')} />
@@ -241,6 +293,15 @@ const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem 
           </ScrollView>
         </Layout>
       </View>
+      <Modal
+        visible={visible}
+        backdropStyle={styles.backdrop}
+        onBackdropPress={() => setVisible(false) & (favoriteItem || custom ? navigation.pop() : null)}>
+        <Card disabled={true}>
+          <Text>{success}</Text>
+          <Button onPress={() => setVisible(false) & (favoriteItem || custom ? navigation.pop() : null)} style={{marginVertical: 10}}>OK</Button>
+        </Card>
+      </Modal>
     </>
   );
 };
@@ -272,6 +333,9 @@ const styles = StyleSheet.create(
     button: {
       marginTop: 20,
       width: '85%',
+    },
+    backdrop: {
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
   });
 
