@@ -52,6 +52,8 @@ function App() {
           <Route path="/pages/customs">
             <CustomRecipe />
           </Route>
+          <Route path="/api/reset/:token" exact />
+          <Route path="/api/verify/:verificationCode/:token" exact />
           <Redirect to="/" />  
         </Switch>       
       </Router>
