@@ -14,6 +14,7 @@ import VerifyPage from './pages/VerifyPage';
 import PWresetPage from './pages/PWresetPage';
 import PasswordResetPage from './pages/PasswordResetPage';
 import VerifyRoute from './components/VerifyRoute';
+import ResetRoute from './components/ResetRoute';
 
 function App() {  
   return (
@@ -53,7 +54,9 @@ function App() {
           <Route path="/pages/customs">
             <CustomRecipe />
           </Route>
-          <Route path="/reset/:token" exact />
+          <Route path="/reset/:token" exact >
+            <ResetRoute />
+          </Route>
           <Route path="/verify/:verificationCode/:token" exact>
             <VerifyRoute />
           </Route>
