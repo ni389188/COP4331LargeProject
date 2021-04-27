@@ -242,13 +242,13 @@ exports.setAppRecipe = function (app, MongoClient)
             {
                 console.log(result.deletedCount);
 
-                if (result.deletedCount > 1)
+                if (result.deletedCount > 0)
                 {
                     res.status(200).json({removed:true, error: "n/a"});
                 }
                 else
                 {
-                    res.status(400).json({removed:false, error: "There was a problem."});
+                    res.status(400).json({removed:false, error: "There was a problem or already deleted."});
                 }
             })
             // Catch Error.
