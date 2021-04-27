@@ -139,6 +139,9 @@ const Favorites = () =>
 
                                                         // If a recipe was deleted.
                                                         if (deleted) {
+                                                            // Displays which recipe was deleted.
+                                                            window.alert(`${deletedTitle} was deleted`);
+
                                                             // Refreshes the page.
                                                             window.location.reload();
                                                         }
