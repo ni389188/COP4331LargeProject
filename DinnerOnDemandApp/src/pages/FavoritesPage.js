@@ -1,46 +1,99 @@
-import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, FlatList } from 'react-native';
 
 import PageTitle from '../components/PageTitle';
 import NavigationBar from '../components/NavigationBar';
 import NavigationButton from '../components/NavigationButton';
 import RecipeCard from '../components/RecipeCard';
 import Counter from '../components/Counter';
+import { Layout, Text } from '@ui-kitten/components';
+import jwtDecode from 'jwt-decode';
 
-const FavoritesPage = ({navigation}) =>
+const FavoritesPage = ({ navigation }) =>
 {
-    return(
-      <View style = {styles.container}>
-        <View style = {styles.header}>
-          <PageTitle text = 'Favorites' />
-        </View>
-        <View style = {styles.body}>
-          <View style = {styles.button}>
-            <NavigationButton
-            name = 'See Current Recipes'
-            doFunction = {() => navigation.navigate('CurrentRecipesPage')}
-            />
-          </View>
-          <View style = {styles.background}>
-            <View style = {styles.counterSection}>
-              <Counter 
-              number = {5}
-              direction = 'row'
-              />
-            </View>
-            <View style = {styles.textSection}>
-              <Text style = {styles.text}>Avocado</Text>
-            </View>
-          </View>
-        </View>
-      </View>
-    );
+  const [refresh, setRefresh] = useState(false);
+  const [results, setResults] = useState([])
+  const storage = require('../tokenStorage.js');
+  var userID = '';
+
+  useEffect(() =>
+  {
+    getRecipes();
+  }, [])
+
+  function buildPath(route)
+  {
+    if (process.env.NODE_ENV === 'production')
+      return 'https://' + app_name + '.herokuapp.com/' + route;
+    else
+      return 'http://10.0.2.2:5000/' + route;
+  };
+
+  const getRecipes = async () =>
+  {
+    var tok = storage.retrieveToken();
+
+    if (tok != null)
+    {
+      var ud = jwtDecode(tok);
+      userID = ud.userId;
+    }
+
+    var js = JSON.stringify({ UserID: userID });
+
+    try {
+      const response = await fetch(buildPath('api/getrecipes'),
+      {
+        method: 'POST',
+        body: js,
+        headers:
+        {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      var res = JSON.parse(await response.text());
+
+      if (!res.found) {
+        alert(res.errors);
+      }
+      else {
+        setResults(res.recipes)
+      }
+
+      setRefresh(false);
+    }
+    catch (e) {
+      alert(e.toString());
+    }
+  }
+
+  return (
+    <Layout style={styles.container}>
+      <Text style={{marginTop: 20}}>Pull down to refresh list</Text>
+      {
+        results.length === 0 ?
+          <Text style={{width: "85%", textAlign: "center", fontSize: 20, fontWeight: "bold"}}>
+            You don't have any favorite recipes, go the Search tab and look some up!
+          </Text>
+        :
+          <FlatList
+            data={results}
+            renderItem={({ item }) => <RecipeCard item={item} favorite={true} />}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={1}
+            contentContainerStyle={{paddingVertical: 20}}
+            onRefresh={() => setRefresh(true) & getRecipes()}
+            refreshing={refresh}
+          />
+      }
+    </Layout>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
   },

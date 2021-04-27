@@ -9,11 +9,13 @@ import { ThemeContext } from '../components/theme-context';
 
 const APIKEY = '7bfd691826fd4d31834f7728f67c9b3e';
 
-const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
+const RecipePage = ({ navigation, route: { params: { item, custom, favoriteItem } } }) => {
   const themeContext = React.useContext(ThemeContext);
 
   const [instructions, setInstructions] = useState([]);
-  const ingredients = item !== undefined ? item.usedIngredients !== undefined ? [...item.usedIngredients, ...item.missedIngredients] : [...item.Ingredients] : null
+  const ingredients = favoriteItem ? [...item.ingredients] 
+    : item !== undefined ? item.usedIngredients !== undefined 
+    ? [...item.usedIngredients, ...item.missedIngredients] : [...item.Ingredients] : null
   let newIngredientObj = []
   let steps = []
 
@@ -27,13 +29,19 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
   }
 
   useEffect(() => {
-    if (!custom && item !== undefined && item.usedIngredients !== undefined) {
+    if (!favoriteItem && !custom && item !== undefined && item.usedIngredients !== undefined)
+    {
       axios.get(`https://api.spoonacular.com/recipes/${item.id}/analyzedInstructions?apiKey=${APIKEY}`)
         .then(res => {
           setInstructions(res.data)
         })
     }
-    else if (item !== undefined || custom) {
+    else if (favoriteItem)
+    {
+      setInstructions([item.instructions])
+    }
+    else if (item !== undefined || custom)
+    {
       setInstructions([...item.Instructions])
     }
   }, []);
@@ -48,22 +56,6 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
       return 'http://10.0.2.2:5000/' + route;
     }
   };
-
-  const addToShop = () => {
-    let obj =
-    {
-      title: item.title,
-      image: item.image,
-      ingredients: newIngredientObj,
-      instructions: { steps: steps }
-    }
-
-    axios.post(buildPath(""), JSON.stringify(obj))
-      .then(res => {
-
-      })
-      .catch(res => alert(res));
-  }
 
   const favorite = async () => {
     var js = JSON.stringify({ UserID: userID, RecipeID: item.id, Title: item.title });
@@ -96,8 +88,39 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
     }
   }
 
-  const share = () => {
+  const unFavorite = async () =>
+  {
+    var js = JSON.stringify({ UserID: userID, RecipeID: item.RecipeID, Title: item.title});
 
+    try {
+      const response = await fetch(buildPath('api/removerecipe'),
+        {
+          method: 'POST',
+          body: js,
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        });
+
+      var res = JSON.parse(await response.text());
+
+      console.log(res);
+
+      if (res.removed) {
+        // Let the user know it has been added to favorites
+        alert("Recipe Removed")
+      }
+      else {
+        // Let them know an error occured
+        alert("Error or recipe added already")
+      }
+    }
+    catch (e)
+    {
+      alert(e.toString());
+      // return;
+    }
   }
 
   const tweetNow = () => {
@@ -124,7 +147,7 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
           <PageTitle text={custom ? item.Title : item.title} back navigate={navigation} />
         </View>
         <Layout style={styles.body}>
-          <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 50 }} style={{ flex: 1 }}>
+          <ScrollView contentContainerStyle={{ alignItems: 'center', paddingBottom: 100 }} style={{ flex: 1 }}>
             <Image
               style={[styles.image, {
                 backgroundColor: "#ABDDDC", padding: 10, borderColor: "red",
@@ -134,8 +157,12 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
             />
             <View style={{ flexDirection: "row", marginTop: 10 }}>
               {/* Add/Remove from Recipes */}
-              <TouchableOpacity onPress={() => custom ? null : favorite()} style={{ alignItems: "center" }}>
-                <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/unlike.png')} />
+              <TouchableOpacity onPress={() => custom || favoriteItem ? null : favorite()} style={{ alignItems: "center" }}>
+                <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/heart-492.png')} />
+                <Text>Add Recipe</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => favoriteItem ? unFavorite() : null} style={{ alignItems: "center" }}>
+                <Image style={{ width: 30, height: 30, marginBottom: 5, tintColor: themeContext.theme === "light" ? "black" : "white" }} source={require('../components/heart-492.png')} />
                 <Text>Add Recipe</Text>
               </TouchableOpacity>
               {/* Share */}
@@ -162,7 +189,6 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
                         style={{ width: 50, height: 50 }}
                         source={ !custom && ingredient.image !== undefined ? { uri: ingredient.image } : require("../components/Logo.png")}
                       />
-                      {console.log(ingredient.image)}
                       <View style={{ flexDirection: "column", marginStart: 5, width: "80%", }}>
                         <Text style={{color: "black"}}>
                           Ingredient: {custom ? ingredient : ingredient.originalString}
@@ -187,23 +213,26 @@ const RecipePage = ({ navigation, route: { params: { item, custom } } }) => {
             >
               {
                 instructions.length > 0 ?
-                  custom ?
-                    instructions.map((desc, index) => {
-                      return (
-                        <Text key={index} style={{ marginBottom: 5, color: "black" }}>
-                          {`${index + 1}. ${desc}`}
-                        </Text>
-                      )
-                    })
-                    :
-                    instructions[0].steps.map((desc, index) => {
-                      steps.push({ step: desc.step });
-                      return (
-                        <Text key={index} style={{ marginBottom: 5, color: "black" }}>
-                          {`${index + 1}. ${desc.step}`}
-                        </Text>
-                      )
-                    })
+                  favoriteItem ?
+                    <Text style={{ color: "black" }}>{instructions[0]}</Text>
+                  :
+                    custom ?
+                      instructions.map((desc, index) => {
+                        return (
+                          <Text key={index} style={{ marginBottom: 5, color: "black" }}>
+                            {`${index + 1}. ${desc}`}
+                          </Text>
+                        )
+                      })
+                      :
+                      instructions[0].steps.map((desc, index) => {
+                        steps.push({ step: desc.step });
+                        return (
+                          <Text key={index} style={{ marginBottom: 5, color: "black" }}>
+                            {`${index + 1}. ${desc.step}`}
+                          </Text>
+                        )
+                      })
                   :
                   <Text>No Instructions</Text>
               }
