@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../components/InsideNavBar';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import { ButtonGroup, Card, Col, Row } from 'react-bootstrap';
 // import { Container } from './styles';
 
 const CustomRecipe = () => {
@@ -12,6 +13,16 @@ const CustomRecipe = () => {
     // const [instructions, setInstructions] = useState([]);
     const uploadedImage = React.useRef(null);
     const imageUploader = React.useRef(null);
+    const [results, setResults] = useState([]);
+
+    let col_1 = []
+    let col_2 = []
+    let col_3 = []
+
+    useEffect(() =>
+    {
+        getCustom();
+    }, [])
 
     const app_name = 'cop4331din';
 
@@ -80,6 +91,7 @@ const CustomRecipe = () => {
             if (res.Added) {
                 // let the user know
                 document.getElementById("added").innerHTML = "Custom Recipe has been added!";
+                getCustom();
             }
             else {
                 // let them know it hasnt
@@ -105,6 +117,141 @@ const CustomRecipe = () => {
             reader.readAsDataURL(file);
         }
     };
+
+    const deleteCustom = async (item) =>
+    {
+      var js = JSON.stringify({ID: item._id});
+  
+      try {
+        const response = await fetch(buildPath('api/removecustom'),
+          {
+            method: 'POST',
+            body: js,
+            headers:
+            {
+              'Content-Type': 'application/json'
+            }
+          });
+  
+        var res = JSON.parse(await response.text());
+  
+        console.log(res);
+  
+        if (res.removed) {
+            getCustom()
+        }
+      }
+      catch (e)
+      {
+        // setSuccess(e.toString());
+        // setVisible(true);
+        // return;
+      }
+    }
+
+    const doitem = (recipe, index) =>
+    {
+        return (
+            <div>
+                <Card controlId={index} border="light" style={{ width: '35rem', padding: "10px" }}>
+                    <Card.Title>
+                        {recipe.Title}
+                    </Card.Title>
+                    <Card.Img src={recipe.Image} />
+                    <Card.Body>
+                        <h3>Ingredients</h3>
+                        {
+                            recipe.Ingredients.map((ingredient, index) =>
+                            {
+                                return (
+                                    <div key={index}>
+                                        <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                            <Card.Text>
+                                                <h5>{index + 1}: {ingredient}</h5><br />
+                                            </Card.Text>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        <h3>Instructions</h3>
+                        {
+                            recipe.Instructions.map((instruction, index) =>
+                            {
+                                return (
+                                    <div key={index}>
+                                        <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
+                                            <Card.Text>
+                                                <h5>{index + 1}: {instruction}</h5><br />
+                                            </Card.Text>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+                        <br />
+                        <ButtonGroup>
+                            <Button variant="secondary" onClick={() => deleteCustom(recipe)}>Delete</Button>
+                        </ButtonGroup>
+                    </Card.Body>
+                </Card>
+                <br />
+            </div>
+        )
+    }
+
+    const getCustom = async () =>
+    {
+        setResults([])
+
+        let userID = JSON.parse(localStorage.getItem('user_data')).userId;
+
+        // call api/getcustomrecipes
+        // Takes in userID
+        var js = JSON.stringify({ UserID: userID });
+
+        try {
+            const response = await fetch(buildPath('api/getcustomrecipes'),
+            {
+                method: 'POST',
+                body: js,
+                headers:
+                {
+                'Content-Type': 'application/json'
+                }
+            });
+
+            var res = JSON.parse(await response.text());
+
+            if (res.found) {
+                setResults(res.recipes)
+                // renderResult()
+            }
+        }
+        catch (e) {
+            console.log(e.toString());
+        }
+    }
+
+    const renderResult = () => {
+        results.map((item, index) => {
+            let val = (index % 3) + 1
+
+            switch (val) {
+                case 1:
+                    col_1.push(doitem(item, index));
+                    break;
+                case 2:
+                    col_2.push(doitem(item, index));
+                    break;
+                case 3:
+                    col_3.push(doitem(item, index));
+                    break;
+                default:
+                    break;
+            }
+        })
+    }
 
     return (
         <>
@@ -173,6 +320,14 @@ const CustomRecipe = () => {
                             <Button style={{marginBottom: 10}} class=" btn-block btn-lg mb-5" variant="light" onClick={() => addRecipe()}>Add Recipe</Button>
                             <p style={{marginBottom: 10}} id="added"></p>
                         </Form >
+                    </div>
+                    <div className="container-fluid  justify-content-center ">
+                        {renderResult()}
+                        <Row>
+                            <Col id={"col_1"} > {col_1}  </Col>
+                            <Col id={"col_2"}>  {col_2}  </Col>
+                            <Col id={"col_3"}>  {col_3}  </Col>
+                        </Row>
                     </div>
                 </div>
             </div>
