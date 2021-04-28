@@ -176,16 +176,16 @@ const Favorites = () =>
                         </h2>
                     </div>
                     
-                :
-                    <div className="container-fluid  justify-content-center ">
-                        {renderResult()}
+            :
+                    <div className="container-fluid bg-secondary justify-content-center ">
+                    {renderResult()}
 
-                        <Row>
-                            <Col id={"col_1"} >  {col_1}  </Col>
-                            <Col id={"col_2"}>  {col_2}  </Col>
-                            <Col id={"col_3"}>  {col_3} </Col>
-                        </Row>
-                    </div>
+                    <Row>
+                        <Col id={"col_1"} >  {col_1}  </Col>
+                        <Col id={"col_2"}>  {col_2}  </Col>
+                        <Col id={"col_3"}>  {col_3} </Col>
+                    </Row>
+                </div>
             }          
         </div>
     )

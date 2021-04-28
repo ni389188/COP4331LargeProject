@@ -159,7 +159,7 @@ const CustomRecipe = () => {
                     </Card.Title>
                     <Card.Img src={recipe.Image} />
                     <Card.Body>
-                        <h3>Ingredients</h3>
+                        <h5>Ingredients:</h5>
                         {
                             recipe.Ingredients.map((ingredient, index) =>
                             {
@@ -167,14 +167,14 @@ const CustomRecipe = () => {
                                     <div key={index}>
                                         <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
                                             <Card.Text>
-                                                <h5>{index + 1}: {ingredient}</h5><br />
+                                                {index + 1}: {ingredient}<br />
                                             </Card.Text>
                                         </div>
                                     </div>
                                 )
                             })
                         }
-                        <h3>Instructions</h3>
+                        <h5>Instructions</h5>
                         {
                             recipe.Instructions.map((instruction, index) =>
                             {
@@ -182,17 +182,14 @@ const CustomRecipe = () => {
                                     <div key={index}>
                                         <div style={{ flexDirection: "column", marginStart: 5, width: "80%" }}>
                                             <Card.Text>
-                                                <h5>{index + 1}: {instruction}</h5><br />
+                                                {index + 1}: {instruction}<br />
                                             </Card.Text>
                                         </div>
                                     </div>
                                 )
                             })
                         }
-                        <br />
-                        <ButtonGroup>
-                            <Button variant="secondary" onClick={() => deleteCustom(recipe)}>Delete</Button>
-                        </ButtonGroup>
+                        <Button variant="danger" onClick={() => deleteCustom(recipe)}>Delete</Button>
                     </Card.Body>
                 </Card>
                 <br />
@@ -321,7 +318,8 @@ const CustomRecipe = () => {
                             <p style={{marginBottom: 10}} id="added"></p>
                         </Form >
                     </div>
-                    <div className="container-fluid bg-secondary">
+                    <br/>
+                    <div className="container-fluid  justify-content-center">
                         {renderResult()}
                         <Row>
                             <Col id={"col_1"} > {col_1}  </Col>
