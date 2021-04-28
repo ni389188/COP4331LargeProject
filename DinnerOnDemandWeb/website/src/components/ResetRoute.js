@@ -33,8 +33,9 @@ const ResetRoute = () =>
             }
         }
         catch(e)        
-        {            
-            alert(e.toString());                 
+        {        
+            // Removed alert due to project requirements.    
+            console.log(e.toString());                 
         }
     }
     doReset()
