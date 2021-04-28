@@ -1,31 +1,34 @@
 import React from 'react';
-import {View, Image} from 'react-native';
+import { View, Image } from 'react-native';
 import jwt_decode from 'jwt-decode';
 
-function ProfileImage()
-{
-  const storage = require('../tokenStorage.js');  
+function ProfileImage() {
+  const storage = require('../tokenStorage.js');
   var tok = storage.retrieveToken();
   var ud = null;
-  if(tok != null)
-  {
+  if (tok != null) {
     ud = jwt_decode(tok);
   }
-  return(
+  return (
     <>
-        {
-            ud.image === null
-            ?
-            <Image
-            style={{height:150, width:150, borderRadius: 100}}
+      {
+        ud === null ?
+          <Image
+            style={{ height: 150, width: 150, borderRadius: 100 }}
             source={require('./defaultProfileImage.png')}
+          />
+        :
+          ud.image === null ?
+            <Image
+              style={{ height: 150, width: 150, borderRadius: 100 }}
+              source={require('./defaultProfileImage.png')}
             />
-            :
-            <Image 
-            style = {{height:150, width:150, borderRadius: 100}}
-            source={{uri: ud.image}}
+          :
+            <Image
+              style={{ height: 150, width: 150, borderRadius: 100 }}
+              source={{ uri: ud.image }}
             />
-        }
+      }
     </>
   );
 };

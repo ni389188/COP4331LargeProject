@@ -30,6 +30,7 @@ const SettingsPage = ({ navigation }) => {
   };
 
   const doDelete = async event => {
+    var ud = await jwt_decode(await storage.retrieveToken());
     var obj = { _id: ud.userId };
     var js = JSON.stringify(obj);
     try        
@@ -47,7 +48,6 @@ const SettingsPage = ({ navigation }) => {
             },
           ],
         );
-        var ud = await jwt_decode(await storage.retrieveToken());
         await storage.removeToken('user_data');
         navigation.navigate('AccountPage');
       }
@@ -163,10 +163,10 @@ const SettingsPage = ({ navigation }) => {
                   <NavigationButton name='Edit Last Name' doFunction={() => setState(2)} />
                 </View>
               </View>
-              <View style={[styles.section, { alignItems: 'center' }]}>
-                <NavigationButton name='Save' doFunction={doSave} />
+              <View style={[styles.section, { alignContent: 'center', marginVertical: 5 }]}>
+                <NavigationButton name='Save' doFunction={doSave} custom={{width: "127%"}} />
               </View>
-              <View style={{ flex: 0.5, alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{ alignItems: 'center', marginVertical: 1 }}>
                 <TouchableOpacity onPress={() => setVisible(true)}>
                   <Text style={styles.deleteButton}>Delete Account</Text>
                 </TouchableOpacity>
@@ -192,18 +192,16 @@ const SettingsPage = ({ navigation }) => {
                 <View style={styles.section}>
                   <View style={styles.nameDivide}>
                     <View style={styles.namePart}>
-                      <Text style={styles.inputTitle}> {[state == 1 ? "First" : "Last"]} name</Text>
-                    </View>
-                    <View style={styles.namePart}>
                       <TextInput
                         style={styles.input}
                         placeholder={"Please enter your " + [state == 1 ? "first" : "last"] + " name"}
                         onChangeText={onChangeText}
+                        placeholderTextColor='white'
                       />
                     </View>
                   </View>
                 </View>
-                <View style={styles.section}>
+                <View style={[styles.section, {marginVertical: 10}]}>
                   <NavigationButton
                     name='Save'
                     doFunction={() => { setState(0);[state == 1 ? setFirstName(text) : setLastName(text)]; onChangeText('') }}
@@ -212,7 +210,6 @@ const SettingsPage = ({ navigation }) => {
                 <View style={styles.section}>
                   <NavigationButton name='Cancel' doFunction={() => { setState(0); onChangeText('') }} />
                 </View>
-                <View style={{ flex: 4 }} />
               </>
               :
               state == 3
@@ -223,18 +220,21 @@ const SettingsPage = ({ navigation }) => {
                       name='Choose an image'
                       doFunction={() => launchImageLibrary({ includeBase64: true, mediaType: 'photo', maxHeight: 150, maxWidth: 150 },
                         (response) => { if (response.base64) onChangeText('data:image/png;base64,' + response.base64) })}
+                      custom={{width: "110%"}}
                     />
                   </View>
-                  <View style={styles.section}>
+                  <View style={[styles.section, {marginVertical: 10}]}>
                     <NavigationButton
                       name='Save'
                       doFunction={() => { setState(0), setImage(text), onChangeText('') }}
+                      custom={{width: "127%"}}
                     />
                   </View>
                   <View style={styles.section}>
                     <NavigationButton
                       name='Cancel'
                       doFunction={() => { setState(0), onChangeText('') }}
+                      custom={{width: "124%"}}
                     />
                   </View>
                   <View style={{ flex: 1 }} />
@@ -251,77 +251,82 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ABDDDC",
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    height: "100%"
   },
   header: {
-    flex: 1,
+    // flex: 1,
     width: '100%',
-    height: '100%',
+    // height: '100%',
     flexDirection: 'row',
   },
   imageSection: {
-    flex: 5,
-    justifyContent: 'center',
+    // flex: 5,
+    // justifyContent: 'center',
     alignItems: 'center',
-    height: '100%',
+    // height: '100%',
     width: '100%',
-
   },
   body: {
-    flex: 6,
+    // flex: 6,
     width: '85%',
-    justifyContent: 'center',
-    padding: 20,
+    // justifyContent: 'center',
+    alignSelf: "center",
+    padding: 10,
     borderRadius: 20,
-    marginBottom: 20,
+    marginVertical: 15,
   },
   altBody: {
-    flex: 11,
+    // flex: 11,
     width: '85%',
     justifyContent: 'center',
     padding: 20,
     borderRadius: 20,
     marginVertical: 20,
+    alignSelf: "center"
   },
   footer: {
     flex: 1.5,
     width: '100%',
   },
   section: {
-    flex: 1,
-    width: '100%',
+    // flex: 1,
+    // width: '100%',
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignSelf: 'center',
   },
   nameDivide: {
-    flex: 3,
+    // flex: 3,
     height: '100%',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: "column"
+    alignSelf: 'center',
+    // justifyContent: 'center',
+    flexDirection: "column",
+    alignContent: "center",
+    width: "100%"
   },
   buttonDivide:{
-    flex:1.5,
+    // flex:1.5,
     height:'100%',
     width:'100%',
     justifyContent: 'center',
   },
   namePart: {
-    flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    flexDirection: "row"
+    // flex: 1,
+    // width: '100%',
+    // justifyContent: 'center',
+    flexDirection: "row",
+    alignSelf: "center"
   },
   inputTitle: {
     fontSize: 25,
   },
   input: {
-    color: 'black',
+    color: 'white',
     borderColor: 'grey',
     borderWidth: 2,
     borderRadius: 10,
+    backgroundColor: 'black'
   },
   image: {
     height: 150,
@@ -329,8 +334,8 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   button: {
-    width: '50%',
-    marginTop: 25,
+    // width: '50%',
+    marginTop: 15,
   },
   text: {
     fontSize: 25,

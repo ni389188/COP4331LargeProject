@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '15%',
     width: '85%',
-    marginTop: 30,
+    marginTop: 15,
   },
   image: {
     height: 150,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '85%',
-    marginTop: 20,
+    marginTop: 5,
   },
   backdrop: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',

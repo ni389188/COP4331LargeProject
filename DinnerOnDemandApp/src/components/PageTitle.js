@@ -32,7 +32,7 @@ function PageTitle({text, back, navigate})
 
 const styles = StyleSheet.create({
    header: {
-      flex: 1,
+      // flex: 1,
       backgroundColor: 'blue',
       flexDirection: "row",
       alignItems: "center",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
       justifyContent: "center"
    },
    text: {
-      flex: 6,
+      // flex: 6,
       fontSize: 20,
       textAlign: 'center',
       textAlignVertical: "center",

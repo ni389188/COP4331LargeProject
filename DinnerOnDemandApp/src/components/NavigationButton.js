@@ -22,7 +22,7 @@ function NavigationButton({name, doFunction, custom})
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    width: '100%',
+    // width: '100%',
   },
   buttonBackground: {
     width: '100%',
