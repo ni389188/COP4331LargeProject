@@ -30,8 +30,6 @@ const SettingsPage = ({ navigation }) => {
   };
 
   const doDelete = async event => {
-    var ud = await jwt_decode(await storage.retrieveToken());
-    await storage.removeToken('user_data');
     var obj = { _id: ud.userId };
     var js = JSON.stringify(obj);
     try        
@@ -49,6 +47,8 @@ const SettingsPage = ({ navigation }) => {
             },
           ],
         );
+        var ud = await jwt_decode(await storage.retrieveToken());
+        await storage.removeToken('user_data');
         navigation.navigate('AccountPage');
       }
       else {
