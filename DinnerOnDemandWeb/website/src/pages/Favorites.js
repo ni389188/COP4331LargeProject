@@ -120,11 +120,8 @@ const Favorites = () =>
 
                                     // If a recipe was deleted.
                                     if (deleted) {
-                                        // Displays which recipe was deleted.
-                                        window.alert(`${deletedTitle} was deleted`);
-
                                         // Refreshes the page.
-                                        window.location.reload();
+                                        doRefresh(deleted);
                                     }                                    
                                 }
                             }}>
@@ -161,7 +158,10 @@ const Favorites = () =>
         })
     }
 
-    const doRefresh = async () => {
+    // Used to await for deleted, before reloading.
+    // If removed deletion will not work.
+    const doRefresh = async (deleted) => {
+        await deleted;
         window.location.reload();
     }
 
