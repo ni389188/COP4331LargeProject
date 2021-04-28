@@ -321,7 +321,7 @@ const CustomRecipe = () => {
                             <p style={{marginBottom: 10}} id="added"></p>
                         </Form >
                     </div>
-                    <div className="container-fluid  justify-content-center ">
+                    <div className="container-fluid bg-secondary">
                         {renderResult()}
                         <Row>
                             <Col id={"col_1"} > {col_1}  </Col>
