@@ -55,6 +55,8 @@ exports.setApp = function (app, MongoClient)
                 subject: "Dinner on demand: Please verify your Email",
                 text: "Please confirm your email to activate your account! http://localhost:3000/verify/"+randomNumber+"/"+ret.accessToken
             };
+
+            console.log(data.text);
         };
         try
         {
