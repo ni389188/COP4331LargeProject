@@ -14,6 +14,11 @@ import './searchRecipe.css'
 
 // import { Container } from './styles';
 
+const addIngredients = () =>
+{
+
+};
+
 const SearchRecipe = () => {
     
     const [ingredients, setIngredients] = useState("")
@@ -91,11 +96,17 @@ const SearchRecipe = () => {
 
             if (res.Added) {
                 // Let the user know it has been added to favorites
-                document.getElementById(index).innerHTML = "Recipe has been added to Favorites!"
+                var addButton = document.getElementById(index);
+                addButton.innerHTML = "Added to your Favorites!";
+                addButton.disabled = true;
+
+                return true;
             }
             else {
-                // Let them know an error occured
-                document.getElementById(index).innerHTML = res.error
+                window.alert(res.kind);
+                // Let the user know an error occured
+                window.alert("An error occurred adding this recipe to your favorites. Please try again");
+                return false;
             }
         }
         catch (e) {
@@ -113,6 +124,7 @@ const SearchRecipe = () => {
     let col_3 = []
 
     const doitem = (recipe, index) => {
+
         return (
             <div>
                 <Card controlId={recipe.key} border="light" style={{ width: '35rem', padding: "10px" }}>
@@ -136,8 +148,17 @@ const SearchRecipe = () => {
                             })
                         }
                         <br />
+                        
                         <ButtonGroup>
-                            <Button variant="secondary" onClick={() => addToFav(recipe.id, recipe.title, recipe.image, index)}>Add To Favorites</Button>
+                            <Button variant="secondary" id={index} onClick={() => {
+
+                                var result = addToFav(recipe.id, recipe.title, recipe.image, index);
+
+                                if (result) {
+                                    
+                                }
+
+                            }}>Add To Favorites</Button>
                         </ButtonGroup>
                     </Card.Body>
                 </Card>
