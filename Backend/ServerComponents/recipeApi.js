@@ -125,12 +125,19 @@ exports.setAppRecipe = function (app, MongoClient)
             })
             // Catch Error.
             .catch(err => {
-                // Display error.
-                console.log(err);   
+                // Display errors
+                console.log(err.errors);
 
-                // Respond with error.
-                res.status(400).json(err);
-    
+                if (err.errors.CompositeID) {
+                    res.status(400).json({
+                        alreadyAdded: true
+                    }
+                    )
+                }
+                else {
+                    // Respond with error.
+                    res.status(400).json(err);
+                }
             });
         }
 
