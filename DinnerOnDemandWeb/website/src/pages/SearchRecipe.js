@@ -102,8 +102,10 @@ const SearchRecipe = () => {
 
                 return true;
             }
+            else if (res.alreadyAdded) {
+                window.alert("This recipe is already one of your favorites");
+            }
             else {
-                window.alert(res.kind);
                 // Let the user know an error occured
                 window.alert("An error occurred adding this recipe to your favorites. Please try again");
                 return false;
@@ -115,6 +117,7 @@ const SearchRecipe = () => {
         }
     }
 
+    // TODO: Implement add to shopping list.
     const addToShop = async (id, title) => {
 
     }
