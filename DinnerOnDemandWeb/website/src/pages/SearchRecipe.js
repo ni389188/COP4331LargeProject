@@ -35,7 +35,7 @@ const SearchRecipe = () => {
         }
     };
 
-    const doSomething = async (e) => {
+    const doSearch = async (e) => {
         e.preventDefault();
 
         if (localStorage.getItem('user_data') === null) {
@@ -199,7 +199,7 @@ const SearchRecipe = () => {
                 <NavBar />
                 <br />
                 <div className="container d-flex justify-content-center  "> 
-                    <Form onSubmit={doSomething}>
+                    <Form onSubmit={doSearch}>
                         <Form.Group>
                             <Form.Control type="text" placeholder="Search for Ingredients/Recipes Here"
                                 value={ingredients} onChange={e => setIngredients(e.target.value)} />
