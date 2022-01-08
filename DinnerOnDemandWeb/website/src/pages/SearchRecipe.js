@@ -215,6 +215,11 @@ const SearchRecipe = () => {
 
     const renderResult = (item) => {
         results.map((recipe, index) => {
+			
+			// If the recipe is part of the favorites, then we do not display it.
+			if (localStorage.getItem(recipe.id)) {
+				return;
+			}
 
             let val = (index % 3) + 1
 
