@@ -169,7 +169,7 @@ const SearchRecipe = () => {
     let col_2 = []
     let col_3 = []
 
-    const doitem = (recipe, index) => {
+    const displayRecipes = (recipe, index) => {
 
         return (
             <div>
@@ -225,13 +225,13 @@ const SearchRecipe = () => {
 
             switch (val) {
                 case 1:
-                    col_1.push(doitem(recipe, index));
+                    col_1.push(displayRecipes(recipe, index));
                     break;
                 case 2:
-                    col_2.push(doitem(recipe, index));
+                    col_2.push(displayRecipes(recipe, index));
                     break;
                 case 3:
-                    col_3.push(doitem(recipe, index));
+                    col_3.push(displayRecipes(recipe, index));
                     break;
                 default:
                     break;
