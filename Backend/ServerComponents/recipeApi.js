@@ -153,7 +153,7 @@ exports.setAppRecipe = function (app, MongoClient)
     app.post('/api/getrecipes', async (req, res, next) => 
     {   
 
-        if (null == req.body.UserID) {
+        if (null === req.body.UserID) {
             res.status(400).json({found:false, errors:'userID required'});
         }
 
@@ -165,6 +165,44 @@ exports.setAppRecipe = function (app, MongoClient)
                 
                 if (result.length > 0) {
                     res.status(200).json({found:true, recipes: result});
+                }
+                else {
+                    res.status(404).json({found:false, errors:'not found'});
+                }
+            })
+            // Catch Error.
+            .catch(err => {
+                // Display error.
+                console.log(err);   
+
+                // Respond with error.
+                res.status(400).json({found:false, err});
+        
+            });
+        }
+    });
+	
+	// Get the IDs of all the recipes added by the user
+	app.post('/api/getfavoriteIDs', async (req, res, next) => 
+    {   
+
+        if (null === req.body.UserID) {
+            res.status(400).json({found:false, errors:'userID required'});
+        }
+
+        else {
+            var UserID = req.body.UserID;
+
+            // Find the recipes linked to the userID passed
+            Recipe.find({UserID:UserID}).then(result => {
+                
+				// If there are any recipes, then return those IDs
+                if (result.length > 0) {
+					let favoriteIDs = [];
+					
+					result.forEach(favorite => favoriteIDs.push(favorite.RecipeID));
+					
+                    res.status(200).json({found:true, recipeIDs: favoriteIDs});
                 }
                 else {
                     res.status(404).json({found:false, errors:'not found'});
