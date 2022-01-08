@@ -37,16 +37,24 @@ const SearchRecipe = () => {
 
     const doSearch = async (e) => {
         e.preventDefault();
+		
+		let userData = (localStorage.getItem('user_data'));
 
-        if (localStorage.getItem('user_data') === null) {
+        if (userData === null) {
             console.log('undefined');
             window.location.href = "../pages/LoginPage";
             return;
         }
+		
+		// Check if the user just logged in.
+		if (localStorage.getItem('justLoggedIn')) {
+			
+			// JSON parse is needed since userData is saved a String derived from a Json Object.
+			favoritesToStorage(JSON.parse(userData).userId);
+		}
 
-        // Call searchrecipe api
+        // Call searchrecipe API.
         var js = JSON.stringify({ Ingredients: ingredients.replace(" ", ""), Limit: "20" });
-
 
         try {
             const response = await fetch(buildPath('api/searchrecipe'),
@@ -110,6 +118,41 @@ const SearchRecipe = () => {
                 window.alert("An error occurred adding this recipe to your favorites. Please try again");
                 return false;
             }
+        }
+        catch (e) {
+            console.log(e.toString());
+            // return;
+        }
+    }
+	
+	const favoritesToStorage = async (userID) => {
+
+        let request = JSON.stringify({UserID: userID});
+
+        try {
+            const response = await fetch(buildPath('api/getfavoriteIDs'),
+                {
+                    method: 'POST',
+                    body: request,
+                    headers:
+                    {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+            let res = JSON.parse(await response.text());
+
+			// If we found favorites
+            if (res.found) {
+				
+				// Store each ID in the localstorage to efficiently (O(1)) not display favorites in future searches.
+				res.recipeIDs.forEach(ID => localStorage.setItem(ID, true));
+				localStorage.setItem('justLoggedIn', false);
+
+            }
+            
+			// Do not do anything if no favorites were found, since the user could have no favorites.
+			// If it is an error, the user should not know about this.
         }
         catch (e) {
             console.log(e.toString());
