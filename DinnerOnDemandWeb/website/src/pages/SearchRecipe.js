@@ -107,6 +107,9 @@ const SearchRecipe = () => {
                 var addButton = document.getElementById(index);
                 addButton.innerHTML = "Added to your Favorites!";
                 addButton.disabled = true;
+				
+				// Add favorite to the local storage.
+				localStorage.setItem(id, true);
 
                 return true;
             }
