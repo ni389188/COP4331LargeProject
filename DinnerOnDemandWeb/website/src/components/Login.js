@@ -41,8 +41,6 @@ function Login() {
                 localStorage.setItem('user_data', JSON.stringify(token));
                 localStorage.setItem('justLoggedIn', true);
                 
-                // Initialize the favorites asynchronously.
-                getFavorites(token.userId);
                 setMessage('');
                 window.location.href = '../pages/HomePage';
             }
@@ -50,17 +48,6 @@ function Login() {
         catch (e) {
             alert(e.toString());
             return;
-        }
-    };
-
-    async function getFavorites(userID) {
-
-        // The user passed is not empty.
-        if (userID !== undefined) {
-            // TODO: Populate local storage with favorites.
-        }
-        else {
-            console.log("Error: The user was not obtained");
         }
     };
 
