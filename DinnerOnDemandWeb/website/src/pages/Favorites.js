@@ -67,7 +67,7 @@ const Favorites = () =>
     }
 
     // Deletes a recipe.
-    const doDelete = async (ID) => {
+    const doDelete = async (ID, recipeID) => {
         // call api/addrecipe
 
         var js = JSON.stringify({ID});
@@ -86,6 +86,10 @@ const Favorites = () =>
             var res = JSON.parse(await response.text());
 
             if (res.removed) {
+				
+				// Deletes favorite from local storage.
+				await localStorage.removeItem(recipeID);
+				
                 // Returns true if the recipe was deleted.
                 return true;
             }
@@ -116,7 +120,7 @@ const Favorites = () =>
                                     var deletedTitle = item.Title;
 
                                     // If recipe is deleted returns true.
-                                    var deleted = doDelete(item._id);
+                                    var deleted = doDelete(item._id, item.RecipeID);
 
                                     // If a recipe was deleted.
                                     if (deleted) {
