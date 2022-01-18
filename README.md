@@ -22,3 +22,7 @@ Navigate to the Backend folder then run:
 Frontend:
 
     $ npm start
+
+For the first time running you may have to first run on folders:
+    
+    $ npm update
