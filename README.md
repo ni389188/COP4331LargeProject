@@ -21,6 +21,8 @@ Navigate to the Backend folder then run:
     
 Frontend:
 
+Navigate to the DinnerOnDemandWeb folder then run:
+
     $ npm start
 
 For the first time running you may have to first run on folders:
