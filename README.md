@@ -8,4 +8,12 @@ Loved any of these recipes; add them to your favorites.
 
 ## Running the project
 
+Backend:
+
+Navigate to the Backend folder then run:
+
+    $ npm start
+    
+Frontend:
+
     $ npm start
